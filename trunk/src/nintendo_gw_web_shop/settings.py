@@ -13,7 +13,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
         #'NAME': '/Users/markku/data/applications/eclipse/workspace/nintendo_gw_web_shop/src/sqlite.db',                      # Or path to database file if using sqlite3.
-        'NAME': '/Users/kjsaila/Documents/workspace/nintendo_gw_web_shop_svn/src/sqlite.db',                      # Or path to database file if using sqlite3.
+        #'NAME': '/Users/kjsaila/Documents/workspace/nintendo_gw_web_shop_svn/src/sqlite.db',                      # Or path to database file if using sqlite3.
+        'NAME': '/data/code/eclipse/eclipse_classic_3-6-1_workspace/nintendo_gw_web_shop/src/sqlite.db',                      # Or path to database file if using sqlite3.
         'USER': '',                      # Not used with sqlite3.
         'PASSWORD': '',                  # Not used with sqlite3.
         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
@@ -46,7 +47,8 @@ USE_L10N = True
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"
-MEDIA_ROOT = '/Users/kjsaila/Documents/workspace/nintendo_gw_web_shop_svn/src/nintendo_gw_web_shop/static/'
+#MEDIA_ROOT = '/Users/kjsaila/Documents/workspace/nintendo_gw_web_shop_svn/src/nintendo_gw_web_shop/static/'
+MEDIA_ROOT = '/data/code/eclipse/eclipse_classic_3-6-1_workspace/nintendo_gw_web_shop/src/nintendo_gw_web_shop/static/'
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash if there is a path component (optional in other cases).
@@ -83,7 +85,8 @@ TEMPLATE_DIRS = (
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
     #'/Users/markku/data/applications/eclipse/workspace/nintendo_gw_web_shop/src/nintendo_gw_web_shop/templates'
-    '/Users/kjsaila/Documents/workspace/nintendo_gw_web_shop_svn/src/nintendo_gw_web_shop/templates'
+    #'/Users/kjsaila/Documents/workspace/nintendo_gw_web_shop_svn/src/nintendo_gw_web_shop/templates'
+    '/data/code/eclipse/eclipse_classic_3-6-1_workspace/nintendo_gw_web_shop/src/nintendo_gw_web_shop/templates'
 )
 
 INSTALLED_APPS = (
