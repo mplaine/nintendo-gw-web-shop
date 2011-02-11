@@ -13,14 +13,46 @@ class User(models.Model):
 	password		= models.CharField( max_length=30 )
 	country			= models.CharField( max_length=30 )
 	
-class ProductDetails(models.Model):   
+class Product(models.Model):
+	numOfComments 		= models.IntegerField() 
+	numOfViews 		= models.IntegerField() 
+	numOfPurchases 		= models.IntegerField()
+
+class ProductDetails(models.Model):
+	product			= models.ForeignKey( Product )
 	name 			= models.CharField(max_length=50)
 	picture 		= models.URLField() 
 	price 			= models.DecimalField(decimal_places=2, max_digits=6) 
 	quantity 		= models.IntegerField()
+
+class Comment(models.Model): 
+	user 		= models.ForeignKey(User)
+	published 	= models.DateTimeField('date published')
+	contents 	= models.TextField()
+	commentsOn 	= models.ForeignKey("self")
+
+class Rating(models.Model):
+	rate		= models.IntegerField() #TODO MAX & MIN values
+	user 		= models.ForeignKey(User)
+
+class Order(models.Model):
+	date		= models.DateTimeField()
+	user 		= models.ForeignKey(User)
+	delivered	= models.BooleanField()
+	paid		= models.BooleanField()
 	
-class Product(models.Model):
-	details 		= models.ForeignKey( ProductDetails ) 
-	numOfComments 	= models.IntegerField() 
-	numOfViews 		= models.IntegerField() 
-	numOfPurchases 	= models.IntegerField()
+
+# Deprecated: replaced by Order class 
+#class ShoppingCart(models.Model):
+
+
+class ProductOrder(models.Model):
+	details 	= models.ForeignKey(ProductDetails)
+	quota		= models.IntegerField()
+	order		= models.ForeignKey(Order)
+
+class Review(models.Model):
+	user 		= models.ForeignKey(User)
+    	published 	= models.DateTimeField('date published')
+	contents	= models.TextField()
+
