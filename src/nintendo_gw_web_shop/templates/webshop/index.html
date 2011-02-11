@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Web Shop</title>
+	<link rel="stylesheet" type="text/css" href="/webshop/static/css/style.css" />
+	<script src="/webshop/static/js/modernizr-1.5.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+	<!--[if IE]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<script>
+		$(function() {
+			$('.thumb').hover(
+					function() {
+						var me = this;
+						$('.thumb-info', me).css('height', 'auto');
+					}, 
+					function() {
+						var me = this;
+						$('.thumb-info', me).css('height', '25px');
+					}
+			);
+			$('.thumb').click(function() {
+				location.href = location.href +'category';
+			});
+			$('#search-button').click(function(){
+				window.location.href = 'http://' + location.host +'/webshop/home/search';
+			});
+			$('#search-input').focusin(function() {
+				$(this).val('');
+			});
+			var availableTags = [
+			         			"ActionScript",
+			         			"AppleScript",
+			         			"Asp",
+			         			"BASIC",
+			         			"C",
+			         			"C++",
+			         			"Clojure",
+			         			"COBOL",
+			         			"ColdFusion",
+			         			"Erlang",
+			         			"Fortran",
+			         			"Groovy",
+			         			"Haskell",
+			         			"Java",
+			         			"JavaScript",
+			         			"Lisp",
+			         			"Perl",
+			         			"PHP",
+			         			"Python",
+			         			"Ruby",
+			         			"Scala",
+			         			"Scheme"
+			         		];
+       		$( "#search-input" ).autocomplete({
+       			source: availableTags,
+       			select: function( event, ui ) {
+    				window.location.href = 'http://' + location.host +'/webshop/home/category';
+    			}
+       		});
+			
+		});
+	</script>
+</head>
+<body>
+	<div id="wrapper">
+		<div id="header">
+			<a href="/webshop/home" id="logo"><img src="/webshop/static/images/ngws_logo.png" /></a>
+			<div id="navi">
+				<a class="navi-selected" href="/webshop/home">home</a>
+				<a href="javascript:;">profile</a>
+				<a href="javascript:;">cart</a>
+			</div>
+			<h3 id="page-title">Page Title</h3>
+			<div id="search-bar">
+				<input id="search-input" value="search" /><input type="button" id="search-button" value=""/>
+			</div>
+		</div>
+		<div id="content">
+			<div class="thumb">
+				<img src="/webshop/static/images/ac-01.jpg" />
+				<div class="thumb-info">
+					<p class="thumb-title">Title</p>
+					<p class="thumb-body">Click to view [3 items]</p>
+				</div>
+			</div>
+			<div class="padding"></div>
+			<div class="thumb">
+				<img src="/webshop/static/images/ac-01.jpg" />
+				<div class="thumb-info">
+					<p class="thumb-title">Title</p>
+					<p class="thumb-body">Click to view [3 items]</p>
+				</div>
+			</div>
+			<div class="padding"></div>
+			<div class="thumb">
+				<img src="/webshop/static/images/ac-01.jpg" />
+				<div class="thumb-info">
+					<p class="thumb-title">Title</p>
+					<p class="thumb-body">Click to view [3 items]</p>
+				</div>
+			</div>
+			<div class="padding"></div>
+			<div class="thumb">
+				<img src="/webshop/static/images/ac-01.jpg" />
+				<div class="thumb-info">
+					<p class="thumb-title">Title</p>
+					<p class="thumb-body">Click to view [3 items]</p>
+				</div>
+			</div>
+			
+			<div class="thumb">
+				<img src="/webshop/static/images/ac-01.jpg" />
+				<div class="thumb-info">
+					<p class="thumb-title">Title</p>
+					<p class="thumb-body">Click to view [3 items]</p>
+				</div>
+			</div>
+			<div class="padding"></div>
+			<div class="thumb">
+				<img src="/webshop/static/images/ac-01.jpg" />
+				<div class="thumb-info">
+					<p class="thumb-title">Title</p>
+					<p class="thumb-body">Click to view [3 items]</p>
+				</div>
+			</div>
+			<div class="padding"></div>
+			<div class="thumb">
+				<img src="/webshop/static/images/ac-01.jpg" />
+				<div class="thumb-info">
+					<p class="thumb-title">Title</p>
+					<p class="thumb-body">Click to view [3 items]</p>
+				</div>
+			</div>
+			<div class="padding"></div>
+			<div class="thumb">
+				<img src="/webshop/static/images/ac-01.jpg" />
+				<div class="thumb-info">
+					<p class="thumb-title">Title</p>
+					<p class="thumb-body">Click to view [3 items]</p>
+				</div>
+			</div>
+			
+			<div class="thumb">
+				<img src="/webshop/static/images/ac-01.jpg" />
+				<div class="thumb-info">
+					<p class="thumb-title">Title</p>
+					<p class="thumb-body">Click to view [3 items]</p>
+				</div>
+			</div>
+			<div class="padding"></div>
+			<div class="thumb">
+				<img src="/webshop/static/images/ac-01.jpg" />
+				<div class="thumb-info">
+					<p class="thumb-title">Title</p>
+					<p class="thumb-body">Click to view [3 items]</p>
+				</div>
+			</div>
+			<div class="padding"></div>
+			<div class="thumb">
+				<img src="/webshop/static/images/ac-01.jpg" />
+				<div class="thumb-info">
+					<p class="thumb-title">Title</p>
+					<p class="thumb-body">Click to view [3 items]</p>
+				</div>
+			</div>
+			<div class="padding"></div>
+			<div class="thumb">
+				<img src="/webshop/static/images/ac-01.jpg" />
+				<div class="thumb-info">
+					<p class="thumb-title">Title</p>
+					<p class="thumb-body">Click to view [3 items]</p>
+				</div>
+			</div>
+
+		</div>
+		<div id="footer">
+			<div id="footer-navi">
+				<a href="javascript:;">about</a>
+				<a href="javascript:;">credits</a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
