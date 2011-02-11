@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8" />
+	<title>Web Shop</title>
+	<link rel="stylesheet" type="text/css" href="/static/style.css" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+	<script src="/static/modernizr-1.5.min.js"></script>
+	<!--[if IE]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script>
+		$(function() {
+			$('#forgot-password').click(function() {
+				$('#get-password-div').slideToggle();
+			});
+		});
+	</script>
+</head>
+<body>
+	<div id="wrapper">
+		<h1>Register</h1>
+		<form method="post">
+			<p>
+				<input placeholder="first name" name="fname" required="required" />
+			</p>
+			<p>
+				<input placeholder="last name" name="lname" required="required" />
+			</p>
+			<p>
+				<input placeholder="email" name="email" required="required" type="email" />
+			</p>
+			<p>
+				<input placeholder="username" name="username" required="required" min="4" />
+			</p>
+			<p>
+				<input placeholder="password" name="password" required="required" type="password" min="4" />
+			</p>
+			<p>
+				<input type="submit" Value="register" />
+			</p>	
+		</form>
+		<span id="forgot-password">Forgot Password?</span>
+		<div id="get-password-div">
+			<input placeholder="email" type="email" /><input type="button" value="get new password" />
+		</div>
+	</div>
+</body>
+</html>
