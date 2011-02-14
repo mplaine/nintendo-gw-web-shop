@@ -14,13 +14,14 @@ class User(models.Model):
 	country			= models.CharField( max_length=30 )
 	
 class Product(models.Model):
-	numOfComments 		= models.IntegerField() 
+	numOfComments 	= models.IntegerField() 
 	numOfViews 		= models.IntegerField() 
-	numOfPurchases 		= models.IntegerField()
+	numOfPurchases 	= models.IntegerField()
 
 class ProductDetails(models.Model):
 	product			= models.ForeignKey( Product )
 	name 			= models.CharField(max_length=50)
+	description		= models.CharField(max_length=1023)
 	picture 		= models.URLField() 
 	price 			= models.DecimalField(decimal_places=2, max_digits=6) 
 	quantity 		= models.IntegerField()
@@ -53,6 +54,6 @@ class ProductOrder(models.Model):
 
 class Review(models.Model):
 	user 		= models.ForeignKey(User)
-    	published 	= models.DateTimeField('date published')
+	published 	= models.DateTimeField('date published')
 	contents	= models.TextField()
 
