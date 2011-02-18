@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
 	<meta charset="utf-8" />
 	<title>Web Shop</title>
@@ -7,24 +7,34 @@
 	<script src="/webshop/static/js/modernizr-1.5.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+	<script src="/webshop/static/js/jquery.quicksand.js"></script>
 	<!--[if IE]>
 		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 	<script>
 		$(function() {
-			$('.thumb').hover(
-					function() {
-						var me = this;
-						$('.thumb-info', me).css('height', 'auto');
-					}, 
-					function() {
-						var me = this;
-						$('.thumb-info', me).css('height', '25px');
-					}
-			);
-			$('.thumb').click(function() {
-				window.location.href = 'http://' + location.host +'/webshop/home/category';
+			bindThumbs();
+			
+			$('#login-input').click(function() {
+				$(this).select();
 			});
+			$('#login-input').focusout(function() {
+				if($(this).val() == '') {
+					$(this).val('username');
+				}
+			});
+			$('#password-input').click(function() {
+				$(this).select();
+			});
+			$('#password-input').focusout(function() {
+				if($(this).val() == '') {
+					$(this).val('password');
+				}
+			});
+			$('#login-link').click(function() {
+				$('#login-bubble').toggle();
+			});
+			
 			$('#search-button').click(function(){
 				window.location.href = 'http://' + location.host +'/webshop/home/search';
 			});
@@ -58,11 +68,92 @@
        		$( "#search-input" ).autocomplete({
        			source: availableTags,
        			select: function( event, ui ) {
-    				window.location.href = 'http://' + location.host +'/webshop/home/category';
+    				window.location.href = 'http://' + location.host +'/webshop/home/category/1/product#item3';
     			}
        		});
-			
 		});
+		
+		// Custom sorting plugin
+		(function($) {
+		  $.fn.sorted = function(customOptions) {
+		    var options = {
+		      reversed: false,
+		      by: function(a) { return a.text(); }
+		    };
+		    $.extend(options, customOptions);
+		    $data = $(this);
+		    arr = $data.get();
+		    arr.sort(function(a, b) {
+		      var valA = options.by($(a));
+		      var valB = options.by($(b));
+		      if (options.reversed) {
+		        return (valA < valB) ? 1 : (valA > valB) ? -1 : 0;				
+		      } else {		
+		        return (valA < valB) ? -1 : (valA > valB) ? 1 : 0;	
+		      }
+		    });
+		    return $(arr);
+		  };
+		})(jQuery);
+	
+		// DOMContentLoaded
+		$(function() {
+	
+		  var $filterSort = $('#sort-bar input[name="sort"]');
+	
+		  // get the first collection
+		  var $applications = $('#content');
+	
+		  // clone applications to get a second collection
+		  var $data = $applications.clone();
+	
+		  // attempt to call Quicksand on every form change
+		  ($filterSort).change(function(e) {
+			  var $filteredData = $data.find('.thumb');
+		    // if sorted by size
+		    if ($('#sort-bar input[name="sort"]:checked').val() == "size") {
+		      var $sortedData = $filteredData.sorted({
+		    	reversed: true,
+		    	by: function(v) {
+		        	return parseFloat($(v).find('span[data-type=size]').text());
+		        }
+		      });
+		    } else {
+		      // if sorted by name
+		      var $sortedData = $filteredData.sorted({
+		        by: function(v) {
+		          return $(v).find('.thumb-title').text().toLowerCase();
+		        }
+		      });
+		    }   
+	
+		    // finally, call quicksand
+		    $applications.quicksand($sortedData, {
+		      duration: 800
+		      //easing: 'swing'
+		    }, function() {
+		    	bindThumbs();
+		    	$('.thumb').not(':nth-child(4n)').css('margin-right', '16px');
+		    });  
+	
+		  });
+		});
+		function bindThumbs() {
+			$('.thumb').hover(
+					function() {
+						var me = this;
+						$('.thumb-info', me).css('height', 'auto');
+					}, 
+					function() {
+						var me = this;
+						$('.thumb-info', me).css('height', '25px');
+					}
+			);
+			$('.thumb').click(function() {
+				var me = this;
+				window.location.href = 'http://' + location.host +'/webshop/home/category/'+($(me).index('.thumb') + 1)+'/product#item1';
+			});
+		}
 	</script>
 </head>
 <body>
@@ -71,108 +162,112 @@
 			<a href="/webshop/home" id="logo"><img src="/webshop/static/images/ngws_logo.png" /></a>
 			<div id="navi">
 				<a class="navi-selected" href="/webshop/home">home</a>
-				<a href="javascript:;">profile</a>
-				<a href="javascript:;">cart</a>
+				<a href="javascript:;">register</a>
+				<a href="javascript:;" id="login-link">login</a>
+				<a id="cart-link" href="javascript:;">cart <span id="cart-items">(0)</span></a>
+				<div id="login-bubble">
+					<span id="login-arrow-green"></span>
+					<span id="login-arrow-white"></span>
+					<form>
+						<p class="top-para"><input name="username" value="username" id="login-input" /></p>
+						<p class="bottom-para"><input name="password" value="password" type="password" id="password-input" /></p>
+						<input type="button" value=">" id="login-send" />
+					</form>
+				</div>
 			</div>
 			<h3 id="page-title">Series</h3>
 			<div id="search-bar">
 				<input id="search-input" value="search" /><input type="button" id="search-button" value=""/>
 			</div>
+			<form id="sort-bar">
+				<b>Sort By: </b><input type="radio" name="sort" value="name" /> Name <input type="radio" name="sort" value="size" /> Number of Games 
+			</form>
 		</div>
 		<div id="content">
-			<div class="thumb">
+			<div class="thumb" data-id="1">
 				<img src="/webshop/static/images/products/thumbs/ac-01.jpg" />
 				<div class="thumb-info">
 					<p class="thumb-title">Silver Series</p>
-					<p class="thumb-body">View all [6 items]</p>
+					<p class="thumb-body">View all [<span data-type="size">6</span> items]</p>
 				</div>
 			</div>
-			<div class="padding"></div>
-			<div class="thumb">
+			<div class="thumb" data-id="2">
 				<img src="/webshop/static/images/products/thumbs/mh-06.jpg" />
 				<div class="thumb-info">
 					<p class="thumb-title">Gold Series</p>
-					<p class="thumb-body">View all [3 items]</p>
+					<p class="thumb-body">View all [<span data-type="size">3</span> items]</p>
 				</div>
 			</div>
-			<div class="padding"></div>
-			<div class="thumb">
+			<div class="thumb" data-id="3">
 				<img src="/webshop/static/images/products/thumbs/pr-21.jpg" />
 				<div class="thumb-info">
 					<p class="thumb-title">Wide Screen Series</p>
-					<p class="thumb-body">View all [10 items]</p>
+					<p class="thumb-body">View all [<span data-type="size">10</span> items]</p>
 				</div>
 			</div>
-			<div class="padding"></div>
-			<div class="thumb">
+			<div class="thumb" data-id="4">
 				<img src="/webshop/static/images/products/thumbs/ol-51.jpg" />
 				<div class="thumb-info">
 					<p class="thumb-title">Multi Screen Series</p>
-					<p class="thumb-body">View all [15 items]</p>
+					<p class="thumb-body">View all [<span data-type="size">15</span> items]</p>
 				</div>
 			</div>
 			
-			<div class="thumb">
+			<div class="thumb" data-id="5">
 				<img src="/webshop/static/images/products/thumbs/cj-71.jpg" />
 				<div class="thumb-info">
 					<p class="thumb-title">Table Top Series</p>
-					<p class="thumb-body">View all [4 items]</p>
+					<p class="thumb-body">View all [<span data-type="size">4</span> items]</p>
 				</div>
 			</div>
-			<div class="padding"></div>
-			<div class="thumb">
+			<div class="thumb" data-id="6">
 				<img src="/webshop/static/images/products/thumbs/sm-91.jpg" />
 				<div class="thumb-info">
 					<p class="thumb-title">Panorama Screen Series</p>
-					<p class="thumb-body">View all [6 items]</p>
+					<p class="thumb-body">View all [<span data-type="size"">6</span> items]</p>
 				</div>
 			</div>
-			<div class="padding"></div>
-			<div class="thumb">
+			<div class="thumb" data-id="7">
 				<img src="/webshop/static/images/products/thumbs/dj-101.jpg" />
 				<div class="thumb-info">
 					<p class="thumb-title">New Wide Screen Series</p>
-					<p class="thumb-body">View all [8 items]</p>
+					<p class="thumb-body">View all [<span data-type="size">8</span> items]</p>
 				</div>
 			</div>
-			<div class="padding"></div>
-			<div class="thumb">
+			<div class="thumb" data-id="8">
 				<img src="/webshop/static/images/products/thumbs/bu-201.jpg" />
 				<div class="thumb-info">
 					<p class="thumb-title">Super Color Series</p>
-					<p class="thumb-body">View all [2 items]</p>
+					<p class="thumb-body">View all [<span data-type="size">2</span> items]</p>
 				</div>
 			</div>
 			
-			<div class="thumb">
+			<div class="thumb" data-id="9">
 				<img src="/webshop/static/images/products/thumbs/bx-301_boxing.jpg" />
 				<div class="thumb-info">
 					<p class="thumb-title">Micro vs. System Series</p>
-					<p class="thumb-body">View all [4 items]</p>
+					<p class="thumb-body">View all [<span data-type="size">4</span> items]</p>
 				</div>
 			</div>
-			<div class="padding"></div>
-			<div class="thumb">
+			<div class="thumb" data-id="10">
 				<img src="/webshop/static/images/products/thumbs/ym-801.jpg" />
 				<div class="thumb-info">
 					<p class="thumb-title">Crystal Screen Series</p>
-					<p class="thumb-body">View all [3 items]</p>
+					<p class="thumb-body">View all [<span data-type="size">3</span> items]</p>
 				</div>
 			</div>
-			<div class="padding"></div>
-			<div class="thumb">
+			<div class="thumb" data-id="11">
 				<img src="/webshop/static/images/products/thumbs/ym-901-s.jpg" />
 				<div class="thumb-info">
 					<p class="thumb-title">Special Series</p>
-					<p class="thumb-body">View all [1 item]</p>
+					<p class="thumb-body">View all [<span data-type="size">1</span> item]</p>
 				</div>
 			</div>
-			<div class="padding"></div>
-			<div class="thumb">
+			<div class="thumb" data-id="12">
 				<img src="/webshop/static/images/products/thumbs/rgw-001.jpg" />
 				<div class="thumb-info">
 					<p class="thumb-title">2010 Series</p>
-					<p class="thumb-body">View all [1 item]</p>
+					<p class="thumb-body">View all [<span data-type="size">1</span> item]</p>
 				</div>
 			</div>
 

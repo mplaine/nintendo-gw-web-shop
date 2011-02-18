@@ -12,6 +12,25 @@
 	<![endif]-->
 	<script>
 		$(function() {
+			$('#login-input').click(function() {
+				$(this).select();
+			});
+			$('#login-input').focusout(function() {
+				if($(this).val() == '') {
+					$(this).val('username');
+				}
+			});
+			$('#password-input').click(function() {
+				$(this).select();
+			});
+			$('#password-input').focusout(function() {
+				if($(this).val() == '') {
+					$(this).val('password');
+				}
+			});
+			$('#login-link').click(function() {
+				$('#login-bubble').toggle();
+			})
 			$('#search-button').click(function(){
 				window.location.href = 'http://' + location.host +'/webshop/home/search';
 			});
@@ -45,7 +64,7 @@
        		$( "#search-input" ).autocomplete({
        			source: availableTags,
        			select: function( event, ui ) {
-    				window.location.href = 'http://' + location.host +'/webshop/home/category';
+    				window.location.href = 'http://' + location.host +'/webshop/home/category/1/product#item3';
     			}
        		});
 			
@@ -58,8 +77,18 @@
 			<a href="/webshop/home" id="logo"><img src="/webshop/static/images/ngws_logo.png" /></a>
 			<div id="navi">
 				<a class="navi-selected" href="/webshop/home">home</a>
-				<a href="javascript:;">profile</a>
-				<a href="javascript:;">cart</a>
+				<a href="javascript:;">register</a>
+				<a href="javascript:;" id="login-link">login</a>
+				<a id="cart-link" href="javascript:;">cart <span id="cart-items">(0)</span></a>
+				<div id="login-bubble">
+					<span id="login-arrow-green"></span>
+					<span id="login-arrow-white"></span>
+					<form>
+						<p class="top-para"><input name="username" value="username" id="login-input" /></p>
+						<p class="bottom-para"><input name="password" value="password" type="password" id="password-input" /></p>
+						<input type="button" value=">" id="login-send" />
+					</form>
+				</div>
 			</div>
 			<h3 id="page-title">Search Results</h3>
 			<div id="search-bar">
@@ -68,40 +97,36 @@
 		</div>
 		<div id="content">
 			<div class="thumb">
-				<img src="/webshop/static/images/ac-01.jpg" />
+				<img src="/webshop/static/images/products/thumbs/ac-01.jpg" />
 				<div class="thumb-info">
 					<p class="thumb-title">Hit 1</p>
 				</div>
 			</div>
-			<div class="padding"></div>
 			<div class="thumb">
-				<img src="/webshop/static/images/ac-01.jpg" />
+				<img src="/webshop/static/images/products/thumbs/ak-302.jpg" />
 				<div class="thumb-info">
 					<p class="thumb-title">Hit 2</p>
 				</div>
 			</div>
-			<div class="padding"></div>
 			<div class="thumb">
-				<img src="/webshop/static/images/ac-01.jpg" />
+				<img src="/webshop/static/images/products/thumbs/bd-62.jpg" />
 				<div class="thumb-info">
 					<p class="thumb-title">Hit 3</p>
 				</div>
 			</div>
-			<div class="padding"></div>
 			<div class="thumb">
-				<img src="/webshop/static/images/ac-01.jpg" />
+				<img src=/webshop/static/images/products/thumbs/bf-803.jpg />
 				<div class="thumb-info">
 					<p class="thumb-title">Hit 4</p>
 				</div>
 			</div>
 			
 			<div class="thumb">
-				<img src="/webshop/static/images/ac-01.jpg" />
+				<img src="/webshop/static/images/products/thumbs/bu-201.jpg" />
 				<div class="thumb-info">
 					<p class="thumb-title">Hit 5</p>
 				</div>
 			</div>
-			<div class="padding"></div>
 			
 		</div>
 		<div id="footer">
