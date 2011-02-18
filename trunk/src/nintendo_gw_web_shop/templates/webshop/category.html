@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 <head>
 	<meta charset="utf-8" />
 	<title>Web Shop</title>
@@ -13,8 +13,16 @@
 	<![endif]-->
 	<script>
 		$(function() {
+			$('a', '#side-navi').attr('href', 'javascript:;');
+			
+			$('a[name="'+window.location.hash.substring(1, 6)+'"]').parent().show();
+			$('li', '#side-navi').eq((window.location.hash.substring(5, 6) - 1)).append($('#side-navi-arrow'));		
+			$('#side-navi-arrow').show("slide", { direction: "left" }, 500);
 			$('li', '#side-navi').click(function() {
 				var me = this;
+				window.location.hash = 'item' + ($(me).index() + 1);
+				$('.product').hide();
+				$('a[name="'+window.location.hash.substring(1, 6)+'"]').parent().show();
 				$('#side-navi-arrow').hide("slide", { direction: "left" }, 1000);
 				
 				$("#main-content").flip({
@@ -59,9 +67,28 @@
        		$( "#search-input" ).autocomplete({
        			source: availableTags,
        			select: function( event, ui ) {
-    				window.location.href = 'http://' + location.host +'/webshop/home/category';
+    				window.location.href = 'http://' + location.host +'/webshop/home/category/1/product#item3';
     			}
        		});
+       		$('#login-input').click(function() {
+				$(this).select();
+			});
+			$('#login-input').focusout(function() {
+				if($(this).val() == '') {
+					$(this).val('username');
+				}
+			});
+			$('#password-input').click(function() {
+				$(this).select();
+			});
+			$('#password-input').focusout(function() {
+				if($(this).val() == '') {
+					$(this).val('password');
+				}
+			});
+			$('#login-link').click(function() {
+				$('#login-bubble').toggle();
+			})
 		});
 	</script>
 </head>
@@ -71,8 +98,18 @@
 			<a href="/webshop/home" id="logo"><img src="/webshop/static/images/ngws_logo.png" /></a>
 			<div id="navi">
 				<a class="navi-selected" href="/webshop/home">home</a>
-				<a href="javascript:;">profile</a>
-				<a href="javascript:;">cart</a>
+				<a href="javascript:;">register</a>
+				<a href="javascript:;" id="login-link">login</a>
+				<a id="cart-link" href="javascript:;">cart <span id="cart-items">(0)</span></a>
+				<div id="login-bubble">
+					<span id="login-arrow-green"></span>
+					<span id="login-arrow-white"></span>
+					<form>
+						<p class="top-para"><input name="username" value="username" id="login-input" /></p>
+						<p class="bottom-para"><input name="password" value="password" type="password" id="password-input" /></p>
+						<input type="button" value=">" id="login-send" />
+					</form>
+				</div>
 			</div>
 			<h3 id="page-title">Category Title</h3>
 			<div id="search-bar">
@@ -83,24 +120,93 @@
 			<div id="side-navi">
 				<h4 class="side-navi-header">Products</h4>
 				<ul>
-					<li>Product Name</li>
-					<li>Product Name</li>
-					<li>Product Name<div id="side-navi-arrow"></div></li>
-					<li>Product Name</li>
-					<li>Product Name</li>
-					<li>Product Name</li>
+					<li><a href="#item1">Item 1</a><div id="side-navi-arrow"></div></li>
+					<li><a href="#item2">Item 2</a></li>
+					<li><a href="#item3">Item 3</a></li>
+					<li><a href="#item4">Item 4</a></li>
+					<li><a href="#item5">Item 5</a></li>
+					<li><a href="#item6">Item 6</a></li>
 				</ul>
 			</div>
 			<div id="main-content">
-				<div class="product-content">
-					<div class="product-thumb">
-						<img src="/webshop/static/images/ac-01.jpg" />
+				<div class="product">
+					<a name="item1"></a>
+					<h1 class="product-title">Item 1</h1>
+					<div class="product-content">
+						<div class="product-thumb">
+							<img src="/webshop/static/images/products/thumbs/ac-01.jpg" />
+						</div>
+						<div class="product-details">Details Goes Here (Item 1)</div>
 					</div>
-					<div class="product-details">Details Goes Here</div>
+					<h3 class="product-header">Ratings</h3>
+					<h3 class="product-header">Reviews</h3>
+					<h3 class="product-header">Comments</h3>
 				</div>
-				<h3 class="product-header">Ratings</h3>
-				<h3 class="product-header">Reviews</h3>
-				<h3 class="product-header">Comments</h3>
+				<div class="product">
+					<a name="item2"></a>
+					<h1 class="product-title">Item 2</h1>
+					<div class="product-content">
+						<div class="product-thumb">
+							<img src="/webshop/static/images/products/thumbs/ac-01.jpg" />
+						</div>
+						<div class="product-details">Details Goes Here (Item 2)</div>
+					</div>
+					<h3 class="product-header">Ratings</h3>
+					<h3 class="product-header">Reviews</h3>
+					<h3 class="product-header">Comments</h3>
+				</div>
+				<div class="product">
+					<a name="item3"></a>
+					<h1 class="product-title">Item 3</h1>
+					<div class="product-content">
+						<div class="product-thumb">
+							<img src="/webshop/static/images/products/thumbs/ac-01.jpg" />
+						</div>
+						<div class="product-details">Details Goes Here (Item 3)</div>
+					</div>
+					<h3 class="product-header">Ratings</h3>
+					<h3 class="product-header">Reviews</h3>
+					<h3 class="product-header">Comments</h3>
+				</div>
+				<div class="product">
+					<a name="item4"></a>
+					<h1 class="product-title">Item 4</h1>
+					<div class="product-content">
+						<div class="product-thumb">
+							<img src="/webshop/static/images/products/thumbs/ac-01.jpg" />
+						</div>
+						<div class="product-details">Details Goes Here (Item 4)</div>
+					</div>
+					<h3 class="product-header">Ratings</h3>
+					<h3 class="product-header">Reviews</h3>
+					<h3 class="product-header">Comments</h3>
+				</div>
+				<div class="product">
+					<a name="item5"></a>
+					<h1 class="product-title">Item 5</h1>
+					<div class="product-content">
+						<div class="product-thumb">
+							<img src="/webshop/static/images/products/thumbs/ac-01.jpg" />
+						</div>
+						<div class="product-details">Details Goes Here (Item 5)</div>
+					</div>
+					<h3 class="product-header">Ratings</h3>
+					<h3 class="product-header">Reviews</h3>
+					<h3 class="product-header">Comments</h3>
+				</div>
+				<div class="product">
+					<a name="item6"></a>
+					<h1 class="product-title">Item 6</h1>
+					<div class="product-content">
+						<div class="product-thumb">
+							<img src="/webshop/static/images/products/thumbs/ac-01.jpg" />
+						</div>
+						<div class="product-details">Details Goes Here (Item 6)</div>
+					</div>
+					<h3 class="product-header">Ratings</h3>
+					<h3 class="product-header">Reviews</h3>
+					<h3 class="product-header">Comments</h3>
+				</div>
 			</div>
 		</div>
 		<div id="footer">
