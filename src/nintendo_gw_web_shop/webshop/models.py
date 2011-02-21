@@ -97,7 +97,12 @@ class Order( models.Model ):
 	paid		= models.BooleanField()
 	# List of SaleItems needs to be added
 
+class OrderItem( models.Model ):
+	saleItem				= models.ForeignKey( SaleItem )
+	order					= models.ForeignKey( Order )
 
+	def __unicode__( self ):
+		return self.id
 
 # Deprecated: replaced by Order class 
 #class ShoppingCart(models.Model):
