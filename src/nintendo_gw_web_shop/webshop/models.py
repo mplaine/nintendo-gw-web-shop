@@ -4,7 +4,10 @@ from django.contrib.localflavor.fi.forms import FIZipCodeField
 
 # Categories: Silver, Gold, etc.
 class Type( models.Model ):
-	name 		= models.CharField( max_length=50, unique=True )
+	name 					= models.CharField( max_length=50, unique=True )
+	IMAGE_UPLOAD_TO			= "images/types"
+	image					= models.ImageField( upload_to=IMAGE_UPLOAD_TO, max_length=255 )
+	imageThumb				= models.ImageField( "Image thumb", upload_to=IMAGE_UPLOAD_TO + "/thumbs", max_length=255 )
 	
 	def __unicode__( self ):
 		return self.name + " Series"
