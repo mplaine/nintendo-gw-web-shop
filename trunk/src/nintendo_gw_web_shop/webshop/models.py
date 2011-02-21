@@ -19,7 +19,7 @@ class Product( models.Model ):
 	type					= models.ForeignKey( Type )
 	model					= models.CharField( max_length=20 )
 	dateOfRelease			= models.DateField( "Date of release" )
-	produced				= models.IntegerField()
+	produced				= models.IntegerField( default=0 )
 	RARITY_VERY_COMMON		= 1
 	RARITY_COMMON			= 2
 	RARITY_RARE				= 3
@@ -47,6 +47,7 @@ class Product( models.Model ):
 class SaleItem( models.Model ):
 	price					= models.DecimalField( max_digits=7, decimal_places=2 )
 	product					= models.ForeignKey( Product )
+	onSale					= models.BooleanField( "On sale", default=True)
 
 	def __unicode__( self ):
 		return self.product.__str__() + u", %.2f \u20AC" % ( self.price, )
@@ -79,12 +80,14 @@ class Comment( models.Model ):
 	user 		= models.ForeignKey( User )
 	published 	= models.DateTimeField( "Date published" )
 	contents 	= models.TextField()
-	commentsOn 	= models.ForeignKey( "self" )
+	commentsOn 	= models.ForeignKey( "Parent comment", "self" )
+	product		= models.ForeignKey( Product )
 
 
 class Rating( models.Model ):
 	rate		= models.IntegerField() #TODO MAX & MIN values
 	user 		= models.ForeignKey( User )
+	product		= models.ForeignKey( Product )
 
 
 class Order( models.Model ):
