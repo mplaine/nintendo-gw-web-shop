@@ -23,8 +23,11 @@ def home( request ):
 	return HttpResponse(template.render(variables))
 	#return render_to_response( 'webshop/index.html', context_instance = RequestContext( request ) )
 
-def category( request ):
-	return render_to_response( 'webshop/category.html', context_instance = RequestContext( request ) )
+def category( request, type_id ):
+	type = get_object_or_404(Type, id=type_id)
+	template = get_template('webshop/category.html')
+	variables = Context({'type':type})
+	return HttpResponse(template.render(variables))
 
 def register( request ):
 	return render_to_response( 'webshop/register.html', context_instance = RequestContext( request ) )
