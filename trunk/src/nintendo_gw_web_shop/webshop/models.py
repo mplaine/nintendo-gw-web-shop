@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.localflavor.fi.forms import FIZipCodeField
+from django.contrib.auth.models import User
 
 
 # Categories: Silver, Gold, etc.
@@ -62,25 +62,22 @@ class Statistic( models.Model ):
 		return self.product.__str__() + ": %d views" % ( self.numberOfViews, )
 		
 
-# Users: Teemu Teekkari, Arto Assari, etc.
-class User( models.Model ):
-	firstName 		= models.CharField( "First name", max_length=50 )
-	lastName 		= models.CharField( "Last name", max_length=50 )
-	email 			= models.EmailField()
-	streetAddress 	= models.CharField( "Street address", max_length=100 )
-	city 			= models.CharField( max_length=50 )
-	# Does not show the field below (zipCode) in the Django admin UI!!!
-	zipCode			= FIZipCodeField
-	# See auth_user model/table for more information how use hash passwords
-	password		= models.CharField( max_length=50 )
-	country			= models.CharField( max_length=50 )
+# Addresses of the user
+class Address( models.Model ):
+	user				= models.ForeignKey( User )
+	streetAddressLine1 	= models.CharField( "Street address line 1", max_length=100 )
+	streetAddressLine2 	= models.CharField( "Street address line 2", max_length=100, blank=True )
+	zipCode				= models.CharField( max_length=10 )
+	city 				= models.CharField( max_length=50 )
+	state				= models.CharField( max_length=50, blank=True )
+	country				= models.CharField( max_length=50, default="Finland" )
 
 		
 class Comment( models.Model ):
 	user 		= models.ForeignKey( User )
 	published 	= models.DateTimeField( "Date published" )
 	contents 	= models.TextField()
-	commentsOn 	= models.ForeignKey( "Parent comment", "self" )
+	commentsOn 	= models.ForeignKey( "self" )
 	product		= models.ForeignKey( Product )
 
 
@@ -107,18 +104,26 @@ class OrderItem( models.Model ):
 # Deprecated: replaced by Order class 
 #class ShoppingCart(models.Model):
 
+# Users: Teemu Teekkari, Arto Assari, etc.
+#class User( models.Model ):
+#	firstName 			= models.CharField( "First name", max_length=50 )
+#	lastName 			= models.CharField( "Last name", max_length=50 )
+#	password			= models.CharField( max_length=128 )
+#	email 				= models.EmailField()
+
+
 #class Product(models.Model):
 #	numOfComments 	= models.IntegerField() 
 #	numOfViews 		= models.IntegerField() 
 #	numOfPurchases 	= models.IntegerField()
 
-class ProductDetails(models.Model):
-	product			= models.ForeignKey( Product )
-	name 			= models.CharField(max_length=50)
-	description		= models.CharField(max_length=1023)
-	picture 		= models.URLField() 
-	price 			= models.DecimalField(decimal_places=2, max_digits=6) 
-	quantity 		= models.IntegerField()
+#class ProductDetails(models.Model):
+#	product			= models.ForeignKey( Product )
+#	name 			= models.CharField(max_length=50)
+#	description		= models.CharField(max_length=1023)
+#	picture 		= models.URLField() 
+#	price 			= models.DecimalField(decimal_places=2, max_digits=6) 
+#	quantity 		= models.IntegerField()
 
 
 #class ProductOrder(models.Model):
