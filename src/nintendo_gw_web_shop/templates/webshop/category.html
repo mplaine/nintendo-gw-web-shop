@@ -89,6 +89,11 @@
 			$('#login-link').click(function() {
 				$('#login-bubble').toggle();
 			})
+			$('form[class="add-to-cart"]').submit(function() {
+				//Your code Here
+				
+				return false;
+			});
 		});
 	</script>
 </head>
@@ -111,7 +116,7 @@
 					</form>
 				</div>
 			</div>
-			<h3 id="page-title">Category Title</h3>
+			<h3 id="page-title">{{type}}</h3>
 			<div id="search-bar">
 				<input id="search-input" value="search" /><input type="button" id="search-button" value=""/>
 			</div>
@@ -119,16 +124,43 @@
 		<div id="content">
 			<div id="side-navi">
 				<h4 class="side-navi-header">Products</h4>
+				<div id="side-navi-arrow"></div>
 				<ul>
+					<!-- 
 					<li><a href="#item1">Item 1</a><div id="side-navi-arrow"></div></li>
 					<li><a href="#item2">Item 2</a></li>
 					<li><a href="#item3">Item 3</a></li>
 					<li><a href="#item4">Item 4</a></li>
 					<li><a href="#item5">Item 5</a></li>
 					<li><a href="#item6">Item 6</a></li>
+					-->
+					{% for product in type.product_set.all %}
+						<li><a href="#item{{forloop.counter}}">{{product.title}}</a></li>
+					{% endfor %}
+					
 				</ul>
 			</div>
 			<div id="main-content">
+				{% for product in type.product_set.all %}
+					<div class="product">
+						<a name="item{{forloop.counter}}"></a>
+						<form class="add-to-cart" action="/webshop/urlhere" method="post">
+							<input type="hidden" value="{{product.id}}" />
+							<input class="add-cart-submit" type="submit" value="Add to cart" />
+						</form>
+						<h1 class="product-title">{{product.title}}</h1>
+						<div class="product-content">
+							<div class="product-thumb">
+								<img src="/webshop/static/{{product.imageThumb}}" />
+							</div>
+							<div class="product-details">Details Goes Here ({{product.title}})</div>
+						</div>
+						<h3 class="product-header">Ratings</h3>
+						<h3 class="product-header">Reviews</h3>
+						<h3 class="product-header">Comments</h3>
+					</div>
+				{% endfor %}
+				<!-- 
 				<div class="product">
 					<a name="item1"></a>
 					<h1 class="product-title">Item 1</h1>
@@ -208,6 +240,7 @@
 					<h3 class="product-header">Comments</h3>
 				</div>
 			</div>
+			 -->
 		</div>
 		<div id="footer">
 			<div id="footer-navi">

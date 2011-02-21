@@ -9,7 +9,7 @@ admin.autodiscover()
 urlpatterns    = patterns( '',
     ( r'^$', 'webshop.views.home'),
     ( r'^home/$', 'webshop.views.home'),
-    ( r'^home/category/', 'webshop.views.category'),
+    ( r'^home/category/(?P<type_id>\d+)/', 'webshop.views.category'),
     ( r'^home/search/', 'webshop.views.search'),
     ( r'^register/', 'webshop.views.register'),
     # Uncomment the admin/doc line below to enable admin documentation:

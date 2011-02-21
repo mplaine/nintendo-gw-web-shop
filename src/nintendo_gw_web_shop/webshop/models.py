@@ -41,6 +41,15 @@ class Product( models.Model ):
 
 	def __unicode__( self ):
 		return self.title + " (" + self.type.__str__() + ")"
+	
+	def get_averageRating(self):
+		average = 0
+		if self.rating_set.count > 0:
+			for rating in self.rating_set:
+				average +=rating.rate
+			return (average / self.rating_set.count)
+		else:
+			return 0
 
 
 # Sales: games with price information
@@ -97,6 +106,7 @@ class Order( models.Model ):
 class OrderItem( models.Model ):
 	saleItem				= models.ForeignKey( SaleItem )
 	order					= models.ForeignKey( Order )
+	quantity				= models.IntegerField( default=1 )
 
 	def __unicode__( self ):
 		return self.id

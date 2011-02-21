@@ -151,7 +151,7 @@
 			);
 			$('.thumb').click(function() {
 				var me = this;
-				window.location.href = 'http://' + location.host +'/webshop/home/category/'+($(me).index('.thumb') + 1)+'/product#item1';
+				window.location.href = 'http://' + location.host +'/webshop/home/category/'+$(me).attr('data-id')+'/product#item1';
 			});
 		}
 	</script>
@@ -185,7 +185,7 @@
 		</div>
 		<div id="content">
 		{% if types %}
-  			{% for type in types %}{{p.id}}
+  			{% for type in types %}
   				<div class="thumb" data-id="{{type.id}}">
 					<img src="/webshop/static/{{type.imageThumb}}" />
 					<div class="thumb-info">
