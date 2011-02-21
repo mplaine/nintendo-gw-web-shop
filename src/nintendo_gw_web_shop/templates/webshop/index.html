@@ -180,10 +180,22 @@
 				<input id="search-input" value="search" /><input type="button" id="search-button" value=""/>
 			</div>
 			<form id="sort-bar">
-				<b>Sort By: </b><input type="radio" name="sort" value="name" /> Name <input type="radio" name="sort" value="size" /> Number of Games 
+				<b>Sort By: </b><input type="radio" name="sort" value="name" checked="checked"/> Name <input type="radio" name="sort" value="size" /> Number of Games 
 			</form>
 		</div>
 		<div id="content">
+		{% if types %}
+  			{% for type in types %}{{p.id}}
+  				<div class="thumb" data-id="{{type.id}}">
+					<img src="/webshop/static/{{type.imageThumb}}" />
+					<div class="thumb-info">
+						<p class="thumb-title">{{type}}</p>
+						<p class="thumb-body">View all [<span data-type="size">{{type.product_set.count}}</span> items]</p>
+					</div>
+				</div>
+  			{% endfor %}
+		{% endif %}
+			<!--  
 			<div class="thumb" data-id="1">
 				<img src="/webshop/static/images/products/thumbs/ac-01.jpg" />
 				<div class="thumb-info">
@@ -270,6 +282,7 @@
 					<p class="thumb-body">View all [<span data-type="size">1</span> item]</p>
 				</div>
 			</div>
+			-->
 
 		</div>
 		<div id="footer">
