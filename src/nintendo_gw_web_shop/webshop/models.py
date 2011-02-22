@@ -41,16 +41,34 @@ class Product( models.Model ):
 
 	def __unicode__( self ):
 		return self.title + " (" + self.type.__str__() + ")"
-	
-	def get_averageRating(self):
-		average = 0
-		if self.rating_set.count > 0:
-			for rating in self.rating_set:
-				average +=rating.rate
-			return (average / self.rating_set.count)
-		else:
-			return 0
 
+	def average(self):
+		result = 0
+		index = 0
+		for temp in self.rating_set.all():
+			result += temp.rate
+			index += 1
+		if result > 0:
+			return ( result / index )
+		else:
+			return result
+		
+	def dummylist(self):
+		my_list = [1, 2, 3, 4, 5]
+		return my_list
+	
+	def filteredcomments(self):
+		result_list = []
+		firstlayer = self.comment_set.filter(commentsOn=None)
+		for x in firstlayer:
+			result_list.append(x)
+			temp_list_1 = self.comment_set.filter(commentsOn=x)
+			for y in temp_list_1:
+				result_list.append(y)
+				temp_list_2 = self.comment_set.filter(commentsOn=y)
+				for z in temp_list_2:
+					result_list.append(z)
+		return result_list
 
 # Sales: games with price information
 class SaleItem( models.Model ):
@@ -86,7 +104,7 @@ class Comment( models.Model ):
 	user 		= models.ForeignKey( User )
 	published 	= models.DateTimeField( "Date published" )
 	contents 	= models.TextField()
-	commentsOn 	= models.ForeignKey( "self" )
+	commentsOn 	= models.ForeignKey( "self", null=True, blank=True )
 	product		= models.ForeignKey( Product )
 
 

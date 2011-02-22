@@ -130,8 +130,8 @@ input:focus {
 
 #content {
 	padding: 12px 0 0px;
-	overflow-y: auto;
-	overflow-x: hidden;
+	/*overflow-y: auto;
+	overflow-x: hidden;*/
 }
 
 .thumb {
@@ -233,6 +233,78 @@ input:focus {
 	width: 95%;
 	border-bottom: 1px solid #999999;
 	margin-left: 20px;
+}
+
+.rating-table {
+	float: left;
+	width: 95%;
+	margin-left: 20px;
+	color: #999999;
+}
+
+.own-star {
+	cursor: pointer;
+}
+.comment-wrapper {
+	float: left;
+	width: 95%;
+	margin-left: 20px;
+	color: #999999;
+}
+
+.comment-buble {
+	background: #339900;
+	padding: 10px;
+	color: #FFFFFF;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	margin-bottom: 20px;
+	position: relative;
+}
+
+.comment-body {
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+	border-bottom: 1px dotted #FFFFFF;
+}
+
+.comment-date {
+	text-align: right;
+	font-style: italic;
+	font-size: 12px;
+}
+
+.comment-arrow-green {
+	height: 0px;
+	width: 0px;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid #339900;
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	position: absolute;
+	top: -20px;
+	left: 25px;
+}
+
+.comment-arrow-green-first {
+	height: 0px;
+	width: 0px;
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+	border-left: 10px solid transparent;
+	border-right: 10px solid #339900;
+	position: absolute;
+	top: 20px;
+	left: -20px;
+}
+
+.second-layer {
+	margin-left: 40px;
+}
+
+.third-layer {
+	margin-left: 80px;
 }
 
 #side-navi {
@@ -367,6 +439,7 @@ input:focus {
 #login-send {
 	height: 40px;
 	width: 40px;
+	/*
 	color: #FFFFFF;
 	-moz-border-radius: 20px;
 	-webkit-border-radius: 20px;
@@ -378,6 +451,9 @@ input:focus {
 	font-weight: bold;
 	padding-bottom: 3px;
 	padding-left: 8px;
+	*/
+	border: none;
+	background: url(../images/login.png);
 	position: absolute;
 	top: 21px;
 	right: 5px;
@@ -426,4 +502,9 @@ input:focus {
 	border-radius: 8px;
 	border: 3px solid #339900;
 	cursor: pointer;
+}
+
+.clearfix {
+  clear: both;
+  font-size: 1px;
 }

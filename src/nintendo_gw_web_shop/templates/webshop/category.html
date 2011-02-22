@@ -94,6 +94,29 @@
 				
 				return false;
 			});
+			$('.own-star').hover(
+					function() {
+						var me = this;
+						var parent = $(me).parent();
+						$(me).attr('src', '/webshop/static/images/star_green.png');
+						$(me).prevAll().attr('src', '/webshop/static/images/star_green.png');
+						$(me).nextAll().attr('src', '/webshop/static/images/star_grey.png');
+					}, function() {}
+			);
+			$('.own-star').click(function() {
+				var me = this;
+				$(me).parent().attr('data-id', $(me).attr('data-id'));
+			});
+			$('.own-rating').hover(
+					function() {}, 
+					function() {
+						var me = this;
+						var rate = parseInt($(me).attr('data-id') - 1);
+						$('.own-star:gt('+rate+')', me).attr('src', '/webshop/static/images/star_grey.png');
+						$('.own-star:lt('+rate+')', me).attr('src', '/webshop/static/images/star_green.png');
+						$('.own-star:eq('+rate+')', me).attr('src', '/webshop/static/images/star_green.png');
+					}
+			);
 		});
 	</script>
 </head>
@@ -112,7 +135,7 @@
 					<form>
 						<p class="top-para"><input name="username" value="username" id="login-input" /></p>
 						<p class="bottom-para"><input name="password" value="password" type="password" id="password-input" /></p>
-						<input type="button" value=">" id="login-send" />
+						<input type="button" value="" id="login-send" />
 					</form>
 				</div>
 			</div>
@@ -126,18 +149,9 @@
 				<h4 class="side-navi-header">Products</h4>
 				<div id="side-navi-arrow"></div>
 				<ul>
-					<!-- 
-					<li><a href="#item1">Item 1</a><div id="side-navi-arrow"></div></li>
-					<li><a href="#item2">Item 2</a></li>
-					<li><a href="#item3">Item 3</a></li>
-					<li><a href="#item4">Item 4</a></li>
-					<li><a href="#item5">Item 5</a></li>
-					<li><a href="#item6">Item 6</a></li>
-					-->
 					{% for product in type.product_set.all %}
 						<li><a href="#item{{forloop.counter}}">{{product.title}}</a></li>
 					{% endfor %}
-					
 				</ul>
 			</div>
 			<div id="main-content">
@@ -153,11 +167,64 @@
 							<div class="product-thumb">
 								<img src="/webshop/static/{{product.imageThumb}}" />
 							</div>
-							<div class="product-details">Details Goes Here ({{product.title}})</div>
+							<div class="product-details">{{product.description}}</div>
 						</div>
 						<h3 class="product-header">Ratings</h3>
-						<h3 class="product-header">Reviews</h3>
+						<table class="rating-table">
+							<tr>
+								<td><b>Average Rating ({{product.rating_set.count}} rates)</b></td>
+								<td><b>Your Rating</b></td>
+							</tr>
+							<tr>
+								<td>
+									{% for i in product.dummylist %}
+										{% if i > product.average %}
+											<img src="/webshop/static/images/star_grey.png" />
+										{% else %}
+											<img src="/webshop/static/images/star_green.png" />
+										{% endif %}
+									{% endfor %}
+								</td>
+								<td>
+									<div class="own-rating" data-id="2">
+										{% for i in product.dummylist %}
+											{% if i > 2 %}
+												<img data-id="{{forloop.counter}}" class="own-star" src="/webshop/static/images/star_grey.png" />
+											{% else %}
+												<img data-id="{{forloop.counter}}" class="own-star" src="/webshop/static/images/star_green.png" />
+											{% endif %}
+										{% endfor %}
+									</div>
+								</td>
+							</tr>
+						</table>
 						<h3 class="product-header">Comments</h3>
+						<div class="comment-wrapper">
+							{% for comment in product.filteredcomments %}
+								{% if comment.commentsOn = None %}
+									<div class="comment-buble first-layer">
+										<span class="comment-arrow-green-first"></span>
+										<div class="comment-body">{{comment.contents}}</div>
+										<div class="comment-date">{{comment.user.username}} - {{comment.published}}</div>
+									</div>
+								{% else %}
+									{% if comment.commentsOn.commentsOn = None %}
+										<div class="comment-buble second-layer">
+											<span class="comment-arrow-green"></span>
+											<div class="comment-body">{{comment.contents}}</div>
+											<div class="comment-date">{{comment.user.username}} - {{comment.published}}</div>
+										</div>
+									{% else %}
+										<div class="comment-buble third-layer">
+											<span class="comment-arrow-green"></span>
+											<div class="comment-body">{{comment.contents}}</div>
+											<div class="comment-date">{{comment.user.username}} - {{comment.published}}</div>
+										</div>
+									{% endif %}
+								{% endif%}
+								<div> </div>
+							{% endfor %}
+						</div>
 					</div>
 				{% endfor %}
 				<!-- 
@@ -242,6 +309,7 @@
 			</div>
 			 -->
 		</div>
+		<div class="clearfix">&nbsp;</div>
 		<div id="footer">
 			<div id="footer-navi">
 				<a href="javascript:;">about</a>
