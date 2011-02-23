@@ -162,19 +162,42 @@
 			<a href="/webshop/home" id="logo"><img src="/webshop/static/images/ngws_logo.png" /></a>
 			<div id="navi">
 				<a class="navi-selected" href="/webshop/home">home</a>
-				<a href="javascript:;">register</a>
-				<a href="javascript:;" id="login-link">login</a>
+				{% if user.is_authenticated %}
+					<a href="javascript:;">account</a>
+					<a href="{% url webshop.views.logout %}" id="logout-link">logout</a>
+				{% else %}
+					<a href="javascript:;">register</a>
+					<a href="javascript:;" id="login-link">login</a>
+<!--					<a href="{% url webshop.views.login %}" id="login-link2">login</a>-->
+				{% endif %}	
 				<a id="cart-link" href="javascript:;">cart <span id="cart-items">(0)</span></a>
-				<div id="login-bubble">
-					<span id="login-arrow-green"></span>
-					<span id="login-arrow-white"></span>
-					<form>
-						<p class="top-para"><input name="username" value="username" id="login-input" /></p>
-						<p class="bottom-para"><input name="password" value="password" type="password" id="password-input" /></p>
-						<input type="button" value=">" id="login-send" />
-					</form>
-				</div>
+				{% if user.is_authenticated %}
+				{% else %}
+					<div id="login-bubble">
+						<span id="login-arrow-green"></span>
+						<span id="login-arrow-white"></span>
+						<form method="post" action="{% url webshop.views.home %}">
+							{% csrf_token %}
+							<p class="top-para">
+<!--								{{ form.username }}-->
+								<input name="username" value="{{ username }}" id="login-input" />
+							</p>
+							<p class="bottom-para">
+<!--								{{ form.password }}-->
+								<input name="password" value="password" type="password" id="password-input" />
+							</p>
+							<input type="submit" value="" id="login-send" />
+							<input type="hidden" name="next" value="{{ next }}" />
+						</form>
+					</div>
+				{% endif %}	
 			</div>
+			{% if user.is_authenticated %}
+				<div>
+					Welcome {{ user.first_name }}!<br />
+				</div>
+			{% else %}
+			{% endif %}	
 			<h3 id="page-title">Series</h3>
 			<div id="search-bar">
 				<input id="search-input" value="search" /><input type="button" id="search-button" value=""/>
