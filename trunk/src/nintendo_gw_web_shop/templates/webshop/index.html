@@ -168,7 +168,6 @@
 				{% else %}
 					<a href="javascript:;">register</a>
 					<a href="javascript:;" id="login-link">login</a>
-<!--					<a href="{% url webshop.views.login %}" id="login-link2">login</a>-->
 				{% endif %}	
 				<a id="cart-link" href="javascript:;">cart <span id="cart-items">(0)</span></a>
 				{% if user.is_authenticated %}
@@ -177,14 +176,13 @@
 						<span id="login-arrow-green"></span>
 						<span id="login-arrow-white"></span>
 						<form method="post" action="{% url webshop.views.home %}">
+							{{ form.errors }}
 							{% csrf_token %}
 							<p class="top-para">
-<!--								{{ form.username }}-->
-								<input name="username" value="{{ username }}" id="login-input" />
+								{{ form.username }}
 							</p>
 							<p class="bottom-para">
-<!--								{{ form.password }}-->
-								<input name="password" value="password" type="password" id="password-input" />
+								{{ form.password }}
 							</p>
 							<input type="submit" value="" id="login-send" />
 							<input type="hidden" name="next" value="{{ next }}" />
