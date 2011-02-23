@@ -431,7 +431,7 @@ input:focus {
 	padding-top: 5px;
 }
 
-#login-input, #password-input {
+#login-input, #password-input, #id_username, #id_password {
 	border: none;
 	color: #339900;
 }

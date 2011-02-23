@@ -15,18 +15,18 @@
 		$(function() {
 			bindThumbs();
 			
-			$('#login-input').click(function() {
+			$('#id_username').click(function() {
 				$(this).select();
 			});
-			$('#login-input').focusout(function() {
+			$('#id_username').focusout(function() {
 				if($(this).val() == '') {
 					$(this).val('username');
 				}
 			});
-			$('#password-input').click(function() {
+			$('#id_password').click(function() {
 				$(this).select();
 			});
-			$('#password-input').focusout(function() {
+			$('#id_password').focusout(function() {
 				if($(this).val() == '') {
 					$(this).val('password');
 				}
