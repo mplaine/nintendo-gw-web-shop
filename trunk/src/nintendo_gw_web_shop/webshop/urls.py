@@ -7,11 +7,13 @@ import settings
 admin.autodiscover()
 
 urlpatterns    = patterns( '',
-    ( r'^$', 'webshop.views.home'),
-    ( r'^home/$', 'webshop.views.home'),
-    ( r'^home/category/(?P<type_id>\d+)/', 'webshop.views.category'),
-    ( r'^home/search/', 'webshop.views.search'),
-    ( r'^register/', 'webshop.views.register'),
+    ( r'^$', 'webshop.views.home' ),
+    ( r'^home/$', 'webshop.views.home' ),
+    ( r'^home/category/(?P<type_id>\d+)/', 'webshop.views.category' ),
+    ( r'^home/search/', 'webshop.views.search' ),
+    ( r'^register/', 'webshop.views.register' ),
+    ( r'^login/$', 'webshop.views.login' ),
+    ( r'^logout/$', 'webshop.views.logout' ),
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
