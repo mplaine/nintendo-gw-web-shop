@@ -1,5 +1,8 @@
-body {
+html {
+	overflow-y: scroll;
+}
 
+body {
 }
 
 img {
@@ -28,34 +31,37 @@ input:focus {
 	border-bottom: 1px solid #999999;
 }
 
+#logo {
+	float: left;
+}
+
 #navi {
-	position: absolute;
-	top: 50px;
-	left: 250px;
-	width: 370px;
-	height: 32px;
-	line-height: 32px;
+	float: left;
+	margin-top: 6px;
+	margin-left: 122px;
+}
+
+#greeting {
+	clear: both;
 }
 
 #navi a {
 	color: #999999;
-	text-decoration: none;
+	line-height: 50px;
 	margin-right: 15px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+	text-decoration: none;
 }
 
-#navi a.navi-selected {
-	color: #339900;
-	text-decoration: underline;
+#navi span.navi-selected {
+	border-top: 3px solid #339900;
 }
 
-#cart-link {
-	background: url(../images/cart.png) 0 -3px no-repeat scroll;
+#navi-cart {
+	background: url(../images/cart.png) no-repeat;
+	margin-left: 25px;
 	padding-left: 35px;
-	height: 32px;
-	line-height: 32px;
-	position: absolute;
-	right: 0px;
-	top: 0px;
 }
 
 #page-title {
@@ -77,11 +83,8 @@ input:focus {
 
 #search-bar {
 	border: 1px solid #339900;
-	position: absolute;
-	top: 52px;
-	right: 0px;
-	width: 300px;
-	height: 21px;
+	float: right;
+	margin-top: 18px;
 }
 
 #search-input {
@@ -397,7 +400,7 @@ input:focus {
 	display: block;
 }
 
-#login-link {
+#navi-login {
 	z-index: 2;
 	position: relative;
 }
@@ -431,7 +434,7 @@ input:focus {
 	padding-top: 5px;
 }
 
-#login-input, #password-input, #id_username, #id_password {
+.login-form #id_username, .login-form #id_password {
 	border: none;
 	color: #339900;
 }

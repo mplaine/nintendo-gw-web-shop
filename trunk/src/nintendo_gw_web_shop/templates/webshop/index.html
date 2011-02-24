@@ -1,76 +1,12 @@
-<!DOCTYPE html>
-<html lang="en" class="no-js">
-<head>
-	<meta charset="utf-8" />
-	<title>Web Shop</title>
-	<link rel="stylesheet" type="text/css" href="/webshop/static/css/style.css" />
-	<script src="/webshop/static/js/modernizr-1.5.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+{% extends "webshop/base_template.html" %}
+{% block title %}Nintendo Game &amp; Watch Shop - Home{% endblock %}
+{% block extra-scripts %}
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
 	<script src="/webshop/static/js/jquery.quicksand.js"></script>
-	<!--[if IE]>
-		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-	<script>
+	<script type="text/javascript">
 		$(function() {
-			bindThumbs();
-			
-			$('#id_username').click(function() {
-				$(this).select();
-			});
-			$('#id_username').focusout(function() {
-				if($(this).val() == '') {
-					$(this).val('username');
-				}
-			});
-			$('#id_password').click(function() {
-				$(this).select();
-			});
-			$('#id_password').focusout(function() {
-				if($(this).val() == '') {
-					$(this).val('password');
-				}
-			});
-			$('#login-link').click(function() {
-				$('#login-bubble').toggle();
-			});
-			
-			$('#search-button').click(function(){
-				window.location.href = 'http://' + location.host +'/webshop/home/search';
-			});
-			$('#search-input').focusin(function() {
-				$(this).val('');
-			});
-			var availableTags = [
-			         			"ActionScript",
-			         			"AppleScript",
-			         			"Asp",
-			         			"BASIC",
-			         			"C",
-			         			"C++",
-			         			"Clojure",
-			         			"COBOL",
-			         			"ColdFusion",
-			         			"Erlang",
-			         			"Fortran",
-			         			"Groovy",
-			         			"Haskell",
-			         			"Java",
-			         			"JavaScript",
-			         			"Lisp",
-			         			"Perl",
-			         			"PHP",
-			         			"Python",
-			         			"Ruby",
-			         			"Scala",
-			         			"Scheme"
-			         		];
-       		$( "#search-input" ).autocomplete({
-       			source: availableTags,
-       			select: function( event, ui ) {
-    				window.location.href = 'http://' + location.host +'/webshop/home/category/1/product#item3';
-    			}
-       		});
+			$( "#navi-home>span" ).addClass( "navi-selected" );
+			bindThumbs();			
 		});
 		
 		// Custom sorting plugin
@@ -155,163 +91,23 @@
 			});
 		}
 	</script>
-</head>
-<body>
-	<div id="wrapper">
-		<div id="header">
-			<a href="/webshop/home" id="logo"><img src="/webshop/static/images/ngws_logo.png" /></a>
-			<div id="navi">
-				<a class="navi-selected" href="/webshop/home">home</a>
-				{% if user.is_authenticated %}
-					<a href="javascript:;">account</a>
-					<a href="{% url webshop.views.logout %}" id="logout-link">logout</a>
-				{% else %}
-					<a href="{% url webshop.views.register %}">register</a>
-					<a href="javascript:;" id="login-link">login</a>
-				{% endif %}	
-				<a id="cart-link" href="javascript:;">cart <span id="cart-items">(0)</span></a>
-				{% if user.is_authenticated %}
-				{% else %}
-					<div id="login-bubble">
-						<span id="login-arrow-green"></span>
-						<span id="login-arrow-white"></span>
-						<form method="post" action="{% url webshop.views.home %}">
-							{{ form.errors }}
-							{% csrf_token %}
-							<p class="top-para">
-								{{ form.username }}
-							</p>
-							<p class="bottom-para">
-								{{ form.password }}
-							</p>
-							<input type="submit" value="" id="login-send" />
-							<input type="hidden" name="next" value="{{ next }}" />
-						</form>
-					</div>
-				{% endif %}	
-			</div>
-			{% if user.is_authenticated %}
-				<div>
-					Welcome {{ user.first_name }}!<br />
-				</div>
-			{% else %}
-			{% endif %}	
-			<h3 id="page-title">Series</h3>
-			<div id="search-bar">
-				<input id="search-input" value="search" /><input type="button" id="search-button" value=""/>
-			</div>
-			<form id="sort-bar">
-				<b>Sort By: </b><input type="radio" name="sort" value="name" checked="checked"/> Name <input type="radio" name="sort" value="size" /> Number of Games 
-			</form>
-		</div>
-		<div id="content">
-		{% if types %}
-  			{% for type in types %}
-  				<div class="thumb" data-id="{{type.id}}">
-					<img src="/webshop/static/{{type.imageThumb}}" />
-					<div class="thumb-info">
-						<p class="thumb-title">{{type}}</p>
-						<p class="thumb-body">View all [<span data-type="size">{{type.product_set.count}}</span> items]</p>
-					</div>
-				</div>
-  			{% endfor %}
-		{% endif %}
-			<!--  
-			<div class="thumb" data-id="1">
-				<img src="/webshop/static/images/products/thumbs/ac-01.jpg" />
+{% endblock %}
+{% block page-title %}Series{% endblock %}
+{% block sort-bar %}
+	<form id="sort-bar">
+		<b>Sort By: </b><input type="radio" name="sort" value="name" checked="checked"/> Name <input type="radio" name="sort" value="size" /> Number of Games 
+	</form>
+{% endblock %}
+{% block content %}
+	{% if types %}
+ 		{% for type in types %}
+ 			<div class="thumb" data-id="{{type.id}}">
+				<img src="/webshop/static/{{type.imageThumb}}" />
 				<div class="thumb-info">
-					<p class="thumb-title">Silver Series</p>
-					<p class="thumb-body">View all [<span data-type="size">6</span> items]</p>
+					<p class="thumb-title">{{type}}</p>
+					<p class="thumb-body">View all [<span data-type="size">{{type.product_set.count}}</span> items]</p>
 				</div>
 			</div>
-			<div class="thumb" data-id="2">
-				<img src="/webshop/static/images/products/thumbs/mh-06.jpg" />
-				<div class="thumb-info">
-					<p class="thumb-title">Gold Series</p>
-					<p class="thumb-body">View all [<span data-type="size">3</span> items]</p>
-				</div>
-			</div>
-			<div class="thumb" data-id="3">
-				<img src="/webshop/static/images/products/thumbs/pr-21.jpg" />
-				<div class="thumb-info">
-					<p class="thumb-title">Wide Screen Series</p>
-					<p class="thumb-body">View all [<span data-type="size">10</span> items]</p>
-				</div>
-			</div>
-			<div class="thumb" data-id="4">
-				<img src="/webshop/static/images/products/thumbs/ol-51.jpg" />
-				<div class="thumb-info">
-					<p class="thumb-title">Multi Screen Series</p>
-					<p class="thumb-body">View all [<span data-type="size">15</span> items]</p>
-				</div>
-			</div>
-			
-			<div class="thumb" data-id="5">
-				<img src="/webshop/static/images/products/thumbs/cj-71.jpg" />
-				<div class="thumb-info">
-					<p class="thumb-title">Table Top Series</p>
-					<p class="thumb-body">View all [<span data-type="size">4</span> items]</p>
-				</div>
-			</div>
-			<div class="thumb" data-id="6">
-				<img src="/webshop/static/images/products/thumbs/sm-91.jpg" />
-				<div class="thumb-info">
-					<p class="thumb-title">Panorama Screen Series</p>
-					<p class="thumb-body">View all [<span data-type="size"">6</span> items]</p>
-				</div>
-			</div>
-			<div class="thumb" data-id="7">
-				<img src="/webshop/static/images/products/thumbs/dj-101.jpg" />
-				<div class="thumb-info">
-					<p class="thumb-title">New Wide Screen Series</p>
-					<p class="thumb-body">View all [<span data-type="size">8</span> items]</p>
-				</div>
-			</div>
-			<div class="thumb" data-id="8">
-				<img src="/webshop/static/images/products/thumbs/bu-201.jpg" />
-				<div class="thumb-info">
-					<p class="thumb-title">Super Color Series</p>
-					<p class="thumb-body">View all [<span data-type="size">2</span> items]</p>
-				</div>
-			</div>
-			
-			<div class="thumb" data-id="9">
-				<img src="/webshop/static/images/products/thumbs/bx-301_boxing.jpg" />
-				<div class="thumb-info">
-					<p class="thumb-title">Micro vs. System Series</p>
-					<p class="thumb-body">View all [<span data-type="size">4</span> items]</p>
-				</div>
-			</div>
-			<div class="thumb" data-id="10">
-				<img src="/webshop/static/images/products/thumbs/ym-801.jpg" />
-				<div class="thumb-info">
-					<p class="thumb-title">Crystal Screen Series</p>
-					<p class="thumb-body">View all [<span data-type="size">3</span> items]</p>
-				</div>
-			</div>
-			<div class="thumb" data-id="11">
-				<img src="/webshop/static/images/products/thumbs/ym-901-s.jpg" />
-				<div class="thumb-info">
-					<p class="thumb-title">Special Series</p>
-					<p class="thumb-body">View all [<span data-type="size">1</span> item]</p>
-				</div>
-			</div>
-			<div class="thumb" data-id="12">
-				<img src="/webshop/static/images/products/thumbs/rgw-001.jpg" />
-				<div class="thumb-info">
-					<p class="thumb-title">2010 Series</p>
-					<p class="thumb-body">View all [<span data-type="size">1</span> item]</p>
-				</div>
-			</div>
-			-->
-
-		</div>
-		<div id="footer">
-			<div id="footer-navi">
-				<a href="javascript:;">about</a>
-				<a href="javascript:;">credits</a>
-			</div>
-		</div>
-	</div>
-</body>
-</html>
+ 		{% endfor %}
+	{% endif %}
+{% endblock %}
