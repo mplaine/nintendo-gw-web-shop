@@ -1,23 +1,18 @@
-<!DOCTYPE html>
-<html lang="en" class="no-js">
-<head>
-	<meta charset="utf-8" />
-	<title>Web Shop</title>
-	<link rel="stylesheet" type="text/css" href="/webshop/static/css/style.css" />
-	<script src="/webshop/static/js/modernizr-1.5.min.js"></script>
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+{% extends "webshop/base_template.html" %}
+{% block title %}Nintendo Game &amp; Watch Shop - {{type}}{% endblock %}
+{% block extra-scripts %}
 	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
 	<script src="/webshop/static/js/jquery.flip.min.js"></script>
-	<!--[if IE]>
-		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<![endif]-->
-	<script>
+	<script type="text/javascript">
 		$(function() {
+			$( "#navi-home>span" ).addClass( "navi-selected" );
+			
 			$('a', '#side-navi').attr('href', 'javascript:;');
 			
 			$('a[name="'+window.location.hash.substring(1, 6)+'"]').parent().show();
 			$('li', '#side-navi').eq((window.location.hash.substring(5, 6) - 1)).append($('#side-navi-arrow'));		
 			$('#side-navi-arrow').show("slide", { direction: "left" }, 500);
+			
 			$('li', '#side-navi').click(function() {
 				var me = this;
 				window.location.hash = 'item' + ($(me).index() + 1);
@@ -34,61 +29,7 @@
 					}
 				});
 			});
-			$('#search-button').click(function(){
-				window.location.href = 'http://' + location.host +'/webshop/home/search';
-			});
-			$('#search-input').focusin(function() {
-				$(this).val('');
-			});
-			var availableTags = [
-			         			"ActionScript",
-			         			"AppleScript",
-			         			"Asp",
-			         			"BASIC",
-			         			"C",
-			         			"C++",
-			         			"Clojure",
-			         			"COBOL",
-			         			"ColdFusion",
-			         			"Erlang",
-			         			"Fortran",
-			         			"Groovy",
-			         			"Haskell",
-			         			"Java",
-			         			"JavaScript",
-			         			"Lisp",
-			         			"Perl",
-			         			"PHP",
-			         			"Python",
-			         			"Ruby",
-			         			"Scala",
-			         			"Scheme"
-			         		];
-       		$( "#search-input" ).autocomplete({
-       			source: availableTags,
-       			select: function( event, ui ) {
-    				window.location.href = 'http://' + location.host +'/webshop/home/category/1/product#item3';
-    			}
-       		});
-       		$('#login-input').click(function() {
-				$(this).select();
-			});
-			$('#login-input').focusout(function() {
-				if($(this).val() == '') {
-					$(this).val('username');
-				}
-			});
-			$('#password-input').click(function() {
-				$(this).select();
-			});
-			$('#password-input').focusout(function() {
-				if($(this).val() == '') {
-					$(this).val('password');
-				}
-			});
-			$('#login-link').click(function() {
-				$('#login-bubble').toggle();
-			})
+			
 			$('form[class="add-to-cart"]').submit(function() {
 				//Your code Here
 				
@@ -119,203 +60,91 @@
 			);
 		});
 	</script>
-</head>
-<body>
-	<div id="wrapper">
-		<div id="header">
-			<a href="/webshop/home" id="logo"><img src="/webshop/static/images/ngws_logo.png" /></a>
-			<div id="navi">
-				<a class="navi-selected" href="/webshop/home">home</a>
-				<a href="javascript:;">register</a>
-				<a href="javascript:;" id="login-link">login</a>
-				<a id="cart-link" href="javascript:;">cart <span id="cart-items">(0)</span></a>
-				<div id="login-bubble">
-					<span id="login-arrow-green"></span>
-					<span id="login-arrow-white"></span>
-					<form>
-						<p class="top-para"><input name="username" value="username" id="login-input" /></p>
-						<p class="bottom-para"><input name="password" value="password" type="password" id="password-input" /></p>
-						<input type="button" value="" id="login-send" />
-					</form>
-				</div>
-			</div>
-			<h3 id="page-title">{{type}}</h3>
-			<div id="search-bar">
-				<input id="search-input" value="search" /><input type="button" id="search-button" value=""/>
-			</div>
-		</div>
-		<div id="content">
-			<div id="side-navi">
-				<h4 class="side-navi-header">Products</h4>
-				<div id="side-navi-arrow"></div>
-				<ul>
-					{% for product in type.product_set.all %}
-						<li><a href="#item{{forloop.counter}}">{{product.title}}</a></li>
-					{% endfor %}
-				</ul>
-			</div>
-			<div id="main-content">
-				{% for product in type.product_set.all %}
-					<div class="product">
-						<a name="item{{forloop.counter}}"></a>
-						<form class="add-to-cart" action="/webshop/urlhere" method="post">
-							<input type="hidden" value="{{product.id}}" />
-							<input class="add-cart-submit" type="submit" value="Add to cart" />
-						</form>
-						<h1 class="product-title">{{product.title}}</h1>
-						<div class="product-content">
-							<div class="product-thumb">
-								<img src="/webshop/static/{{product.imageThumb}}" />
-							</div>
-							<div class="product-details">{{product.description}}</div>
-						</div>
-						<h3 class="product-header">Ratings</h3>
-						<table class="rating-table">
-							<tr>
-								<td><b>Average Rating ({{product.rating_set.count}} rates)</b></td>
-								<td><b>Your Rating</b></td>
-							</tr>
-							<tr>
-								<td>
-									{% for i in product.dummylist %}
-										{% if i > product.average %}
-											<img src="/webshop/static/images/star_grey.png" />
-										{% else %}
-											<img src="/webshop/static/images/star_green.png" />
-										{% endif %}
-									{% endfor %}
-								</td>
-								<td>
-									<div class="own-rating" data-id="2">
-										{% for i in product.dummylist %}
-											{% if i > 2 %}
-												<img data-id="{{forloop.counter}}" class="own-star" src="/webshop/static/images/star_grey.png" />
-											{% else %}
-												<img data-id="{{forloop.counter}}" class="own-star" src="/webshop/static/images/star_green.png" />
-											{% endif %}
-										{% endfor %}
-									</div>
-								</td>
-							</tr>
-						</table>
-						<h3 class="product-header">Comments</h3>
-						<div class="comment-wrapper">
-							{% for comment in product.filteredcomments %}
-								{% if comment.commentsOn = None %}
-									<div class="comment-buble first-layer">
-										<span class="comment-arrow-green-first"></span>
-										<div class="comment-body">{{comment.contents}}</div>
-										<div class="comment-date">{{comment.user.username}} - {{comment.published}}</div>
-									</div>
-								{% else %}
-									{% if comment.commentsOn.commentsOn = None %}
-										<div class="comment-buble second-layer">
-											<span class="comment-arrow-green"></span>
-											<div class="comment-body">{{comment.contents}}</div>
-											<div class="comment-date">{{comment.user.username}} - {{comment.published}}</div>
-										</div>
-									{% else %}
-										<div class="comment-buble third-layer">
-											<span class="comment-arrow-green"></span>
-											<div class="comment-body">{{comment.contents}}</div>
-											<div class="comment-date">{{comment.user.username}} - {{comment.published}}</div>
-										</div>
-									{% endif %}
-								{% endif%}
-								<div> </div>
-							{% endfor %}
-						</div>
-					</div>
-				{% endfor %}
-				<!-- 
-				<div class="product">
-					<a name="item1"></a>
-					<h1 class="product-title">Item 1</h1>
-					<div class="product-content">
-						<div class="product-thumb">
-							<img src="/webshop/static/images/products/thumbs/ac-01.jpg" />
-						</div>
-						<div class="product-details">Details Goes Here (Item 1)</div>
-					</div>
-					<h3 class="product-header">Ratings</h3>
-					<h3 class="product-header">Reviews</h3>
-					<h3 class="product-header">Comments</h3>
-				</div>
-				<div class="product">
-					<a name="item2"></a>
-					<h1 class="product-title">Item 2</h1>
-					<div class="product-content">
-						<div class="product-thumb">
-							<img src="/webshop/static/images/products/thumbs/ac-01.jpg" />
-						</div>
-						<div class="product-details">Details Goes Here (Item 2)</div>
-					</div>
-					<h3 class="product-header">Ratings</h3>
-					<h3 class="product-header">Reviews</h3>
-					<h3 class="product-header">Comments</h3>
-				</div>
-				<div class="product">
-					<a name="item3"></a>
-					<h1 class="product-title">Item 3</h1>
-					<div class="product-content">
-						<div class="product-thumb">
-							<img src="/webshop/static/images/products/thumbs/ac-01.jpg" />
-						</div>
-						<div class="product-details">Details Goes Here (Item 3)</div>
-					</div>
-					<h3 class="product-header">Ratings</h3>
-					<h3 class="product-header">Reviews</h3>
-					<h3 class="product-header">Comments</h3>
-				</div>
-				<div class="product">
-					<a name="item4"></a>
-					<h1 class="product-title">Item 4</h1>
-					<div class="product-content">
-						<div class="product-thumb">
-							<img src="/webshop/static/images/products/thumbs/ac-01.jpg" />
-						</div>
-						<div class="product-details">Details Goes Here (Item 4)</div>
-					</div>
-					<h3 class="product-header">Ratings</h3>
-					<h3 class="product-header">Reviews</h3>
-					<h3 class="product-header">Comments</h3>
-				</div>
-				<div class="product">
-					<a name="item5"></a>
-					<h1 class="product-title">Item 5</h1>
-					<div class="product-content">
-						<div class="product-thumb">
-							<img src="/webshop/static/images/products/thumbs/ac-01.jpg" />
-						</div>
-						<div class="product-details">Details Goes Here (Item 5)</div>
-					</div>
-					<h3 class="product-header">Ratings</h3>
-					<h3 class="product-header">Reviews</h3>
-					<h3 class="product-header">Comments</h3>
-				</div>
-				<div class="product">
-					<a name="item6"></a>
-					<h1 class="product-title">Item 6</h1>
-					<div class="product-content">
-						<div class="product-thumb">
-							<img src="/webshop/static/images/products/thumbs/ac-01.jpg" />
-						</div>
-						<div class="product-details">Details Goes Here (Item 6)</div>
-					</div>
-					<h3 class="product-header">Ratings</h3>
-					<h3 class="product-header">Reviews</h3>
-					<h3 class="product-header">Comments</h3>
-				</div>
-			</div>
-			 -->
-		</div>
-		<div class="clearfix">&nbsp;</div>
-		<div id="footer">
-			<div id="footer-navi">
-				<a href="javascript:;">about</a>
-				<a href="javascript:;">credits</a>
-			</div>
-		</div>
+{% endblock %}
+{% block page-title %}{{type}}{% endblock %}
+{% block sort-bar %}{% endblock %}
+{% block content %}
+	<div id="side-navi">
+		<h4 class="side-navi-header">Products</h4>
+		<div id="side-navi-arrow"></div>
+		<ul>
+			{% for product in type.product_set.all %}
+				<li><a href="#item{{forloop.counter}}">{{product.title}}</a></li>
+			{% endfor %}
+		</ul>
 	</div>
-</body>
-</html>
+	<div id="main-content">
+		{% for product in type.product_set.all %}
+			<div class="product">
+				<a name="item{{forloop.counter}}"></a>
+				<form class="add-to-cart" action="/webshop/urlhere" method="post">
+					<input type="hidden" value="{{product.id}}" />
+					<input class="add-cart-submit" type="submit" value="Add to cart" />
+				</form>
+				<h1 class="product-title">{{product.title}}</h1>
+				<div class="product-content">
+					<div class="product-thumb">
+						<img src="/webshop/static/{{product.imageThumb}}" />
+					</div>
+					<div class="product-details">{{product.description}}</div>
+				</div>
+				<h3 class="product-header">Ratings</h3>
+				<table class="rating-table">
+					<tr>
+						<td><b>Average Rating ({{product.rating_set.count}} rates)</b></td>
+						<td><b>Your Rating</b></td>
+					</tr>
+					<tr>
+						<td>
+							{% for i in product.dummylist %}
+								{% if i > product.average %}
+									<img src="/webshop/static/images/star_grey.png" />
+								{% else %}
+									<img src="/webshop/static/images/star_green.png" />
+								{% endif %}
+							{% endfor %}
+						</td>
+						<td>
+							<div class="own-rating" data-id="2">
+								{% for i in product.dummylist %}
+									{% if i > 2 %}
+										<img data-id="{{forloop.counter}}" class="own-star" src="/webshop/static/images/star_grey.png" />
+									{% else %}
+										<img data-id="{{forloop.counter}}" class="own-star" src="/webshop/static/images/star_green.png" />
+									{% endif %}
+								{% endfor %}
+							</div>
+						</td>
+					</tr>
+				</table>
+				<h3 class="product-header">Comments</h3>
+				<div class="comment-wrapper">
+					{% for comment in product.filteredcomments %}
+						{% if comment.commentsOn = None %}
+							<div class="comment-buble first-layer">
+								<span class="comment-arrow-green-first"></span>
+								<div class="comment-body">{{comment.contents}}</div>
+								<div class="comment-date">{{comment.user.username}} - {{comment.published}}</div>
+							</div>
+						{% else %}
+							{% if comment.commentsOn.commentsOn = None %}
+								<div class="comment-buble second-layer">
+									<span class="comment-arrow-green"></span>
+									<div class="comment-body">{{comment.contents}}</div>
+									<div class="comment-date">{{comment.user.username}} - {{comment.published}}</div>
+								</div>
+							{% else %}
+								<div class="comment-buble third-layer">
+									<span class="comment-arrow-green"></span>
+									<div class="comment-body">{{comment.contents}}</div>
+									<div class="comment-date">{{comment.user.username}} - {{comment.published}}</div>
+								</div>
+							{% endif %}
+						{% endif%}
+						<div> </div>
+					{% endfor %}
+				</div>
+			</div>
+		{% endfor %}
+	</div>
+{% endblock %}

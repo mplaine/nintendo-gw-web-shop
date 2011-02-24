@@ -1,0 +1,23 @@
+{% extends "webshop/base_template.html" %}
+{% block title %}Nintendo Game &amp; Watch Shop - Account{% endblock %}
+{% block extra-scripts %}
+	<script type="text/javascript">
+		$(function() {
+			$( "#navi-account>span" ).addClass( "navi-selected" );
+		});	
+	</script>				
+{% endblock %}
+{% block page-title %}Account{% endblock %}
+{% block sort-bar %}{% endblock %}
+{% block content %}
+	<div id="side-navi">
+	</div>
+	<div id="main-content">
+		<form class="account-form" action="{% url webshop.views.account %}" method="post">
+			{{ form.errors }}
+			{% csrf_token %}
+			{{ myUserChangeForm.as_p }}
+			<input type="submit" value="Save" />
+		</form>
+	</div>
+{% endblock %}
