@@ -10,7 +10,7 @@ from django.template.loader import get_template
 from django.template.context import Context
 from django.core.context_processors import csrf
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 
 #from django.http import HttpResponse
 #from django.template import Context, loader
@@ -45,8 +45,20 @@ def category( request, type_id ):
 	return render_to_response( "webshop/category.html", variables, context )
 
 def register( request ):
-	variables	= {}
-	context		= RequestContext( request )
+	if request.method == "POST":
+		print "post"
+		form		= UserCreationForm( data=request.POST )
+		if form.is_valid():
+			form.save()
+			return HttpResponseRedirect( "/webshop/home/" )
+		#else:
+			#print "Form is not valid!"
+	else:
+		form		= UserCreationForm()
+	
+	variables		= { "form" : form }
+	context			= RequestContext( request )
+	context.update( csrf( request ) )
 	return render_to_response( "webshop/register.html", variables, context )
 
 def logout( request ):

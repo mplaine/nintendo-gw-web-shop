@@ -166,7 +166,7 @@
 					<a href="javascript:;">account</a>
 					<a href="{% url webshop.views.logout %}" id="logout-link">logout</a>
 				{% else %}
-					<a href="javascript:;">register</a>
+					<a href="{% url webshop.views.register %}">register</a>
 					<a href="javascript:;" id="login-link">login</a>
 				{% endif %}	
 				<a id="cart-link" href="javascript:;">cart <span id="cart-items">(0)</span></a>
