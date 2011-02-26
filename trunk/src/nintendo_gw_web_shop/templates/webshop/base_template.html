@@ -12,26 +12,6 @@
 		{% block extra-scripts %}{% endblock %}
 		<script type="text/javascript">
 			$(function() {
-				$('#id_username').click(function() {
-					$(this).select();
-				});
-				$('#id_username').focusout(function() {
-					if($(this).val() == '') {
-						$(this).val('username');
-					}
-				});
-				$('#id_password').click(function() {
-					$(this).select();
-				});
-				$('#id_password').focusout(function() {
-					if($(this).val() == '') {
-						$(this).val('password');
-					}
-				});
-				$('#navi-login').click(function() {
-					$('#login-bubble').toggle();
-				});
-				
 				$('#search-button').click(function(){
 					window.location.href = 'http://' + location.host +'/webshop/home/search';
 				});
@@ -84,28 +64,9 @@
 						<a id="navi-logout" href="{% url webshop.views.logout %}"><span>logout</span></a>
 					{% else %}
 						<a id="navi-register" href="{% url webshop.views.register %}"><span>register</span></a>
-						<a id="navi-login" href="javascript:;"><span>login</span></a>
+						<a id="navi-login" href="{% url webshop.views.login %}"><span>login</span></a>
 					{% endif %}	
 					<a id="navi-cart" href="javascript:;"><span>cart <span id="cart-items">(0)</span></span></a>
-					{% if user.is_authenticated %}
-					{% else %}
-						<div id="login-bubble">
-							<span id="login-arrow-green"></span>
-							<span id="login-arrow-white"></span>
-							<form class="login-form" method="post" action="{% url webshop.views.home %}">
-								{{ form.errors }}
-								{% csrf_token %}
-								<p class="top-para">
-									{{ form.username }}
-								</p>
-								<p class="bottom-para">
-									{{ form.password }}
-								</p>
-								<input type="hidden" name="next" value="{{ next }}" />
-								<input type="submit" value="" id="login-send" />
-							</form>
-						</div>
-					{% endif %}	
 				</div>
 				<div id="search-bar">
 					<input id="search-input" value="search" /><input type="button" id="search-button" value=""/>
