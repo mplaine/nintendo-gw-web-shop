@@ -1,10 +1,46 @@
 {% extends "webshop/base_template.html" %}
 {% block title %}Nintendo Game &amp; Watch Shop - Register{% endblock %}
 {% block extra-scripts %}
+	<script type="text/javascript" src="/webshop/static/js/jquery.validate.min.js"></script>
 	<script type="text/javascript">
-		$(function() {
+		$( function() {
 			$( "#navi-register>span" ).addClass( "navi-selected" );
-		});	
+			
+			$( "#register-form" ).validate( {
+				rules: {
+					"first_name": {
+						required: true,
+						maxlength: 30
+					},
+					"last_name": {
+						required: true,
+						maxlength: 30
+					},
+					"username": {
+						required: true,
+						maxlength: 30
+					},
+					"password1": {
+						required: true,
+						maxlength: 128
+					},
+					"password2": {
+						required: true,
+						maxlength: 128
+					},
+					"email": {
+						required: true,
+						email: true,
+						maxlength: 128
+					}
+				},
+				messages: {
+					"email": {
+						email: "Enter a valid e-mail address."
+		            }
+				}
+			} );
+		} );	
 	</script>				
 {% endblock %}
 {% block page-title %}Register{% endblock %}
@@ -13,11 +49,39 @@
 	<div id="side-navi">
 	</div>
 	<div id="main-content">
-		<form class="register-form" action="{% url webshop.views.register %}" method="post">
-			{{ userCreationForm.errors }}
+		<h3>Register</h3>
+		<form id="register-form" class="form" action="{% url webshop.views.register %}" method="post">
+			{% if form.errors %}
+				<div class="form-error">
+					<div>Please, correct the following errors and try again:</div>
+					<ul>
+						{% for key,value in form.errors.items %}
+							{% for error in value %}<li>{{ error }}</li>{% endfor %} 
+						{% endfor %}
+					</ul>
+				</div>
+			{% endif %}
 			{% csrf_token %}
-			{{ userCreationForm.as_p }}
-			<input type="submit" value="Register" />
+			<table>
+				{% for field in form %}
+					<tr>
+						<th>
+							<label for="{{ field.auto_id }}">
+								{% if field.field.required %}
+									<span class="required">{{ field.label }}</span>
+								{% else %}
+									{{ field.label }}
+								{% endif %}
+							</label>
+						</th>
+						<td>{{ field }}</td>
+					</tr>
+				{% endfor %}
+				<tr>
+					<th>&nbsp;</th>
+					<td><input type="submit" value="Register" /></td>
+				</tr>
+			</table>
 		</form>
 	</div>
 {% endblock %}

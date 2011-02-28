@@ -1,7 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
-from webshop.forms import ProductForm, MyUserChangeForm
+from webshop.forms import ProductForm, MyUserCreationForm, MyAuthenticationForm, MyUserChangeForm
 from webshop.models import SaleItem, Product, Type
 from django.template.loader import get_template
 from django.template.context import Context
@@ -19,11 +19,14 @@ def home( request ):
 	return render_to_response( "webshop/index.html", variables, context )
 
 def login( request ):
+	if request.user.is_authenticated():
+		return redirect( "webshop.views.home" )
+
 	if request.method == "POST":
-		authenticationForm		= AuthenticationForm( data=request.POST )
-		if authenticationForm.is_valid():
-			username			= authenticationForm.cleaned_data.get( "username", "" )
-			password			= authenticationForm.cleaned_data.get( "password", "" )
+		myAuthenticationForm	= MyAuthenticationForm( data=request.POST )
+		if myAuthenticationForm.is_valid():
+			username			= myAuthenticationForm.cleaned_data.get( "username", "" )
+			password			= myAuthenticationForm.cleaned_data.get( "password", "" )
 			user				= authenticate( username=username, password=password )
 			auth_login( request, user )
 			next				= request.POST.get( "next", reverse( "webshop.views.home" ) )
@@ -31,10 +34,10 @@ def login( request ):
 		#else:
 			#print "Form is not valid!"
 	else:
-		authenticationForm		= AuthenticationForm( initial={ "username" : "", "password" : "" } )	
+		myAuthenticationForm	= MyAuthenticationForm( initial={ "username" : "", "password" : "" } )	
 	
-	next						= request.META.get( "HTTP_REFERER", reverse( "webshop.views.home" ) )
-	variables					= { "form" : authenticationForm, "next" : next }
+	next						= request.META.get( "HTTP_REFERER", reverse( "webshop.views.home" ) ) # After a successful login, redirect the user to the page (s)he came from
+	variables					= { "form" : myAuthenticationForm, "next" : next }
 	context						= RequestContext( request )
 	context.update( csrf( request ) )
 	return render_to_response( "webshop/login.html", variables, context )	
@@ -47,24 +50,30 @@ def category( request, type_id ):
 
 def register( request ):
 	if request.user.is_authenticated():
-		return redirect( "webshop.views.account" )
+		return redirect( "webshop.views.home" )
 		
 	if request.method == "POST":
-		userCreationForm		= UserCreationForm( data=request.POST )
-		if userCreationForm.is_valid():
-			userCreationForm.save()
+		myUserCreationForm		= MyUserCreationForm( data=request.POST )
+		if myUserCreationForm.is_valid():
+			user				= myUserCreationForm.save()
+			# Automatically login the user after successful registration
+			user.backend		= "django.contrib.auth.backends.ModelBackend"
+			auth_login( request, user )
 			return redirect( "webshop.views.home" )
 		#else:
 			#print "Form is not valid!"
 	else:
-		userCreationForm		= UserCreationForm()
+		myUserCreationForm		= MyUserCreationForm( initial={ "username" : "", "password1" : "", "password2" : "" } )
 	
-	variables					= { "userCreationForm" : userCreationForm }
+	variables					= { "form" : myUserCreationForm }
 	context						= RequestContext( request )
 	context.update( csrf( request ) )
 	return render_to_response( "webshop/register.html", variables, context )
 
 def account( request ):
+	if not request.user.is_authenticated():
+		return redirect( "webshop.views.home" )	
+	
 	if request.method == "POST":
 		myUserChangeForm		= MyUserChangeForm( data=request.POST, instance=request.user )
 		if myUserChangeForm.is_valid():
@@ -73,12 +82,9 @@ def account( request ):
 		#else:
 			#print "Form is not valid!"
 	else:
-		if request.user.is_authenticated():
-			myUserChangeForm	= MyUserChangeForm( instance=request.user )
-		else:
-			myUserChangeForm	= MyUserChangeForm()
+		myUserChangeForm		= MyUserChangeForm( instance=request.user )
 	
-	variables					= { "myUserChangeForm" : myUserChangeForm }
+	variables					= { "form" : myUserChangeForm }
 	context						= RequestContext( request )
 	context.update( csrf( request ) )
 	return render_to_response( "webshop/account.html", variables, context )
