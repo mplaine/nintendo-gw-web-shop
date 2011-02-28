@@ -191,10 +191,15 @@ input:focus {
 
 #main-content {	
 	border: 1px solid #339900;
-	width: 690px;
+	width: 670px;
 	float: right;
-	min-height: 500px;
+	min-height: 480px;
 	margin-bottom: 12px;
+	padding: 10px;
+}
+#main-content h3 {
+	color: #339900;
+	margin-top: 0px;
 }
 
 .product-title {
@@ -236,6 +241,29 @@ input:focus {
 	width: 95%;
 	border-bottom: 1px solid #999999;
 	margin-left: 20px;
+}
+
+.form-error {
+	align: left;
+	background-color: #FF6666;
+	background-image: url( "../images/forbidden_32x32.png" );
+	background-position: 5px 5px;
+	background-repeat: no-repeat;
+	border: 2px solid #CC0000;
+	color: #FFFFFF;
+	font-weight: bold;
+	padding: 12px 12px 0px 50px;
+	margin-bottom: 10px;
+	min-height: 30px;
+	text-align: left;
+}
+.form-error ul {
+	margin: 4px 0px 10px 0px;
+	padding: 0px 0px 0px 30px;
+}
+
+.errorlist {
+	display: none;
 }
 
 .rating-table {
@@ -432,6 +460,38 @@ input:focus {
 
 #login-bubble p.bottom-para {
 	padding-top: 5px;
+}
+
+.form {
+}
+/* Input field label cell */
+.form th {
+	text-align: left;
+	vertical-align: top;
+}
+/* Input field label */
+.form label {
+	color: #666666;
+	margin-right: 10px;
+}
+/* Required star after input field label */
+.form label span.required:after {
+	color: #FF0000;
+	content: " *";
+}
+/* Input field with errors */
+.form input.error {
+    background-color: #FFCCCC;
+    border: 1px solid #FF6666;
+    padding: 2px;
+    height: 16px;
+}
+/* Error message after input field */
+.form label.error {
+	color: #FF0000;
+    display: block;
+    padding-bottom: 10px;
+    padding-top: 4px;	
 }
 
 .deletemelogin-form #id_username, .deletemelogin-form #id_password {
