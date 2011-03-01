@@ -9,6 +9,7 @@ from django.core.context_processors import csrf
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
 from django.contrib.auth.models import User
+from django.contrib import messages
 
 
 def home( request ):
@@ -78,7 +79,8 @@ def account( request ):
 		myUserChangeForm		= MyUserChangeForm( data=request.POST, instance=request.user )
 		if myUserChangeForm.is_valid():
 			myUserChangeForm.save()
-			return redirect( "webshop.views.home" )
+			messages.success( request, "Profile has been successfully updated." ) # Levels: info, success, warning, and error
+			return redirect( "webshop.views.account" )
 		#else:
 			#print "Form is not valid!"
 	else:
@@ -97,3 +99,15 @@ def search( request ):
 	variables					= {}
 	context						= RequestContext( request )
 	return redirect( "webshop.views.home" )
+
+def about( request ):
+	variables					= {}
+	context						= RequestContext( request )
+	context.update( csrf( request ) )
+	return render_to_response( "webshop/about.html", variables, context )
+
+def credits( request ):
+	variables					= {}
+	context						= RequestContext( request )
+	context.update( csrf( request ) )
+	return render_to_response( "webshop/credits.html", variables, context )
