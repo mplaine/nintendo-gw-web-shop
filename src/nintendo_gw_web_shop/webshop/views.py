@@ -111,3 +111,29 @@ def credits( request ):
 	context						= RequestContext( request )
 	context.update( csrf( request ) )
 	return render_to_response( "webshop/credits.html", variables, context )
+
+def payment_pay( request ):
+	variables	= {}
+	context		= RequestContext( request )
+	return render_to_response( "webshop/payement_pay.html", variables, context )
+	
+def payment_success( request ):
+	variables	= {}
+	context		= RequestContext( request )
+	return render_to_response( "webshop/payement_success.html", variables, context )
+	
+def payment_cancel( request ):
+	variables	= {}
+	context		= RequestContext( request )
+	return render_to_response( "webshop/cart.html", variables, context )
+	
+def payment_error( request ):
+	variables	= {}
+	context		= RequestContext( request )
+	return render_to_response( "webshop/error.html", variables, context )
+	
+def cart( request ):
+	variables	= {}
+	context		= RequestContext( request )
+	return render_to_response( "webshop/cart.html", variables, context )
+

@@ -17,6 +17,11 @@ urlpatterns    = patterns( '',
     ( r'^logout/$', 'webshop.views.logout' ),
     ( r'^about/$', 'webshop.views.about' ),
     ( r'^credits/$', 'webshop.views.credits' ),
+    ( r'^cart/$', 'webshop.views.cart' ),
+    ( r'^payment/pay/$', 'webshop.views.payment_pay'),
+    ( r'^payment/success/$', 'webshop.views.payment_success'),
+    ( r'^payment/cancel/$', 'webshop.views.payment_cancel'),
+    ( r'^payment/error/$', 'webshop.views.payment_error'),
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
