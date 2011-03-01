@@ -15,6 +15,8 @@ urlpatterns    = patterns( '',
     ( r'^login/$', 'webshop.views.login' ),
     ( r'^account/', 'webshop.views.account' ),
     ( r'^logout/$', 'webshop.views.logout' ),
+    ( r'^about/$', 'webshop.views.about' ),
+    ( r'^credits/$', 'webshop.views.credits' ),
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

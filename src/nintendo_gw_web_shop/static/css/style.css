@@ -243,25 +243,6 @@ input:focus {
 	margin-left: 20px;
 }
 
-.form-error {
-	align: left;
-	background-color: #FF6666;
-	background-image: url( "../images/forbidden_32x32.png" );
-	background-position: 5px 5px;
-	background-repeat: no-repeat;
-	border: 2px solid #CC0000;
-	color: #FFFFFF;
-	font-weight: bold;
-	padding: 12px 12px 0px 50px;
-	margin-bottom: 10px;
-	min-height: 30px;
-	text-align: left;
-}
-.form-error ul {
-	margin: 4px 0px 10px 0px;
-	padding: 0px 0px 0px 30px;
-}
-
 .errorlist {
 	display: none;
 }
@@ -476,23 +457,74 @@ input:focus {
 }
 /* Required star after input field label */
 .form label span.required:after {
-	color: #FF0000;
+	color: #F43232;
 	content: " *";
 }
 /* Input field with errors */
 .form input.error {
-    background-color: #FFCCCC;
-    border: 1px solid #FF6666;
+    background-color: #FBE3E4;
+    border: 1px solid #FBC2C4;
     padding: 2px;
     height: 16px;
 }
 /* Error message after input field */
 .form label.error {
-	color: #FF0000;
-    display: block;
+	color: #F43232;
+	display: block;
     padding-bottom: 10px;
     padding-top: 4px;	
 }
+
+/* BEGIN: messages */
+.messages {
+}
+.messages ul {
+    list-style: none;
+    margin: 10px 0px;
+    padding-left: 0px;
+}
+.messages ul li {
+    padding: 0.1em;
+}
+.messages.info,
+.messages.success,
+.messages.warning,
+.messages.error,
+.messages.validation {
+	align: left;
+	background-position: 5px 5px;
+	background-repeat: no-repeat;
+	border: 2px solid;
+	margin: 10px 0px;
+	min-height: 30px;
+	padding: 0px 0px 0px 50px;
+	text-align: left;
+}
+.messages.info {
+	background-color: #CDEAF7;
+	background-image: url( "../images/info.png" );
+	border-color: #789FCC;
+	color: #00529B;
+}
+.messages.success {
+	background-color: #E6EFC2;
+	background-image:url( "../images/success.png" );
+	border-color: #C6D880;
+	color: #264409;
+}
+.messages.warning {
+	background-color: #FFF6BF;
+	background-image: url( "../images/warning.png" );
+	border-color: #FFD324;
+	color: #514721;
+}
+.messages.error, .messages.validation {
+	background-color: #FBE3E4;
+	background-image: url( "../images/error.png" );
+	border-color: #FBC2C4;
+	color: #8A1F11;
+}
+/* END: messages */
 
 .deletemelogin-form #id_username, .deletemelogin-form #id_password {
 	border: none;

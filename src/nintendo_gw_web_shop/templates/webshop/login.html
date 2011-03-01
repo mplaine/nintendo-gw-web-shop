@@ -16,6 +16,14 @@
 						required: true,
 						maxlength: 128
 					}
+				},
+				messages: {
+					"username": {
+						required: "Username is required."
+					},
+					"password": {
+						required: "Password is required."
+					}
 				}
 			} );
 		} );	
@@ -29,16 +37,18 @@
 	<div id="main-content">
 		<h3>Login</h3>
 		<form id="login-form" class="form" action="{% url webshop.views.login %}" method="post">
+			{# Show validation errors #}
 			{% if form.errors %}
-				<div class="form-error">
-					<div>Please, correct the following errors and try again:</div>
-					<ul>
+				<div class="messages validation">
+					<ul class="messages-list-validation">
 						{% for key,value in form.errors.items %}
 							{% for error in value %}<li>{{ error }}</li>{% endfor %} 
 						{% endfor %}
 					</ul>
 				</div>
 			{% endif %}
+			{% load messages %}
+			{% render_messages messages %}
 			{% csrf_token %}
 			<div style="display: none;"><input type="hidden" name="next" value="{{ next }}" /></div>
 			<table>

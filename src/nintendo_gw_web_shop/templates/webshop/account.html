@@ -23,8 +23,15 @@
 					}
 				},
 				messages: {
+					"first_name": {
+						required: "First name is required."
+					},
+					"last_name": {
+						required: "Last name is required."
+					},
 					"email": {
-						email: "Enter a valid e-mail address."
+						required: "E-mail address is required.",
+						email: "Please enter a valid e-mail address."
 		            }
 				}
 			} );
@@ -39,16 +46,18 @@
 	<div id="main-content">
 		<h3>Profile</h3>
 		<form id="profile-form" class="form" action="{% url webshop.views.account %}" method="post">
+			{# Show validation errors #}
 			{% if form.errors %}
-				<div class="form-error">
-					<div>Please, correct the following errors and try again:</div>
-					<ul>
+				<div class="messages validation">
+					<ul class="messages-list-validation">
 						{% for key,value in form.errors.items %}
 							{% for error in value %}<li>{{ error }}</li>{% endfor %} 
 						{% endfor %}
 					</ul>
 				</div>
 			{% endif %}
+			{% load messages %}
+			{% render_messages messages %}
 			{% csrf_token %}
 			<table>
 				{% for field in form %}
@@ -67,7 +76,7 @@
 				{% endfor %}
 				<tr>
 					<th>&nbsp;</th>
-					<td><input type="submit" value="save" /></td>
+					<td><input type="submit" value="Save" /></td>
 				</tr>
 			</table>
 		</form>
