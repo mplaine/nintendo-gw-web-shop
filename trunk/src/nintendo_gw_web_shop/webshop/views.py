@@ -12,6 +12,9 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 
 
+def root( request ):
+	return redirect( "webshop.views.home" )
+
 def home( request ):
 	types						= Type.objects.all().order_by( "name" )
 	variables					= { "types" : types }
@@ -71,7 +74,10 @@ def register( request ):
 	context.update( csrf( request ) )
 	return render_to_response( "webshop/register.html", variables, context )
 
-def account( request ):
+def myaccount( request ):
+	return redirect( "webshop.views.account_details" )
+
+def account_details( request ):
 	if not request.user.is_authenticated():
 		return redirect( "webshop.views.home" )	
 	
@@ -80,16 +86,34 @@ def account( request ):
 		if myUserChangeForm.is_valid():
 			myUserChangeForm.save()
 			messages.success( request, "Profile has been successfully updated." ) # Levels: info, success, warning, and error
-			return redirect( "webshop.views.account" )
+			return redirect( "webshop.views.account_details" )
 		#else:
 			#print "Form is not valid!"
 	else:
 		myUserChangeForm		= MyUserChangeForm( instance=request.user )
 	
-	variables					= { "form" : myUserChangeForm }
+	variables					= { "form" : myUserChangeForm, "username_label" : "Username:", "username" : request.user.username }
 	context						= RequestContext( request )
 	context.update( csrf( request ) )
-	return render_to_response( "webshop/account.html", variables, context )
+	return render_to_response( "webshop/myaccount/account_details.html", variables, context )
+
+def address_book( request ):
+	if not request.user.is_authenticated():
+		return redirect( "webshop.views.home" )	
+	
+	variables					= {}
+	context						= RequestContext( request )
+	context.update( csrf( request ) )
+	return render_to_response( "webshop/myaccount/address_book.html", variables, context )
+
+def completed_orders( request ):
+	if not request.user.is_authenticated():
+		return redirect( "webshop.views.home" )	
+	
+	variables					= {}
+	context						= RequestContext( request )
+	context.update( csrf( request ) )
+	return render_to_response( "webshop/myaccount/completed_orders.html", variables, context )
 
 def logout( request ):
 	auth_logout( request )

@@ -1,6 +1,12 @@
 {% extends "webshop/base_template.html" %}
 {% block title %}Nintendo Game &amp; Watch Shop - Credits{% endblock %}
-{% block extra-scripts %}{% endblock %}
+{% block extra-scripts %}
+	<script type="text/javascript">
+		$( function() {
+			$( "#footer-navi-credits>span" ).addClass( "footer-navi-selected" );
+		} );
+	</script>				
+{% endblock %}
 {% block page-title %}Credits{% endblock %}
 {% block sort-bar %}{% endblock %}
 {% block content %}
