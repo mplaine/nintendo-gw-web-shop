@@ -17,6 +17,9 @@ input:focus {
 	width: 960px;
 	margin: 0 auto;
 }
+a {
+	color: #339900;
+}
 /* END: common */
 
 

@@ -84,6 +84,14 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'nintendo_gw_web_shop.urls'
 
+EMAIL_HOST          = "smtp.gmail.com"
+EMAIL_HOST_USER     = "your-email-address@gmail.com" 
+EMAIL_HOST_PASSWORD = "your-password"
+EMAIL_PORT          = 587
+EMAIL_USE_TLS       = True
+SERVER_EMAIL        = "your-email-address@gmail.com"
+DEFAULT_FROM_EMAIL  = "your-email-address@gmail.com"
+
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
