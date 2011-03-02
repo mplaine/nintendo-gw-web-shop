@@ -1,7 +1,6 @@
 {% extends "webshop/base_template.html" %}
 {% block title %}Nintendo Game &amp; Watch Shop - Register{% endblock %}
 {% block extra-scripts %}
-	<script type="text/javascript" src="/webshop/static/js/jquery.validate.min.js"></script>
 	<script type="text/javascript">
 		$( function() {
 			$( "#navi-register>span" ).addClass( "navi-selected" );
@@ -51,7 +50,7 @@
 						required: "Password is required."
 					},
 					"password2": {
-						required: "Password is required.",
+						required: "Password confirmation is required.",
 						equalTo: "Please enter the same password as above."
 					},
 					"email": {

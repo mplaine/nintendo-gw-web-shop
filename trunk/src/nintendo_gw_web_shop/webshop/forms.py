@@ -1,6 +1,6 @@
 from django import forms
 from django.db import models
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordResetForm, UserChangeForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django.forms import widgets
 
@@ -16,6 +16,22 @@ class MyAuthenticationForm( AuthenticationForm ):
     password_max_length     = 128
     username                = forms.CharField( label="%s:" % username_label, max_length="%d" % username_max_length, error_messages={ "required" : "%s is required." % username_label, "max_length" : "%s is too long, maximum length is %d." % ( username_label, username_max_length ) } )
     password                = forms.CharField( label="%s:" % password_label, max_length="%d" % password_max_length, widget=forms.PasswordInput, error_messages={ "required" : "%s is required." % password_label, "max_length" : "%s is too long, maximum length is %d." % ( password_label, password_max_length ) })
+
+class MyPasswordResetForm( PasswordResetForm ):
+    email_label             = "E-mail address"
+    email_max_length        = 128
+    email                   = forms.EmailField( label="%s:" % email_label, max_length="%d" % email_max_length, error_messages={ "required" : "%s is required." % email_label, "max_length" : "%s is too long, maximum length is %d." % ( email_label, email_max_length ) } )
+
+class MyPasswordChangeForm( PasswordChangeForm ):
+    old_password_label          = "Old password"
+    old_password_max_length     = 128
+    new_password1_label         = "New password"
+    new_password1_max_length    = 128
+    new_password2_label         = "Confirm new password"
+    new_password2_max_length    = 128
+    old_password                = forms.CharField( label="%s:" % old_password_label, max_length="%d" % old_password_max_length, widget=forms.PasswordInput, error_messages={ "required" : "%s is required." % old_password_label, "max_length" : "%s is too long, maximum length is %d." % ( old_password_label, old_password_max_length ) })
+    new_password1               = forms.CharField( label="%s:" % new_password1_label, max_length="%d" % new_password1_max_length, widget=forms.PasswordInput, error_messages={ "required" : "%s is required." % new_password1_label, "max_length" : "%s is too long, maximum length is %d." % ( new_password1_label, new_password1_max_length ) })
+    new_password2               = forms.CharField( label="%s:" % new_password2_label, max_length="%d" % new_password2_max_length, widget=forms.PasswordInput, error_messages={ "required" : "%s is required." % new_password2_label, "max_length" : "%s is too long, maximum length is %d." % ( new_password2_label, new_password2_max_length ) })
 
 class MyUserCreationForm( UserCreationForm ):
     first_name_label        = "First name"

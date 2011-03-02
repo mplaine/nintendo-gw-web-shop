@@ -1,7 +1,6 @@
 {% extends "webshop/base_template.html" %}
 {% block title %}Nintendo Game &amp; Watch Shop - Login{% endblock %}
 {% block extra-scripts %}
-	<script type="text/javascript" src="/webshop/static/js/jquery.validate.min.js"></script>
 	<script type="text/javascript">
 		$( function() {
 			$( "#navi-login>span" ).addClass( "navi-selected" );
@@ -71,6 +70,10 @@
 				<tr>
 					<th>&nbsp;</th>
 					<td><input type="submit" value="Login" /></td>
+				</tr>
+				<tr>
+					<th>&nbsp;</th>
+					<td><a href="{% url webshop.views.forgot_your_password %}">Forgot your password?</a></td>
 				</tr>
 			</table>
 		</form>
