@@ -1,0 +1,24 @@
+{% extends "webshop/base_template.html" %}
+{% block title %}Nintendo Game &amp; Watch Shop - My Account - Completed Orders{% endblock %}
+{% block extra-scripts %}
+	<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+	<script type="text/javascript">
+		$( function() {
+			$( "#navi-myaccount>span" ).addClass( "navi-selected" );
+
+			$( "#side-navi-myaccount-completed-orders>span" ).addClass( "side-navi-selected" );
+			$( "#side-navi-myaccount-completed-orders" ).parent().append( $( "#side-navi-arrow" ) );		
+			$( "#side-navi-arrow" ).show( "slide", { direction: "left" }, 500 );
+		} );
+	</script>				
+{% endblock %}
+{% block page-title %}My Account{% endblock %}
+{% block sort-bar %}{% endblock %}
+{% block content %}
+	<div id="side-navi">
+		{% include "webshop/myaccount/side_navi_template.html" %}
+	</div>
+	<div id="main-content">
+		<h3>Completed Orders</h3>
+	</div>
+{% endblock %}

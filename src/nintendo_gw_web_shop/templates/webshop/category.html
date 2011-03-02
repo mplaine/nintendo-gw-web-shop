@@ -8,7 +8,16 @@
 			$( "#navi-home>span" ).addClass( "navi-selected" );
 			
 			$('a', '#side-navi').attr('href', 'javascript:;');
-			
+
+			//$( "a", "#side-navi" ).click( function() {
+			//	var me	= this;
+			//	$( "#side-navi-arrow" ).hide();
+			//	$( me ).append( $( "#side-navi-arrow" ) );
+			//	$( "#side-navi-arrow" ).show( "slide", { direction: "left" }, 500 );
+			//});
+			//
+			//$( "a", "#side-navi" ).attr( "href", "javascript:;" );
+
 			$('a[name="'+window.location.hash.substring(1, 6)+'"]').parent().show();
 			$('li', '#side-navi').eq((window.location.hash.substring(5, 6) - 1)).append($('#side-navi-arrow'));		
 			$('#side-navi-arrow').show("slide", { direction: "left" }, 500);

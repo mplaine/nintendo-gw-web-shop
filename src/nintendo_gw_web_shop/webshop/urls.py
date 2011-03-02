@@ -7,13 +7,16 @@ import settings
 admin.autodiscover()
 
 urlpatterns    = patterns( '',
-    ( r'^$', 'webshop.views.home' ),
+    ( r'^$', 'webshop.views.root' ),
     ( r'^home/$', 'webshop.views.home' ),
     ( r'^home/category/(?P<type_id>\d+)/', 'webshop.views.category' ),
     ( r'^home/search/', 'webshop.views.search' ),
     ( r'^register/$', 'webshop.views.register' ),
     ( r'^login/$', 'webshop.views.login' ),
-    ( r'^account/', 'webshop.views.account' ),
+    ( r'^myaccount/$', 'webshop.views.myaccount' ),
+    ( r'^myaccount/accountdetails/$', 'webshop.views.account_details' ),
+    ( r'^myaccount/addressbook/$', 'webshop.views.address_book' ),
+    ( r'^myaccount/completedorders/$', 'webshop.views.completed_orders' ),
     ( r'^logout/$', 'webshop.views.logout' ),
     ( r'^about/$', 'webshop.views.about' ),
     ( r'^credits/$', 'webshop.views.credits' ),

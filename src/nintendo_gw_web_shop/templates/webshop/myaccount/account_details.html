@@ -1,11 +1,15 @@
 {% extends "webshop/base_template.html" %}
-{% block title %}Nintendo Game &amp; Watch Shop - Profile{% endblock %}
+{% block title %}Nintendo Game &amp; Watch Shop - My Account - Account Details{% endblock %}
 {% block extra-scripts %}
 	<script type="text/javascript" src="/webshop/static/js/jquery.validate.min.js"></script>
 	<script type="text/javascript">
 		$( function() {
-			$( "#navi-account>span" ).addClass( "navi-selected" );
-			
+			$( "#navi-myaccount>span" ).addClass( "navi-selected" );
+
+			$( "#side-navi-myaccount-account-details>span" ).addClass( "side-navi-selected" );
+			$( "#side-navi-myaccount-account-details" ).parent().append( $( "#side-navi-arrow" ) );		
+			$( "#side-navi-arrow" ).show( "slide", { direction: "left" }, 500 );
+
 			$( "#profile-form" ).validate( {
 				rules: {
 					"first_name": {
@@ -38,14 +42,15 @@
 		} );	
 	</script>				
 {% endblock %}
-{% block page-title %}Profile{% endblock %}
+{% block page-title %}My Account{% endblock %}
 {% block sort-bar %}{% endblock %}
 {% block content %}
 	<div id="side-navi">
+		{% include "webshop/myaccount/side_navi_template.html" %}
 	</div>
 	<div id="main-content">
-		<h3>Profile</h3>
-		<form id="profile-form" class="form" action="{% url webshop.views.account %}" method="post">
+		<h3>Account Details</h3>
+		<form id="profile-form" class="form" action="{% url webshop.views.account_details %}" method="post">
 			{# Show validation errors #}
 			{% if form.errors %}
 				<div class="messages validation">
@@ -60,6 +65,12 @@
 			{% render_messages messages %}
 			{% csrf_token %}
 			<table>
+				<tr>
+					<th>
+						<label for="id_username">{{ username_label }}</label>
+					</th>
+					<td>{{ username }}</td>
+				</tr>
 				{% for field in form %}
 					<tr>
 						<th>

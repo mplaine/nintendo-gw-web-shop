@@ -58,25 +58,21 @@
 					<a href="{% url webshop.views.home %}"><img src="/webshop/static/images/ngws_logo.png" /></a>
 				</div>
 				<div id="navi">
-					<a id="navi-home" href="{% url webshop.views.home %}"><span>home</span></a>
-					{% if user.is_authenticated %}
-						<a id="navi-account" href="{% url webshop.views.account %}"><span>account</span></a>
-						<a id="navi-logout" href="{% url webshop.views.logout %}"><span>logout</span></a>
-					{% else %}
-						<a id="navi-register" href="{% url webshop.views.register %}"><span>register</span></a>
-						<a id="navi-login" href="{% url webshop.views.login %}"><span>login</span></a>
-					{% endif %}	
-					<a id="navi-cart" href="javascript:;"><span>cart <span id="cart-items">(0)</span></span></a>
+					<ul>
+						<li><a id="navi-home" href="{% url webshop.views.home %}"><span>home</span></a></li>
+						{% if user.is_authenticated %}
+							<li><a id="navi-myaccount" href="{% url webshop.views.account_details %}"><span>my account</span></a></li>
+							<li><a id="navi-logout" href="{% url webshop.views.logout %}"><span>logout</span></a></li>
+						{% else %}
+							<li><a id="navi-register" href="{% url webshop.views.register %}"><span>register</span></a></li>
+							<li><a id="navi-login" href="{% url webshop.views.login %}"><span>login</span></a></li>
+						{% endif %}	
+						<li><a id="navi-cart" href="{% url webshop.views.cart %}"><span>cart (0)</span></a></li>
+					</ul>
 				</div>
 				<div id="search-bar">
-					<input id="search-input" value="search" /><input type="button" id="search-button" value=""/>
+					<input id="search-input" value="Search" /><input type="button" id="search-button" value=""/>
 				</div>
-				{% if user.is_authenticated %}
-					<div id="greeting">
-						Welcome, {{ user.first_name }}!
-					</div>
-				{% else %}
-				{% endif %}	
 				<h3 id="page-title">{% block page-title %}{% endblock %}</h3>
 				{% block sort-bar %}{% endblock %}
 			</div>
@@ -85,8 +81,10 @@
 			</div>
 			<div id="footer">
 				<div id="footer-navi">
-					<a href="{% url webshop.views.about %}">about</a>
-					<a href="{% url webshop.views.credits %}">credits</a>
+					<ul>
+						<li><a id="footer-navi-about" href="{% url webshop.views.about %}"><span>about</span></a></li>
+						<li><a id="footer-navi-credits" href="{% url webshop.views.credits %}"><span>credits</span></a></li>
+					</ul>
 				</div>
 			</div>
 		</div>
