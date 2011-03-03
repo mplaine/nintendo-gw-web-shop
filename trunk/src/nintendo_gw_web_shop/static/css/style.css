@@ -13,6 +13,9 @@ h1, h2, h3 {
 input:focus {
     outline: none;
 }
+input[ readonly ] {
+	border: none;
+}
 #wrapper {
 	width: 960px;
 	margin: 0 auto;
@@ -47,7 +50,7 @@ a {
 	background: transparent;
 	float: left;
 	margin-top: 20px;
-	margin-left: 102px;
+	margin-left: 122px;
 }
 #navi ul {
 	list-style: none;

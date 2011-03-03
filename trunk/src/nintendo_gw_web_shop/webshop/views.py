@@ -1,8 +1,8 @@
 from django.core.urlresolvers import reverse
-from django.shortcuts import render_to_response, get_object_or_404, redirect
+from django.shortcuts import render_to_response, get_object_or_404, redirect, get_list_or_404
 from django.template import RequestContext
-from webshop.forms import ProductForm, MyUserCreationForm, MyAuthenticationForm, MyUserChangeForm, MyPasswordResetForm, MyPasswordChangeForm
-from webshop.models import SaleItem, Product, Type
+from webshop.forms import ProductForm, MyUserCreationForm, MyAuthenticationForm, MyUserChangeForm, MyPasswordResetForm, MyPasswordChangeForm, AddressForm
+from webshop.models import SaleItem, Product, Type, Address
 from django.template.loader import get_template
 from django.template.context import Context
 from django.core.context_processors import csrf
@@ -10,6 +10,7 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.views import password_reset
+from django.http import Http404
 
 
 def root( request ):
@@ -144,7 +145,7 @@ def account_details( request ):
 	else:
 		myUserChangeForm		= MyUserChangeForm( instance=request.user )
 	
-	variables					= { "form" : myUserChangeForm, "username_label" : "Username:", "username" : request.user.username }
+	variables					= { "form" : myUserChangeForm }
 	context						= RequestContext( request )
 	context.update( csrf( request ) )
 	return render_to_response( "webshop/myaccount/account_details.html", variables, context )
@@ -152,11 +153,65 @@ def account_details( request ):
 def address_book( request ):
 	if not request.user.is_authenticated():
 		return redirect( "webshop.views.home" )	
+
+	if request.method == "GET":
+		addresses				= Address.objects.filter( user=request.user )
+		# Support one address only (for now)
+		if addresses.__len__() == 0:
+			# No associated addresses found
+			return redirect( "webshop.views.address_book_new" )
+		else:
+			# Retrieve the first address in case the user happens to have multiple addresses for some weird reason
+			return redirect( "webshop.views.address_book_edit", addresses[ 0 ].id )
+	else:
+		raise Http404( "%s method is not supported." % request.method )
+
+def address_book_new( request ):
+	if not request.user.is_authenticated():
+		return redirect( "webshop.views.home" )	
+
+	# Create a new address. Associate the currently logged-in user with the address
+	address						= Address()
+	address.user				= request.user
 	
-	variables					= {}
+	if request.method == "POST":
+		addressForm				= AddressForm( data=request.POST, instance=address )
+		if addressForm.is_valid():
+			addressForm.save()
+			messages.success( request, "Address has been successfully saved." ) # Levels: info, success, warning, and error
+			return redirect( "webshop.views.address_book" )
+		#else:
+			#print "Form is not valid!"			
+	else:
+		addressForm				= AddressForm( initial={} )
+		
+	variables					= { "form" : addressForm }
 	context						= RequestContext( request )
 	context.update( csrf( request ) )
-	return render_to_response( "webshop/myaccount/address_book.html", variables, context )
+	return render_to_response( "webshop/myaccount/address_book_new.html", variables, context )	
+
+def address_book_edit( request, address_id=None ):
+	if not request.user.is_authenticated():
+		return redirect( "webshop.views.home" )	
+
+	# Retrieve the address. Users are allowed to edit their own addresses only!
+	address						= get_object_or_404( Address, pk=address_id, user=request.user )
+
+	if request.method == "POST":
+		addressForm				= AddressForm( data=request.POST, instance=address )
+		if addressForm.is_valid():
+			addressForm.save()
+			messages.success( request, "Address has been successfully updated." ) # Levels: info, success, warning, and error
+			return redirect( "webshop.views.address_book" )
+		#else:
+			#print "Form is not valid!"			
+	else:
+		addressForm				= AddressForm( instance=address )
+		
+	variables					= { "form" : addressForm }
+	context						= RequestContext( request )
+	context.update( csrf( request ) )
+	return render_to_response( "webshop/myaccount/address_book_edit.html", variables, context )
 
 def completed_orders( request ):
 	if not request.user.is_authenticated():
@@ -212,4 +267,3 @@ def cart( request ):
 	variables	= {}
 	context		= RequestContext( request )
 	return render_to_response( "webshop/cart.html", variables, context )
-

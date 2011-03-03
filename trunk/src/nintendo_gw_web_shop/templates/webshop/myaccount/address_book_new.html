@@ -1,46 +1,57 @@
 {% extends "webshop/base_template.html" %}
-{% block title %}Nintendo Game &amp; Watch Shop - My Account - Account Details{% endblock %}
+{% block title %}Nintendo Game &amp; Watch Shop - My Account - Address Book{% endblock %}
 {% block extra-scripts %}
 	<script type="text/javascript">
 		$( function() {
 			$( "#navi-myaccount>span" ).addClass( "navi-selected" );
 
-			$( "#side-navi-myaccount-account-details>span" ).addClass( "side-navi-selected" );
-			$( "#side-navi-myaccount-account-details" ).parent().append( $( "#side-navi-arrow" ) );		
+			$( "#side-navi-myaccount-address-book>span" ).addClass( "side-navi-selected" );
+			$( "#side-navi-myaccount-address-book" ).parent().append( $( "#side-navi-arrow" ) );		
 			$( "#side-navi-arrow" ).show( "slide", { direction: "left" }, 500 );
 
-			$( "#id_first_name" ).focus();
+			$( "#id_streetAddressLine1" ).focus();
 
-			$( "#account-details-form" ).validate( {
+			$( "#address-form" ).validate( {
 				rules: {
-					"first_name": {
+					"streetAddressLine1": {
 						required: true,
-						maxlength: 30
+						maxlength: 100
 					},
-					"last_name": {
-						required: true,
-						maxlength: 30
+					"streetAddressLine2": {
+						maxlength: 100
 					},
-					"email": {
+					"zipCode": {
 						required: true,
-						email: true,
-						maxlength: 128
+						maxlength: 10
+					},
+					"city": {
+						required: true,
+						maxlength: 50
+					},
+					"state": {
+						maxlength: 50
+					},
+					"country": {
+						required: true,
+						maxlength: 50
 					}
 				},
 				messages: {
-					"first_name": {
-						required: "First name is required."
+					"streetAddressLine1": {
+						required: "Street address line 1 is required."
 					},
-					"last_name": {
-						required: "Last name is required."
+					"zipCode": {
+						required: "ZIP code is required."
 					},
-					"email": {
-						required: "E-mail address is required.",
-						email: "Please enter a valid e-mail address."
-		            }
+					"city": {
+						required: "City is required."
+					},
+					"country": {
+						required: "Country is required."
+					}
 				}
-			} );
-		} );	
+			} );		
+		} );
 	</script>				
 {% endblock %}
 {% block page-title %}My Account{% endblock %}
@@ -50,8 +61,8 @@
 		{% include "webshop/myaccount/side_navi_template.html" %}
 	</div>
 	<div id="main-content">
-		<h3>Edit Account Details</h3>
-		<form id="account-details-form" class="form" action="{% url webshop.views.account_details %}" method="post">
+		<h3>Add New Address</h3>
+		<form id="address-form" class="form" action="" method="post">
 			{# Show validation errors #}
 			{% if form.errors %}
 				<div class="messages validation">
@@ -82,9 +93,9 @@
 				{% endfor %}
 				<tr>
 					<th>&nbsp;</th>
-					<td><input type="submit" value="Update account details" /></td>
+					<td><input type="submit" value="Save address" /></td>
 				</tr>
 			</table>
-		</form>
+		</form>		
 	</div>
 {% endblock %}
