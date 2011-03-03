@@ -94,11 +94,13 @@ class Address( models.Model ):
 	user				= models.ForeignKey( User )
 	streetAddressLine1 	= models.CharField( "Street address line 1", max_length=100 )
 	streetAddressLine2 	= models.CharField( "Street address line 2", max_length=100, blank=True )
-	zipCode				= models.CharField( max_length=10 )
+	zipCode				= models.CharField( "ZIP code", max_length=10 )
 	city 				= models.CharField( max_length=50 )
 	state				= models.CharField( max_length=50, blank=True )
 	country				= models.CharField( max_length=50, default="Finland" )
 
+	def __unicode__( self ):
+		return self.user.first_name + " " + self.user.last_name + " (" + self.user.username + "), " + self.streetAddressLine1 + ( ", " + self.streetAddressLine2 if self.streetAddressLine2 is None else "" ) + ", " + self.zipCode + " " + self.city + ( ", " + self.state if self.state is None else "" ) + ", " + self.country
 		
 class Comment( models.Model ):
 	user 		= models.ForeignKey( User )
