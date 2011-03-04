@@ -8,6 +8,8 @@
 			
 			$('a', '#side-navi').attr('href', 'javascript:;');
 
+			$( "#side-navi ul li a>span" ).first().addClass( "side-navi-selected" );
+
 			//$( "a", "#side-navi" ).click( function() {
 			//	var me	= this;
 			//	$( "#side-navi-arrow" ).hide();
@@ -23,9 +25,16 @@
 			
 			$('li', '#side-navi').click(function() {
 				var me = this;
+				
+				// Iterate over all links
+				$( "#side-navi ul li a>span" ).each( function( index ) {
+					$( this ).removeClass( "side-navi-selected" );
+				} );
+				
 				window.location.hash = 'item' + ($(me).index() + 1);
 				$('.product').hide();
 				$('a[name="'+window.location.hash.substring(1, 6)+'"]').parent().show();
+				$( "a>span", me ).addClass( "side-navi-selected" );
 				$('#side-navi-arrow').hide("slide", { direction: "left" }, 1000);
 				
 				$("#main-content").flip({
@@ -73,11 +82,10 @@
 {% block sort-bar %}{% endblock %}
 {% block content %}
 	<div id="side-navi">
-		<h4 class="side-navi-header">Products</h4>
 		<div id="side-navi-arrow"></div>
 		<ul>
 			{% for product in type.product_set.all %}
-				<li><a href="#item{{forloop.counter}}">{{product.title}}</a></li>
+				<li><a href="#item{{forloop.counter}}"><span>{{product.title}}</span></a></li>
 			{% endfor %}
 		</ul>
 	</div>
