@@ -156,15 +156,13 @@ def address_book( request ):
 
 	if request.method == "GET":
 		addresses				= Address.objects.filter( user=request.user )
-		# Support one address only (for now)
-		if addresses.__len__() == 0:
-			# No associated addresses found
-			return redirect( "webshop.views.address_book_new" )
-		else:
-			# Retrieve the first address in case the user happens to have multiple addresses for some weird reason
-			return redirect( "webshop.views.address_book_edit", addresses[ 0 ].id )
 	else:
 		raise Http404( "%s method is not supported." % request.method )
+
+	variables					= { "addresses" : addresses, "first_name" : request.user.first_name, "last_name" : request.user.last_name }
+	context						= RequestContext( request )
+	context.update( csrf( request ) )
+	return render_to_response( "webshop/myaccount/address_book.html", variables, context )
 
 def address_book_new( request ):
 	if not request.user.is_authenticated():
@@ -178,16 +176,16 @@ def address_book_new( request ):
 		addressForm				= AddressForm( data=request.POST, instance=address )
 		if addressForm.is_valid():
 			addressForm.save()
-			messages.success( request, "Address has been successfully saved." ) # Levels: info, success, warning, and error
+			messages.success( request, "New address has been successfully saved." ) # Levels: info, success, warning, and error
 			return redirect( "webshop.views.address_book" )
 		#else:
 			#print "Form is not valid!"			
 	else:
 		addressForm				= AddressForm( initial={} )
 		
-	variables					= { "form" : addressForm }
+	variables					= { "form" : addressForm, "first_name" : request.user.first_name, "last_name" : request.user.last_name }
 	context						= RequestContext( request )
-	context.update( csrf( request ) )
+	#context.update( csrf( request ) )
 	return render_to_response( "webshop/myaccount/address_book_new.html", variables, context )	
 
 def address_book_edit( request, address_id=None ):
@@ -208,10 +206,27 @@ def address_book_edit( request, address_id=None ):
 	else:
 		addressForm				= AddressForm( instance=address )
 		
-	variables					= { "form" : addressForm }
+	variables					= { "form" : addressForm, "first_name" : request.user.first_name, "last_name" : request.user.last_name }
 	context						= RequestContext( request )
 	context.update( csrf( request ) )
 	return render_to_response( "webshop/myaccount/address_book_edit.html", variables, context )
+
+def address_book_delete( request, address_id=None ):
+	if not request.user.is_authenticated():
+		return redirect( "webshop.views.home" )	
+
+	# Retrieve the address. Users are allowed to edit their own addresses only!
+	address						= get_object_or_404( Address, pk=address_id, user=request.user )
+
+	if request.method == "POST":
+		address.delete()
+		messages.success( request, "Address has been successfully deleted." ) # Levels: info, success, warning, and error
+		return redirect( "webshop.views.address_book" )
+		
+	variables					= { "address" : address, "first_name" : request.user.first_name, "last_name" : request.user.last_name }
+	context						= RequestContext( request )
+	context.update( csrf( request ) )
+	return render_to_response( "webshop/myaccount/address_book_delete.html", variables, context )
 
 def completed_orders( request ):
 	if not request.user.is_authenticated():

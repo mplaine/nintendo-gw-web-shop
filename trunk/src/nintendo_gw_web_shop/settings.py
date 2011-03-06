@@ -105,7 +105,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.sites',
     'django.contrib.messages',
-    'polls',
     'webshop',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',

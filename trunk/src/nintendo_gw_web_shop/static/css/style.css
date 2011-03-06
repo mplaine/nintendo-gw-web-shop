@@ -23,6 +23,9 @@ input[ readonly ] {
 a {
 	color: #339900;
 }
+.bold {
+	font-weight: bold;
+}
 /* END: common */
 
 
@@ -141,6 +144,7 @@ a {
 #side-navi {
 	background: #339900;
 	float: left;
+	height: 100%;
 	margin-bottom: 12px;
 	margin-right: 20px;
 	padding: 0px;
@@ -206,6 +210,7 @@ a {
 }
 #main-content h3 {
 	color: #339900;
+	margin-bottom: 25px;
 	margin-top: 0px;
 }
 /* END: content */
@@ -378,6 +383,44 @@ a {
 	margin-bottom: 5px;
 }
 /* END: home */
+
+
+/* BEGIN: my account */
+#address-book-table {
+	border-collapse: collapse;
+	width: 100%;
+}
+#address-book-table td {
+	border-bottom: 1px solid #999999;
+	border-top: 1px solid #999999;
+	padding: 10px 0px 10px 0px;
+}
+#address-book-table ul {
+	list-style: none;
+	margin: 0;
+	padding: 0px 0px 4px 0px;
+	text-indent: 0;	
+}
+#address-book-table thead th {
+	font-weight: normal;
+	padding-bottom: 4px;
+	text-align: left;
+}
+#address-book-table a.add {
+	background-image: url( "../images/add2.png" );
+	background-repeat: no-repeat;
+	padding-left: 20px;
+}
+#address-book-table .inline-form {
+	display: inline;
+}
+#address-book-delete-table ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	text-indent: 0;	
+}
+/* END: my account */
 
 
 /* BEGIN: random/uncleaned */
