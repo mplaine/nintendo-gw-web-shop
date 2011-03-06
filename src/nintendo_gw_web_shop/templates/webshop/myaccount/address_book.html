@@ -1,0 +1,58 @@
+{% extends "webshop/base_template.html" %}
+{% block title %}Nintendo Game &amp; Watch Shop - My Account - Address Book{% endblock %}
+{% block extra-scripts %}
+	<script type="text/javascript">
+		$( function() {
+			$( "#navi-myaccount>span" ).addClass( "navi-selected" );
+
+			$( "#side-navi-myaccount-address-book>span" ).addClass( "side-navi-selected" );
+			$( "#side-navi-myaccount-address-book" ).parent().append( $( "#side-navi-arrow" ) );		
+			$( "#side-navi-arrow" ).show( "slide", { direction: "left" }, 500 );
+		} );
+	</script>				
+{% endblock %}
+{% block page-title %}My Account{% endblock %}
+{% block sort-bar %}{% endblock %}
+{% block content %}
+	<div id="side-navi">
+		{% include "webshop/myaccount/side_navi_template.html" %}
+	</div>
+	<div id="main-content">
+		<h3>Address Book</h3>
+		{% load messages %}
+		{% render_messages messages %}
+		<table id="address-book-table">
+			<thead>
+				<tr>
+					<th><a class="add" href="{% url webshop.views.address_book_new %}">Add a new address</a></th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for address in addresses %}
+					<tr>
+						<td>
+							<ul>
+								<li class="bold">{{ first_name }} {{ last_name }}</li>
+								<li>{{ address.streetAddressLine1 }}</li>
+								{% if address.streetAddressLine2 != "" %}
+									<li>{{ address.streetAddressLine2 }}</li>
+								{% endif %}
+								<li>{{ address.zipCode }} {{ address.city }}</li>
+								{% if address.state != "" %}
+								<li>{{ address.state }}</li>
+								{% endif %}
+								<li>{{ address.country }}</li>
+							</ul>
+							<form class="inline-form" action="{% url webshop.views.address_book_edit address_id=address.pk %}" method="get">
+								<input type="submit" value="Edit" />
+							</form>
+							<form class="inline-form" action="{% url webshop.views.address_book_delete address_id=address.pk %}" method="get">
+								<input type="submit" value="Delete" />
+							</form>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+	</div>
+{% endblock %}

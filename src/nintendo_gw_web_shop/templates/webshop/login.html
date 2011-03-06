@@ -37,7 +37,7 @@
 	</div>
 	<div id="main-content">
 		<h3>Login</h3>
-		<form id="login-form" class="form" action="{% url webshop.views.login %}" method="post">
+		<form id="login-form" class="form" action="" method="post">
 			{# Show validation errors #}
 			{% if form.errors %}
 				<div class="messages validation">
@@ -53,28 +53,30 @@
 			{% csrf_token %}
 			<div style="display: none;"><input type="hidden" name="next" value="{{ next }}" /></div>
 			<table>
-				{% for field in form %}
+				<tbody>
+					{% for field in form %}
+						<tr>
+							<th>
+								<label for="{{ field.auto_id }}">
+									{% if field.field.required %}
+										<span class="required">{{ field.label }}:</span>
+									{% else %}
+										{{ field.label }}:
+									{% endif %}
+								</label>
+							</th>
+							<td>{{ field }}</td>
+						</tr>
+					{% endfor %}
 					<tr>
-						<th>
-							<label for="{{ field.auto_id }}">
-								{% if field.field.required %}
-									<span class="required">{{ field.label }}:</span>
-								{% else %}
-									{{ field.label }}:
-								{% endif %}
-							</label>
-						</th>
-						<td>{{ field }}</td>
+						<th>&nbsp;</th>
+						<td><input type="submit" value="Login" /></td>
 					</tr>
-				{% endfor %}
-				<tr>
-					<th>&nbsp;</th>
-					<td><input type="submit" value="Login" /></td>
-				</tr>
-				<tr>
-					<th>&nbsp;</th>
-					<td><a href="{% url webshop.views.forgot_your_password %}">Forgot your password?</a></td>
-				</tr>
+					<tr>
+						<th>&nbsp;</th>
+						<td><a href="{% url webshop.views.forgot_your_password %}">Forgot your password?</a></td>
+					</tr>
+				</tbody>
 			</table>
 		</form>
 	</div>
