@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404, redirect, get_list_or_404
 from django.template import RequestContext
 from webshop.forms import ProductForm, MyUserCreationForm, MyAuthenticationForm, MyUserChangeForm, MyPasswordResetForm, MyPasswordChangeForm, AddressForm
-from webshop.models import SaleItem, Product, Type, Address
+from webshop.models import SaleItem, Product, Type, Address, Order, OrderItem
 from django.template.loader import get_template
 from django.template.context import Context
 from django.core.context_processors import csrf
@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.views import password_reset
 from django.http import Http404
+from datetime import datetime
 
 
 def root( request ):
@@ -232,7 +233,15 @@ def completed_orders( request ):
 	if not request.user.is_authenticated():
 		return redirect( "webshop.views.home" )	
 	
-	variables					= {}
+	if request.method == "GET":
+		orders					= Order.objects.filter( user=request.user, delivered=True, paid=True, date__lt=datetime.now() )
+		for order in orders:
+			order_items			= OrderItem.objects.filter( order=order )
+			order.order_items	= order_items
+	else:
+		raise Http404( "%s method is not supported." % request.method )
+
+	variables					= { "orders" : orders }
 	context						= RequestContext( request )
 	context.update( csrf( request ) )
 	return render_to_response( "webshop/myaccount/completed_orders.html", variables, context )
