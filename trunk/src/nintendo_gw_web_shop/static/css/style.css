@@ -420,6 +420,21 @@ a {
 	padding: 0;
 	text-indent: 0;	
 }
+#completed-orders-table, #completed-orders-table table {
+	border-collapse: collapse;
+	width: 100%;
+}
+#completed-orders-table td.order {
+	border-bottom: 1px solid #999999;
+	border-top: 1px solid #999999;
+	padding: 10px 0px 10px 0px;
+}
+#completed-orders-table ul {
+	list-style: none;
+	margin: 0;
+	padding: 0px 0px 4px 0px;
+	text-indent: 0;	
+}
 /* END: my account */
 
 
