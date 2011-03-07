@@ -1,0 +1,1134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<django-objects version="1.0">
+    <object pk="1" model="webshop.type">
+        <field type="CharField" name="name">Silver</field>
+        <field type="FileField" name="image">images/types/silver.jpg</field>
+        <field type="FileField" name="imageThumb">images/types/thumbs/silver.jpg</field>
+    </object>
+    <object pk="2" model="webshop.type">
+        <field type="CharField" name="name">Gold</field>
+        <field type="FileField" name="image">images/types/gold.jpg</field>
+        <field type="FileField" name="imageThumb">images/types/thumbs/gold.jpg</field>
+    </object>
+    <object pk="3" model="webshop.type">
+        <field type="CharField" name="name">Wide Screen</field>
+        <field type="FileField" name="image">images/types/wide_screen.jpg</field>
+        <field type="FileField" name="imageThumb">images/types/thumbs/wide_screen.jpg</field>
+    </object>
+    <object pk="4" model="webshop.type">
+        <field type="CharField" name="name">Multi Screen</field>
+        <field type="FileField" name="image">images/types/multi_screen.jpg</field>
+        <field type="FileField" name="imageThumb">images/types/thumbs/multi_screen.jpg</field>
+    </object>
+    <object pk="5" model="webshop.type">
+        <field type="CharField" name="name">Table Top</field>
+        <field type="FileField" name="image">images/types/table_top.jpg</field>
+        <field type="FileField" name="imageThumb">images/types/thumbs/table_top.jpg</field>
+    </object>
+    <object pk="6" model="webshop.type">
+        <field type="CharField" name="name">Panorama Screen</field>
+        <field type="FileField" name="image">images/types/panorama_screen.jpg</field>
+        <field type="FileField" name="imageThumb">images/types/thumbs/panorama_screen.jpg</field>
+    </object>
+    <object pk="7" model="webshop.type">
+        <field type="CharField" name="name">New Wide Screen</field>
+        <field type="FileField" name="image">images/types/new_wide_screen.jpg</field>
+        <field type="FileField" name="imageThumb">images/types/thumbs/new_wide_screen.jpg</field>
+    </object>
+    <object pk="8" model="webshop.type">
+        <field type="CharField" name="name">Super Color</field>
+        <field type="FileField" name="image">images/types/super_color.jpg</field>
+        <field type="FileField" name="imageThumb">images/types/thumbs/super_color.jpg</field>
+    </object>
+    <object pk="9" model="webshop.type">
+        <field type="CharField" name="name">Micro vs. System</field>
+        <field type="FileField" name="image">images/types/micro_vs_system.jpg</field>
+        <field type="FileField" name="imageThumb">images/types/thumbs/micro_vs_system.jpg</field>
+    </object>
+    <object pk="10" model="webshop.type">
+        <field type="CharField" name="name">Crystal Screen</field>
+        <field type="FileField" name="image">images/types/crystal_screen.jpg</field>
+        <field type="FileField" name="imageThumb">images/types/thumbs/crystal_screen.jpg</field>
+    </object>
+    <object pk="11" model="webshop.type">
+        <field type="CharField" name="name">Special</field>
+        <field type="FileField" name="image">images/types/special.jpg</field>
+        <field type="FileField" name="imageThumb">images/types/thumbs/special.jpg</field>
+    </object>
+    <object pk="12" model="webshop.type">
+        <field type="CharField" name="name">2010</field>
+        <field type="FileField" name="image">images/types/2010.jpg</field>
+        <field type="FileField" name="imageThumb">images/types/thumbs/2010.jpg</field>
+    </object>
+    <object pk="1" model="webshop.product">
+        <field type="CharField" name="title">Ball</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">1</field>
+        <field type="CharField" name="model">AC-01</field>
+        <field type="DateField" name="dateOfRelease">1980-04-28</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">4</field>
+        <field type="TextField" name="description">Your task is to control the hands of a juggler. Try to save the balls from falling down.</field>
+        <field type="IntegerField" name="quantity">5</field>
+        <field type="FileField" name="image">images/products/ac-01.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/ac-01.jpg</field>
+    </object>
+    <object pk="2" model="webshop.product">
+        <field type="CharField" name="title">Flagman</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">1</field>
+        <field type="CharField" name="model">FL-02</field>
+        <field type="DateField" name="dateOfRelease">1980-06-05</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">5</field>
+        <field type="TextField" name="description">Simon type of game. You have to repeat the sequences of a flagman&apos;s moves.</field>
+        <field type="IntegerField" name="quantity">1</field>
+        <field type="FileField" name="image">images/products/fl-02.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/fl-02.jpg</field>
+    </object>
+    <object pk="3" model="webshop.product">
+        <field type="CharField" name="title">Vermin</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">1</field>
+        <field type="CharField" name="model">MT-03</field>
+        <field type="DateField" name="dateOfRelease">1980-07-10</field>
+        <field type="IntegerField" name="produced">500000</field>
+        <field type="IntegerField" name="rarity">3</field>
+        <field type="TextField" name="description">Hit the moles as they surface from the tunnels.</field>
+        <field type="IntegerField" name="quantity">10</field>
+        <field type="FileField" name="image">images/products/mt-03.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/mt-03.jpg</field>
+    </object>
+    <object pk="4" model="webshop.product">
+        <field type="CharField" name="title">Fire</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">1</field>
+        <field type="CharField" name="model">RC-04</field>
+        <field type="DateField" name="dateOfRelease">1980-07-31</field>
+        <field type="IntegerField" name="produced">1000000</field>
+        <field type="IntegerField" name="rarity">3</field>
+        <field type="TextField" name="description">You control two guys with a stretcher (which acts as a trampoline!) trying to save the people that fall from a burning building and put them in an ambulance.</field>
+        <field type="IntegerField" name="quantity">10</field>
+        <field type="FileField" name="image">images/products/rc-04.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/rc-04.jpg</field>
+    </object>
+    <object pk="5" model="webshop.product">
+        <field type="CharField" name="title">Judge (Green)</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">1</field>
+        <field type="CharField" name="model">IP-05</field>
+        <field type="DateField" name="dateOfRelease">1980-10-04</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">5</field>
+        <field type="TextField" name="description">Hit your opponent with a hammer or avoid his hit. A green version.</field>
+        <field type="IntegerField" name="quantity">1</field>
+        <field type="FileField" name="image">images/products/ip-05_green.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/ip-05_green.jpg</field>
+    </object>
+    <object pk="6" model="webshop.product">
+        <field type="CharField" name="title">Judge (Purple)</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">1</field>
+        <field type="CharField" name="model">IP-05</field>
+        <field type="DateField" name="dateOfRelease">1980-10-04</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">5</field>
+        <field type="TextField" name="description">Hit your opponent with a hammer or avoid his hit.  A purple version.</field>
+        <field type="IntegerField" name="quantity">1</field>
+        <field type="FileField" name="image">images/products/ip-05_purple.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/ip-05_purple.jpg</field>
+    </object>
+    <object pk="7" model="webshop.product">
+        <field type="CharField" name="title">Manhole</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">2</field>
+        <field type="CharField" name="model">MH-06</field>
+        <field type="DateField" name="dateOfRelease">1981-01-29</field>
+        <field type="IntegerField" name="produced">500000</field>
+        <field type="IntegerField" name="rarity">3</field>
+        <field type="TextField" name="description">Your task is to save passersby from falling into the four holes.</field>
+        <field type="IntegerField" name="quantity">10</field>
+        <field type="FileField" name="image">images/products/mh-06.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/mh-06.jpg</field>
+    </object>
+    <object pk="8" model="webshop.product">
+        <field type="CharField" name="title">Helmet</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">2</field>
+        <field type="CharField" name="model">CN-07</field>
+        <field type="DateField" name="dateOfRelease">1981-02-21</field>
+        <field type="IntegerField" name="produced">500000</field>
+        <field type="IntegerField" name="rarity">3</field>
+        <field type="TextField" name="description">Reach the shed while avoiding falling objects.</field>
+        <field type="IntegerField" name="quantity">10</field>
+        <field type="FileField" name="image">images/products/cn-07.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/cn-07.jpg</field>
+    </object>
+    <object pk="9" model="webshop.product">
+        <field type="CharField" name="title">Lion</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">2</field>
+        <field type="CharField" name="model">LN-08</field>
+        <field type="DateField" name="dateOfRelease">1981-04-29</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">3</field>
+        <field type="TextField" name="description">You control two tamers who try to stop the lions from exiting their cages.</field>
+        <field type="IntegerField" name="quantity">10</field>
+        <field type="FileField" name="image">images/products/ln-08.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/ln-08.jpg</field>
+    </object>
+    <object pk="10" model="webshop.product">
+        <field type="CharField" name="title">Parachute</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">3</field>
+        <field type="CharField" name="model">PR-21</field>
+        <field type="DateField" name="dateOfRelease">1981-06-19</field>
+        <field type="IntegerField" name="produced">1200000</field>
+        <field type="IntegerField" name="rarity">1</field>
+        <field type="TextField" name="description">Save as many paratroopers as you can with your boat.</field>
+        <field type="IntegerField" name="quantity">50</field>
+        <field type="FileField" name="image">images/products/pr-21.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/pr-21.jpg</field>
+    </object>
+    <object pk="11" model="webshop.product">
+        <field type="CharField" name="title">Octopus</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">3</field>
+        <field type="CharField" name="model">OC-22</field>
+        <field type="DateField" name="dateOfRelease">1981-07-16</field>
+        <field type="IntegerField" name="produced">1200000</field>
+        <field type="IntegerField" name="rarity">1</field>
+        <field type="TextField" name="description">Get the treasure and avoid octopus&apos; tentacles.</field>
+        <field type="IntegerField" name="quantity">50</field>
+        <field type="FileField" name="image">images/products/oc-22.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/oc-22.jpg</field>
+    </object>
+    <object pk="12" model="webshop.product">
+        <field type="CharField" name="title">Popeye</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">3</field>
+        <field type="CharField" name="model">pp-23</field>
+        <field type="DateField" name="dateOfRelease">1981-08-05</field>
+        <field type="IntegerField" name="produced">1200000</field>
+        <field type="IntegerField" name="rarity">2</field>
+        <field type="TextField" name="description">You assume the role of Popeye who tries to catch the stuff Olive is throwing at him while avoiding Brutus&apos; attempts to hit you.</field>
+        <field type="IntegerField" name="quantity">30</field>
+        <field type="FileField" name="image">images/products/pp-23.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/pp-23.jpg</field>
+    </object>
+    <object pk="13" model="webshop.product">
+        <field type="CharField" name="title">Chef</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">3</field>
+        <field type="CharField" name="model">FP-24</field>
+        <field type="DateField" name="dateOfRelease">1981-09-08</field>
+        <field type="IntegerField" name="produced">500000</field>
+        <field type="IntegerField" name="rarity">3</field>
+        <field type="TextField" name="description">You control a chef with a pan who tosses up fish. Do not let them fall down.</field>
+        <field type="IntegerField" name="quantity">10</field>
+        <field type="FileField" name="image">images/products/fp-24.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/fp-24.jpg</field>
+    </object>
+    <object pk="14" model="webshop.product">
+        <field type="CharField" name="title">Mickey Mouse</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">3</field>
+        <field type="CharField" name="model">MC-25</field>
+        <field type="DateField" name="dateOfRelease">1981-10-09</field>
+        <field type="IntegerField" name="produced">1200000</field>
+        <field type="IntegerField" name="rarity">2</field>
+        <field type="TextField" name="description">Mickey tries to catch the eggs before they fall on the ground.</field>
+        <field type="IntegerField" name="quantity">30</field>
+        <field type="FileField" name="image">images/products/mc-25.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/mc-25.jpg</field>
+    </object>
+    <object pk="15" model="webshop.product">
+        <field type="CharField" name="title">Egg</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">3</field>
+        <field type="CharField" name="model">EG-26</field>
+        <field type="DateField" name="dateOfRelease">1981-10-09</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">5</field>
+        <field type="TextField" name="description">Same game play as Mickey Mouse. Only difference is that you control a wolf this time.</field>
+        <field type="IntegerField" name="quantity">1</field>
+        <field type="FileField" name="image">images/products/eg-26.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/eg-26.jpg</field>
+    </object>
+    <object pk="16" model="webshop.product">
+        <field type="CharField" name="title">Fire</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">3</field>
+        <field type="CharField" name="model">FR-27</field>
+        <field type="DateField" name="dateOfRelease">1981-12-04</field>
+        <field type="IntegerField" name="produced">1200000</field>
+        <field type="IntegerField" name="rarity">1</field>
+        <field type="TextField" name="description">You control two guys with a stretcher (which acts as a trampoline!) trying to save the people that fall from a burning building and put them in an ambulance.</field>
+        <field type="IntegerField" name="quantity">50</field>
+        <field type="FileField" name="image">images/products/fr-27.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/fr-27.jpg</field>
+    </object>
+    <object pk="17" model="webshop.product">
+        <field type="CharField" name="title">Turtle Bridge</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">3</field>
+        <field type="CharField" name="model">TL-28</field>
+        <field type="DateField" name="dateOfRelease">1982-02-01</field>
+        <field type="IntegerField" name="produced">500000</field>
+        <field type="IntegerField" name="rarity">3</field>
+        <field type="TextField" name="description">You control a porter who tries to get packages from one side of a lake to another by jumping on the turtles&apos; shells.</field>
+        <field type="IntegerField" name="quantity">10</field>
+        <field type="FileField" name="image">images/products/tl-28.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/tl-28.jpg</field>
+    </object>
+    <object pk="18" model="webshop.product">
+        <field type="CharField" name="title">Fire Attack</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">3</field>
+        <field type="CharField" name="model">ID-29</field>
+        <field type="DateField" name="dateOfRelease">1982-03-26</field>
+        <field type="IntegerField" name="produced">500000</field>
+        <field type="IntegerField" name="rarity">2</field>
+        <field type="TextField" name="description">Hit the Indians or the torches they throw before they destroy your fortress.</field>
+        <field type="IntegerField" name="quantity">30</field>
+        <field type="FileField" name="image">images/products/id-29.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/id-29.jpg</field>
+    </object>
+    <object pk="19" model="webshop.product">
+        <field type="CharField" name="title">Snoopy Tennis</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">3</field>
+        <field type="CharField" name="model">SP-30</field>
+        <field type="DateField" name="dateOfRelease">1982-04-28</field>
+        <field type="IntegerField" name="produced">1200000</field>
+        <field type="IntegerField" name="rarity">1</field>
+        <field type="TextField" name="description">You are Snoopy holding a tennis racket. Hit all the tennis balls which are thrown at you.</field>
+        <field type="IntegerField" name="quantity">50</field>
+        <field type="FileField" name="image">images/products/sp-30.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/sp-30.jpg</field>
+    </object>
+    <object pk="20" model="webshop.product">
+        <field type="CharField" name="title">Oil Panic</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">4</field>
+        <field type="CharField" name="model">OL-51</field>
+        <field type="DateField" name="dateOfRelease">1982-05-28</field>
+        <field type="IntegerField" name="produced">1250000</field>
+        <field type="IntegerField" name="rarity">2</field>
+        <field type="TextField" name="description">Catch the oil drops from the pipe and pour them in your colleague&apos;s barrel on the lower level.</field>
+        <field type="IntegerField" name="quantity">30</field>
+        <field type="FileField" name="image">images/products/ol-51.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/ol-51.jpg</field>
+    </object>
+    <object pk="21" model="webshop.product">
+        <field type="CharField" name="title">Donkey Kong</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">4</field>
+        <field type="CharField" name="model">DK-52</field>
+        <field type="DateField" name="dateOfRelease">1982-06-03</field>
+        <field type="IntegerField" name="produced">1250000</field>
+        <field type="IntegerField" name="rarity">1</field>
+        <field type="TextField" name="description">Mario wants to free the princess once more. This time he has to jump over the barrels Donkey Kong is throwing at him and climb ladders to reach her.</field>
+        <field type="IntegerField" name="quantity">50</field>
+        <field type="FileField" name="image">images/products/dk-52.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/dk-52.jpg</field>
+    </object>
+    <object pk="22" model="webshop.product">
+        <field type="CharField" name="title">Mickey &amp; Donald</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">4</field>
+        <field type="CharField" name="model">DM-53</field>
+        <field type="DateField" name="dateOfRelease">1982-11-12</field>
+        <field type="IntegerField" name="produced">1250000</field>
+        <field type="IntegerField" name="rarity">2</field>
+        <field type="TextField" name="description">You control both Mickey and Donald who work as fire fighters trying to extinguish the fire in a building.</field>
+        <field type="IntegerField" name="quantity">30</field>
+        <field type="FileField" name="image">images/products/dm-53.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/dm-53.jpg</field>
+    </object>
+    <object pk="23" model="webshop.product">
+        <field type="CharField" name="title">Green House</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">4</field>
+        <field type="CharField" name="model">GH-54</field>
+        <field type="DateField" name="dateOfRelease">1982-12-06</field>
+        <field type="IntegerField" name="produced">1250000</field>
+        <field type="IntegerField" name="rarity">2</field>
+        <field type="TextField" name="description">Pests try to destroy your plants and as a green house keeper your job is to protect them by spraying with insecticide when they appear.</field>
+        <field type="IntegerField" name="quantity">30</field>
+        <field type="FileField" name="image">images/products/gh-54.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/gh-54.jpg</field>
+    </object>
+    <object pk="24" model="webshop.product">
+        <field type="CharField" name="title">Donkey Kong II</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">4</field>
+        <field type="CharField" name="model">JR-55</field>
+        <field type="DateField" name="dateOfRelease">1983-03-07</field>
+        <field type="IntegerField" name="produced">1250000</field>
+        <field type="IntegerField" name="rarity">1</field>
+        <field type="TextField" name="description">Donkey Kong is restrained with chains. Help Donkey Kong Jr. unlock his locks while avoiding birds and electric current.</field>
+        <field type="IntegerField" name="quantity">50</field>
+        <field type="FileField" name="image">images/products/jr-55.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/jr-55.jpg</field>
+    </object>
+    <object pk="25" model="webshop.product">
+        <field type="CharField" name="title">Mario Bros.</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">4</field>
+        <field type="CharField" name="model">MW-56</field>
+        <field type="DateField" name="dateOfRelease">1983-03-14</field>
+        <field type="IntegerField" name="produced">1250000</field>
+        <field type="IntegerField" name="rarity">1</field>
+        <field type="TextField" name="description">You control Mario and his colleague Luigi who lay packets on rolling platforms. Your job is to pick the packets from the lower platforms and place them on the higher ones so that the packets end into the back of a truck.</field>
+        <field type="IntegerField" name="quantity">50</field>
+        <field type="FileField" name="image">images/products/mw-56.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/mw-56.jpg</field>
+    </object>
+    <object pk="26" model="webshop.product">
+        <field type="CharField" name="title">Rain Shower</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">4</field>
+        <field type="CharField" name="model">LP-57</field>
+        <field type="DateField" name="dateOfRelease">1983-08-10</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">4</field>
+        <field type="TextField" name="description">You have just put your washed clothes to dry when it started raining. Your job (should you decide to accept it) is to drag the wires that the clothes are led on so that the clothes will not get wet.</field>
+        <field type="IntegerField" name="quantity">5</field>
+        <field type="FileField" name="image">images/products/lp-57.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/lp-57.jpg</field>
+    </object>
+    <object pk="27" model="webshop.product">
+        <field type="CharField" name="title">Life Boat</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">4</field>
+        <field type="CharField" name="model">TC-58</field>
+        <field type="DateField" name="dateOfRelease">1983-10-25</field>
+        <field type="IntegerField" name="produced">500000</field>
+        <field type="IntegerField" name="rarity">3</field>
+        <field type="TextField" name="description">Control two life boats in order to catch falling people out of a flaming boat cruiser.</field>
+        <field type="IntegerField" name="quantity">10</field>
+        <field type="FileField" name="image">images/products/tc-58.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/tc-58.jpg</field>
+    </object>
+    <object pk="28" model="webshop.product">
+        <field type="CharField" name="title">Pinball</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">4</field>
+        <field type="CharField" name="model">PB-59</field>
+        <field type="DateField" name="dateOfRelease">1983-12-05</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">3</field>
+        <field type="TextField" name="description">In the game two flippers are on the bottom screen and two flippers on the top screen. There are various other pinball objects such as bumpers, outlanes, rollover lanes, kickbacks, plunger, and more.</field>
+        <field type="IntegerField" name="quantity">10</field>
+        <field type="FileField" name="image">images/products/pb-59.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/pb-59.jpg</field>
+    </object>
+    <object pk="29" model="webshop.product">
+        <field type="CharField" name="title">Black Jack</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">4</field>
+        <field type="CharField" name="model">BJ-60</field>
+        <field type="DateField" name="dateOfRelease">1985-02-15</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">2</field>
+        <field type="TextField" name="description">Well known game of cards played at casinos. You try to reach a higher number than the house (if you get 21 you win). Betting game.</field>
+        <field type="IntegerField" name="quantity">30</field>
+        <field type="FileField" name="image">images/products/bj-60.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/bj-60.jpg</field>
+    </object>
+    <object pk="30" model="webshop.product">
+        <field type="CharField" name="title">Squish</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">4</field>
+        <field type="CharField" name="model">MG-61</field>
+        <field type="DateField" name="dateOfRelease">1986-04-17</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">1</field>
+        <field type="TextField" name="description">Avoid the platforms as they come towards you. Direction of moving floor and pattern of platforms changes often.</field>
+        <field type="IntegerField" name="quantity">50</field>
+        <field type="FileField" name="image">images/products/mg-61.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/mg-61.jpg</field>
+    </object>
+    <object pk="31" model="webshop.product">
+        <field type="CharField" name="title">Bomb Sweeper</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">4</field>
+        <field type="CharField" name="model">BD-62</field>
+        <field type="DateField" name="dateOfRelease">1987-06-15</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">2</field>
+        <field type="TextField" name="description">Catch the bombs thugs are throwing and stash them away.</field>
+        <field type="IntegerField" name="quantity">30</field>
+        <field type="FileField" name="image">images/products/bd-62.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/bd-62.jpg</field>
+    </object>
+    <object pk="32" model="webshop.product">
+        <field type="CharField" name="title">Safe Buster</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">4</field>
+        <field type="CharField" name="model">JB-63</field>
+        <field type="DateField" name="dateOfRelease">1988-01-06</field>
+        <field type="IntegerField" name="produced">500000</field>
+        <field type="IntegerField" name="rarity">2</field>
+        <field type="TextField" name="description">Try to get out of constantly changing labyrinths by finding passages and doors.</field>
+        <field type="IntegerField" name="quantity">30</field>
+        <field type="FileField" name="image">images/products/jb-63.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/jb-63.jpg</field>
+    </object>
+    <object pk="33" model="webshop.product">
+        <field type="CharField" name="title">Gold Cliff</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">4</field>
+        <field type="CharField" name="model">MV-64</field>
+        <field type="DateField" name="dateOfRelease">1988-10-19</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">2</field>
+        <field type="TextField" name="description">As an adventurer, your task is to try to acquire rare items. Various platforms are on your way.</field>
+        <field type="IntegerField" name="quantity">30</field>
+        <field type="FileField" name="image">images/products/mv-64.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/mv-64.jpg</field>
+    </object>
+    <object pk="34" model="webshop.product">
+        <field type="CharField" name="title">Zelda</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">4</field>
+        <field type="CharField" name="model">ZL-65</field>
+        <field type="DateField" name="dateOfRelease">1989-08-26</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">2</field>
+        <field type="TextField" name="description">Fight skeletons or other evil characters, gain experience and destroy the bosses.</field>
+        <field type="IntegerField" name="quantity">30</field>
+        <field type="FileField" name="image">images/products/zl-65.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/zl-65.jpg</field>
+    </object>
+    <object pk="35" model="webshop.product">
+        <field type="CharField" name="title">Donkey Kong Jr.</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">5</field>
+        <field type="CharField" name="model">CJ-71</field>
+        <field type="DateField" name="dateOfRelease">1983-04-28</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">3</field>
+        <field type="TextField" name="description">Your task is to unlock Donkey Kong&apos;s chains. Avoid the birds, use the falling umbrellas and the balloons to get to him.</field>
+        <field type="IntegerField" name="quantity">10</field>
+        <field type="FileField" name="image">images/products/cj-71.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/cj-71.jpg</field>
+    </object>
+    <object pk="36" model="webshop.product">
+        <field type="CharField" name="title">Mario&apos;s Cement Factory</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">5</field>
+        <field type="CharField" name="model">CM-72</field>
+        <field type="DateField" name="dateOfRelease">1983-04-28</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">2</field>
+        <field type="TextField" name="description">Control the levers on various levels so that cement flows steadily into the cement mixers.</field>
+        <field type="IntegerField" name="quantity">30</field>
+        <field type="FileField" name="image">images/products/cm-72.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/cm-72.jpg</field>
+    </object>
+    <object pk="37" model="webshop.product">
+        <field type="CharField" name="title">Snoopy</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">5</field>
+        <field type="CharField" name="model">SM-73</field>
+        <field type="DateField" name="dateOfRelease">1983-06-05</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">3</field>
+        <field type="TextField" name="description">Hit the musical notes as they appear.</field>
+        <field type="IntegerField" name="quantity">10</field>
+        <field type="FileField" name="image">images/products/sm-73.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/sm-73.jpg</field>
+    </object>
+    <object pk="38" model="webshop.product">
+        <field type="CharField" name="title">Popeye</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">5</field>
+        <field type="CharField" name="model">PG-74</field>
+        <field type="DateField" name="dateOfRelease">1983-08-17</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">3</field>
+        <field type="TextField" name="description">Fist-fighting with Brutus this time. Hit him enough times to drop him into the sea.</field>
+        <field type="IntegerField" name="quantity">10</field>
+        <field type="FileField" name="image">images/products/pg-74.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/pg-74.jpg</field>
+    </object>
+    <object pk="39" model="webshop.product">
+        <field type="CharField" name="title">Snoopy</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">6</field>
+        <field type="CharField" name="model">SM-91</field>
+        <field type="DateField" name="dateOfRelease">1983-08-30</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">3</field>
+        <field type="TextField" name="description">Hit the musical notes as they appear.</field>
+        <field type="IntegerField" name="quantity">10</field>
+        <field type="FileField" name="image">images/products/sm-91.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/sm-91.jpg</field>
+    </object>
+    <object pk="40" model="webshop.product">
+        <field type="CharField" name="title">Popeye</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">6</field>
+        <field type="CharField" name="model">PG-92</field>
+        <field type="DateField" name="dateOfRelease">1983-08-30</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">3</field>
+        <field type="TextField" name="description">Fist-fighting with Brutus this time. Hit him enough times to drop him into the sea.</field>
+        <field type="IntegerField" name="quantity">10</field>
+        <field type="FileField" name="image">images/products/pg-92.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/pg-92.jpg</field>
+    </object>
+    <object pk="41" model="webshop.product">
+        <field type="CharField" name="title">Donkey Kong Jr.</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">6</field>
+        <field type="CharField" name="model">CJ-93</field>
+        <field type="DateField" name="dateOfRelease">1983-10-07</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">3</field>
+        <field type="TextField" name="description">Your task is to unlock Donkey Kong&apos;s chains. Avoid the birds, use the falling umbrellas and the balloons to get to him.</field>
+        <field type="IntegerField" name="quantity">10</field>
+        <field type="FileField" name="image">images/products/cj-93.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/cj-93.jpg</field>
+    </object>
+    <object pk="42" model="webshop.product">
+        <field type="CharField" name="title">Mario&apos;s Bombs Away</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">6</field>
+        <field type="CharField" name="model">TB-94</field>
+        <field type="DateField" name="dateOfRelease">1983-11-10</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">3</field>
+        <field type="TextField" name="description">Move bombs safely from one point to another.</field>
+        <field type="IntegerField" name="quantity">10</field>
+        <field type="FileField" name="image">images/products/tb-94.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/tb-94.jpg</field>
+    </object>
+    <object pk="43" model="webshop.product">
+        <field type="CharField" name="title">Mickey Mouse</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">6</field>
+        <field type="CharField" name="model">DC-95</field>
+        <field type="DateField" name="dateOfRelease">1984-02-28</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">5</field>
+        <field type="TextField" name="description">You are Mickey the juggler. Juggle the sticks but not the torches!</field>
+        <field type="IntegerField" name="quantity">1</field>
+        <field type="FileField" name="image">images/products/dc-95.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/dc-95.jpg</field>
+    </object>
+    <object pk="44" model="webshop.product">
+        <field type="CharField" name="title">Donkey Kong Circus</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">6</field>
+        <field type="CharField" name="model">MK-96</field>
+        <field type="DateField" name="dateOfRelease">1984-09-06</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">5</field>
+        <field type="TextField" name="description">Same game play as Mickey panorama but you control Donkey Kong instead.</field>
+        <field type="IntegerField" name="quantity">1</field>
+        <field type="FileField" name="image">images/products/mk-96.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/mk-96.jpg</field>
+    </object>
+    <object pk="45" model="webshop.product">
+        <field type="CharField" name="title">Donkey Kong Jr.</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">7</field>
+        <field type="CharField" name="model">DJ-101</field>
+        <field type="DateField" name="dateOfRelease">1982-10-26</field>
+        <field type="IntegerField" name="produced">1200000</field>
+        <field type="IntegerField" name="rarity">1</field>
+        <field type="TextField" name="description">You control Donkey Kong Jr. (a young monkey) with a mission to free his father from his cage by unlocking all its locks. Jump from branch to branch while avoiding birds and crocodile heads!</field>
+        <field type="IntegerField" name="quantity">50</field>
+        <field type="FileField" name="image">images/products/dj-101.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/dj-101.jpg</field>
+    </object>
+    <object pk="46" model="webshop.product">
+        <field type="CharField" name="title">Mario&apos;s Cement Factory</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">7</field>
+        <field type="CharField" name="model">ML-102</field>
+        <field type="DateField" name="dateOfRelease">1983-06-16</field>
+        <field type="IntegerField" name="produced">750000</field>
+        <field type="IntegerField" name="rarity">1</field>
+        <field type="TextField" name="description">Control the levers on various levels so that cement flows steadily into the cement mixers.</field>
+        <field type="IntegerField" name="quantity">50</field>
+        <field type="FileField" name="image">images/products/ml-102.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/ml-102.jpg</field>
+    </object>
+    <object pk="47" model="webshop.product">
+        <field type="CharField" name="title">Manhole</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">7</field>
+        <field type="CharField" name="model">NH-103</field>
+        <field type="DateField" name="dateOfRelease">1983-08-24</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">3</field>
+        <field type="TextField" name="description">Your task is to save passersby from falling into the four holes.</field>
+        <field type="IntegerField" name="quantity">10</field>
+        <field type="FileField" name="image">images/products/nh-103.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/nh-103.jpg</field>
+    </object>
+    <object pk="48" model="webshop.product">
+        <field type="CharField" name="title">Tropical Fish</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">7</field>
+        <field type="CharField" name="model">TF-104</field>
+        <field type="DateField" name="dateOfRelease">1985-07-08</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">3</field>
+        <field type="TextField" name="description">Help goldfishes go from one aquarium to another with your fishbowl.</field>
+        <field type="IntegerField" name="quantity">10</field>
+        <field type="FileField" name="image">images/products/tf-104.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/tf-104.jpg</field>
+    </object>
+    <object pk="49" model="webshop.product">
+        <field type="CharField" name="title">Super Mario Bros.</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">7</field>
+        <field type="CharField" name="model">YM-105</field>
+        <field type="DateField" name="dateOfRelease">1988-03-08</field>
+        <field type="IntegerField" name="produced">1000000</field>
+        <field type="IntegerField" name="rarity">1</field>
+        <field type="TextField" name="description">Mario is running from left to right, avoiding or jumping over objects in a mission to rescue the princess.</field>
+        <field type="IntegerField" name="quantity">50</field>
+        <field type="FileField" name="image">images/products/ym-105.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/ym-105.jpg</field>
+    </object>
+    <object pk="50" model="webshop.product">
+        <field type="CharField" name="title">Climber</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">7</field>
+        <field type="CharField" name="model">DR-106</field>
+        <field type="DateField" name="dateOfRelease">1988-03-08</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">3</field>
+        <field type="TextField" name="description">You control a kid who jumps from platform to platform trying to get to the topmost one while avoiding birds or disappearing platforms.</field>
+        <field type="IntegerField" name="quantity">10</field>
+        <field type="FileField" name="image">images/products/dr-106.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/dr-106.jpg</field>
+    </object>
+    <object pk="51" model="webshop.product">
+        <field type="CharField" name="title">Balloon Fight</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">7</field>
+        <field type="CharField" name="model">BF-107</field>
+        <field type="DateField" name="dateOfRelease">1988-03-08</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">2</field>
+        <field type="TextField" name="description">This time you are in control of a kid with a jet machine on his back, jumping from one pole to another, trying to shoot balloons.</field>
+        <field type="IntegerField" name="quantity">30</field>
+        <field type="FileField" name="image">images/products/bf-107.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/bf-107.jpg</field>
+    </object>
+    <object pk="52" model="webshop.product">
+        <field type="CharField" name="title">Mario The Juggler</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">7</field>
+        <field type="CharField" name="model">MB-108</field>
+        <field type="DateField" name="dateOfRelease">1991-10-14</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">5</field>
+        <field type="TextField" name="description">Same game play as Ball. You control Mario who juggles balls in the air.</field>
+        <field type="IntegerField" name="quantity">1</field>
+        <field type="FileField" name="image">images/products/mb-108.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/mb-108.jpg</field>
+    </object>
+    <object pk="53" model="webshop.product">
+        <field type="CharField" name="title">Spitball Sparky</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">8</field>
+        <field type="CharField" name="model">BU-201</field>
+        <field type="DateField" name="dateOfRelease">1984-02-07</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">4</field>
+        <field type="TextField" name="description">Blow the ball in such a way that it eventually hits all the blocks on the top of the screen. Arcanoid type game.</field>
+        <field type="IntegerField" name="quantity">5</field>
+        <field type="FileField" name="image">images/products/bu-201.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/bu-201.jpg</field>
+    </object>
+    <object pk="54" model="webshop.product">
+        <field type="CharField" name="title">Crab Grab</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">8</field>
+        <field type="CharField" name="model">UD-202</field>
+        <field type="DateField" name="dateOfRelease">1984-02-21</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">4</field>
+        <field type="TextField" name="description">Push the crabs out of the way and try not to let them grab you.</field>
+        <field type="IntegerField" name="quantity">5</field>
+        <field type="FileField" name="image">images/products/ud-202.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/ud-202.jpg</field>
+    </object>
+    <object pk="55" model="webshop.product">
+        <field type="CharField" name="title">Boxing</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">9</field>
+        <field type="CharField" name="model">BX-301</field>
+        <field type="DateField" name="dateOfRelease">1984-07-31</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">1</field>
+        <field type="TextField" name="description">Box with another human or computer player.</field>
+        <field type="IntegerField" name="quantity">50</field>
+        <field type="FileField" name="image">images/products/bx-301_boxing.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/bx-301_boxing.jpg</field>
+    </object>
+    <object pk="56" model="webshop.product">
+        <field type="CharField" name="title">Punch-Out!!</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">9</field>
+        <field type="CharField" name="model">BX-301</field>
+        <field type="DateField" name="dateOfRelease">1984-09-03</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">1</field>
+        <field type="TextField" name="description">Box with another human or computer player. A USA only release.</field>
+        <field type="IntegerField" name="quantity">50</field>
+        <field type="FileField" name="image">images/products/bx-301_punch-out.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/bx-301_punch-out.jpg</field>
+    </object>
+    <object pk="57" model="webshop.product">
+        <field type="CharField" name="title">Donkey Kong 3</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">9</field>
+        <field type="CharField" name="model">AK-302</field>
+        <field type="DateField" name="dateOfRelease">1984-08-20</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">1</field>
+        <field type="TextField" name="description">Spray the bees so that they go to the other player&apos;s (human or computer-controlled) garden.</field>
+        <field type="IntegerField" name="quantity">50</field>
+        <field type="FileField" name="image">images/products/ak-302.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/ak-302.jpg</field>
+    </object>
+    <object pk="58" model="webshop.product">
+        <field type="CharField" name="title">Donkey Kong Hockey</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">9</field>
+        <field type="CharField" name="model">HK-303</field>
+        <field type="DateField" name="dateOfRelease">1984-11-13</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">1</field>
+        <field type="TextField" name="description">Play hockey with Donkey Kong against another human or computer player.</field>
+        <field type="IntegerField" name="quantity">50</field>
+        <field type="FileField" name="image">images/products/hk-303.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/hk-303.jpg</field>
+    </object>
+    <object pk="59" model="webshop.product">
+        <field type="CharField" name="title">Super Mario Bros.</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">10</field>
+        <field type="CharField" name="model">YM-801</field>
+        <field type="DateField" name="dateOfRelease">1986-06-25</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">5</field>
+        <field type="TextField" name="description">Mario is running from left to right, avoiding or jumping over objects in a mission to rescue the princess.</field>
+        <field type="IntegerField" name="quantity">1</field>
+        <field type="FileField" name="image">images/products/ym-801.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/ym-801.jpg</field>
+    </object>
+    <object pk="60" model="webshop.product">
+        <field type="CharField" name="title">Climber</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">10</field>
+        <field type="CharField" name="model">DR-802</field>
+        <field type="DateField" name="dateOfRelease">1986-07-04</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">5</field>
+        <field type="TextField" name="description">You control a kid who jumps from platform to platform trying to get to the topmost one while avoiding birds or disappearing platforms.</field>
+        <field type="IntegerField" name="quantity">1</field>
+        <field type="FileField" name="image">images/products/dr-802.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/dr-802.jpg</field>
+    </object>
+    <object pk="61" model="webshop.product">
+        <field type="CharField" name="title">Balloon Fight</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">10</field>
+        <field type="CharField" name="model">BF-803</field>
+        <field type="DateField" name="dateOfRelease">1986-11-19</field>
+        <field type="IntegerField" name="produced">250000</field>
+        <field type="IntegerField" name="rarity">5</field>
+        <field type="TextField" name="description">This time you are in control of a kid with a jet machine on his back, jumping from one pole to another, trying to shoot balloons.</field>
+        <field type="IntegerField" name="quantity">1</field>
+        <field type="FileField" name="image">images/products/bf-803.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/bf-803.jpg</field>
+    </object>
+    <object pk="62" model="webshop.product">
+        <field type="CharField" name="title">Super Mario Bros.</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">11</field>
+        <field type="CharField" name="model">YM-901-S</field>
+        <field type="DateField" name="dateOfRelease">1987-08-19</field>
+        <field type="IntegerField" name="produced">10000</field>
+        <field type="IntegerField" name="rarity">5</field>
+        <field type="TextField" name="description">Mario is running from left to right, avoiding or jumping over objects in a mission to rescue the princess.</field>
+        <field type="IntegerField" name="quantity">1</field>
+        <field type="FileField" name="image">images/products/ym-901-s.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/ym-901-s.jpg</field>
+    </object>
+    <object pk="63" model="webshop.product">
+        <field type="CharField" name="title">Ball</field>
+        <field to="webshop.type" name="type" rel="ManyToOneRel">12</field>
+        <field type="CharField" name="model">RGW-001</field>
+        <field type="DateField" name="dateOfRelease">2010-04-28</field>
+        <field type="IntegerField" name="produced">100000</field>
+        <field type="IntegerField" name="rarity">1</field>
+        <field type="TextField" name="description">The anniversary release of Ball from Nintendo for their platinum club members. A Japan only release.</field>
+        <field type="IntegerField" name="quantity">50</field>
+        <field type="FileField" name="image">images/products/rgw-001.jpg</field>
+        <field type="FileField" name="imageThumb">images/products/thumbs/rgw-001.jpg</field>
+    </object>
+    <object pk="1" model="webshop.saleitem">
+        <field type="DecimalField" name="price">60</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">1</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="2" model="webshop.saleitem">
+        <field type="DecimalField" name="price">100</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">2</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="3" model="webshop.saleitem">
+        <field type="DecimalField" name="price">50</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">3</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="4" model="webshop.saleitem">
+        <field type="DecimalField" name="price">50</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">4</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="5" model="webshop.saleitem">
+        <field type="DecimalField" name="price">100</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">5</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="6" model="webshop.saleitem">
+        <field type="DecimalField" name="price">100</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">6</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="7" model="webshop.saleitem">
+        <field type="DecimalField" name="price">50</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">7</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="8" model="webshop.saleitem">
+        <field type="DecimalField" name="price">50</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">8</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="9" model="webshop.saleitem">
+        <field type="DecimalField" name="price">50</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">9</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="10" model="webshop.saleitem">
+        <field type="DecimalField" name="price">30</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">10</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="11" model="webshop.saleitem">
+        <field type="DecimalField" name="price">30</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">11</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="12" model="webshop.saleitem">
+        <field type="DecimalField" name="price">40</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">12</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="13" model="webshop.saleitem">
+        <field type="DecimalField" name="price">50</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">13</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="14" model="webshop.saleitem">
+        <field type="DecimalField" name="price">40</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">14</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="15" model="webshop.saleitem">
+        <field type="DecimalField" name="price">100</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">15</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="16" model="webshop.saleitem">
+        <field type="DecimalField" name="price">30</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">16</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="17" model="webshop.saleitem">
+        <field type="DecimalField" name="price">50</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">17</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="18" model="webshop.saleitem">
+        <field type="DecimalField" name="price">40</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">18</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="19" model="webshop.saleitem">
+        <field type="DecimalField" name="price">30</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">19</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="20" model="webshop.saleitem">
+        <field type="DecimalField" name="price">40</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">20</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="21" model="webshop.saleitem">
+        <field type="DecimalField" name="price">30</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">21</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="22" model="webshop.saleitem">
+        <field type="DecimalField" name="price">40</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">22</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="23" model="webshop.saleitem">
+        <field type="DecimalField" name="price">40</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">23</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="24" model="webshop.saleitem">
+        <field type="DecimalField" name="price">30</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">24</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="25" model="webshop.saleitem">
+        <field type="DecimalField" name="price">30</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">25</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="26" model="webshop.saleitem">
+        <field type="DecimalField" name="price">60</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">26</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="27" model="webshop.saleitem">
+        <field type="DecimalField" name="price">50</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">27</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="28" model="webshop.saleitem">
+        <field type="DecimalField" name="price">50</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">28</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="29" model="webshop.saleitem">
+        <field type="DecimalField" name="price">40</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">29</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="30" model="webshop.saleitem">
+        <field type="DecimalField" name="price">30</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">30</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="31" model="webshop.saleitem">
+        <field type="DecimalField" name="price">40</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">31</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="32" model="webshop.saleitem">
+        <field type="DecimalField" name="price">40</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">32</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="33" model="webshop.saleitem">
+        <field type="DecimalField" name="price">40</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">33</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="34" model="webshop.saleitem">
+        <field type="DecimalField" name="price">40</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">34</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="35" model="webshop.saleitem">
+        <field type="DecimalField" name="price">50</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">35</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="36" model="webshop.saleitem">
+        <field type="DecimalField" name="price">40</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">36</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="37" model="webshop.saleitem">
+        <field type="DecimalField" name="price">50</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">37</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="38" model="webshop.saleitem">
+        <field type="DecimalField" name="price">50</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">38</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="39" model="webshop.saleitem">
+        <field type="DecimalField" name="price">50</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">39</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="40" model="webshop.saleitem">
+        <field type="DecimalField" name="price">50</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">40</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="41" model="webshop.saleitem">
+        <field type="DecimalField" name="price">50</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">41</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="42" model="webshop.saleitem">
+        <field type="DecimalField" name="price">50</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">42</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="43" model="webshop.saleitem">
+        <field type="DecimalField" name="price">100</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">43</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="44" model="webshop.saleitem">
+        <field type="DecimalField" name="price">100</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">44</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="45" model="webshop.saleitem">
+        <field type="DecimalField" name="price">30</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">45</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="46" model="webshop.saleitem">
+        <field type="DecimalField" name="price">30</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">46</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="47" model="webshop.saleitem">
+        <field type="DecimalField" name="price">50</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">47</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="48" model="webshop.saleitem">
+        <field type="DecimalField" name="price">50</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">48</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="49" model="webshop.saleitem">
+        <field type="DecimalField" name="price">30</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">49</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="50" model="webshop.saleitem">
+        <field type="DecimalField" name="price">50</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">50</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="51" model="webshop.saleitem">
+        <field type="DecimalField" name="price">40</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">51</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="52" model="webshop.saleitem">
+        <field type="DecimalField" name="price">100</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">52</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="53" model="webshop.saleitem">
+        <field type="DecimalField" name="price">60</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">53</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="54" model="webshop.saleitem">
+        <field type="DecimalField" name="price">60</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">54</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="55" model="webshop.saleitem">
+        <field type="DecimalField" name="price">30</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">55</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="56" model="webshop.saleitem">
+        <field type="DecimalField" name="price">30</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">56</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="57" model="webshop.saleitem">
+        <field type="DecimalField" name="price">30</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">57</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="58" model="webshop.saleitem">
+        <field type="DecimalField" name="price">30</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">58</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="59" model="webshop.saleitem">
+        <field type="DecimalField" name="price">100</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">59</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="60" model="webshop.saleitem">
+        <field type="DecimalField" name="price">100</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">60</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="61" model="webshop.saleitem">
+        <field type="DecimalField" name="price">100</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">61</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="62" model="webshop.saleitem">
+        <field type="DecimalField" name="price">400</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">62</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="63" model="webshop.saleitem">
+        <field type="DecimalField" name="price">30</field>
+        <field to="webshop.product" name="product" rel="ManyToOneRel">63</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+</django-objects>

@@ -19,8 +19,8 @@
 			//
 			//$( "a", "#side-navi" ).attr( "href", "javascript:;" );
 
-			$('a[name="'+window.location.hash.substring(1, 6)+'"]').parent().show();
-			$('li', '#side-navi').eq((window.location.hash.substring(5, 6) - 1)).append($('#side-navi-arrow'));		
+			$('a[name="'+window.location.hash.substring(1)+'"]').parent().show();
+			$('li', '#side-navi').eq((window.location.hash.substring(5) - 1)).append($('#side-navi-arrow'));		
 			$('#side-navi-arrow').show("slide", { direction: "left" }, 500);
 			
 			$('li', '#side-navi').click(function() {
@@ -33,7 +33,7 @@
 				
 				window.location.hash = 'item' + ($(me).index() + 1);
 				$('.product').hide();
-				$('a[name="'+window.location.hash.substring(1, 6)+'"]').parent().show();
+				$('a[name="'+window.location.hash.substring(1)+'"]').parent().show();
 				$( "a>span", me ).addClass( "side-navi-selected" );
 				$('#side-navi-arrow').hide("slide", { direction: "left" }, 1000);
 				
