@@ -69,6 +69,15 @@ class Product( models.Model ):
 				for z in temp_list_2:
 					result_list.append(z)
 		return result_list
+	
+	def ownrating(self, user):
+		rating	= 0
+		try:
+			rate = self.rating_set.get(user=user)
+			rating	= rate.rate
+		except Rating.DoesNotExist:
+			rating = 0
+		return rating
 
 # Sales: games with price information
 class SaleItem( models.Model ):

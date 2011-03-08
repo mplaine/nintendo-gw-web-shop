@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404, redirect, get_list_or_404
 from django.template import RequestContext
 from webshop.forms import ProductForm, MyUserCreationForm, MyAuthenticationForm, MyUserChangeForm, MyPasswordResetForm, MyPasswordChangeForm, AddressForm
-from webshop.models import SaleItem, Product, Type, Address, Order, OrderItem
+from webshop.models import SaleItem, Product, Type, Address, Order, OrderItem, Rating
 from django.template.loader import get_template
 from django.template.context import Context
 from django.core.context_processors import csrf
@@ -10,8 +10,9 @@ from django.contrib.auth import authenticate, login as auth_login, logout as aut
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.contrib.auth.views import password_reset
-from django.http import Http404
+from django.http import Http404, HttpResponse, QueryDict
 from datetime import datetime
+from django.utils import simplejson as json
 
 
 def root( request ):
@@ -291,3 +292,46 @@ def cart( request ):
 	variables	= {}
 	context		= RequestContext( request )
 	return render_to_response( "webshop/cart.html", variables, context )
+
+### AJAX ###
+def rating( request, product_id ):
+	if request.is_ajax():
+		if request.method == 'POST':
+			try:
+				product	= Product.objects.get(id=product_id)
+				try:
+					rate	= Rating.objects.get(product=product, user=request.user)
+					newrate = request.POST['rate']
+					rate.rate = newrate
+					rate.save()
+					average = product.average()
+					count = product.rating_set.count()
+					my_json = json.dumps({'average':average, 'count':count})
+					return HttpResponse(my_json, mimetype="application/json")
+				except Rating.DoesNotExist:
+					rate = Rating()
+					rate.rate = request.POST['rate']
+					rate.user = request.user
+					rate.product = product
+					rate.save()
+					average = product.average()
+					count = product.rating_set.count()
+					my_json = json.dumps({'average':average, 'count':count})
+					return HttpResponse(my_json, mimetype="application/json")
+			except Product.DoesNotExist:
+				my_json = json.dumps({'error':'product not found'})
+				return HttpResponse(my_json, mimetype="application/json")
+		else:
+			try:
+				product	= Product.objects.get(id=product_id)
+				average = product.average()
+				count = product.rating_set.count()
+				my_json = json.dumps({'average':average, 'count':count})
+				return HttpResponse(my_json, mimetype="application/json")
+			except Product.DoesNotExist:
+				my_json = json.dumps({'error':'product not found'})
+				return HttpResponse(my_json, mimetype="application/json")
+	else:
+		my_json = json.dumps({})
+		return HttpResponse(my_json, mimetype="application/json")
+	
