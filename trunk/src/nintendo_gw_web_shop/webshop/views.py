@@ -234,7 +234,7 @@ def completed_orders( request ):
 		return redirect( "webshop.views.home" )	
 	
 	if request.method == "GET":
-		orders					= Order.objects.filter( user=request.user, delivered=True, paid=True, date__lt=datetime.now() )
+		orders					= Order.objects.filter( user=request.user, delivered=True, paid=True ) # Filter by date, too
 		for order in orders:
 			order_items			= OrderItem.objects.filter( order=order )
 			order.order_items	= order_items

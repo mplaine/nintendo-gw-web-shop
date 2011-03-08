@@ -42,8 +42,8 @@
 										<td style="padding-top: 5px;" align="right">1000 &euro;</td>
 									</tr>
 									<tr>
-										<td colspan="2" align="right">Shipping:</td>
-										<td align="right">20 &euro;</td>
+										<td colspan="2" align="right">Shipping ({{ order.shippingMethod.name }}):</td>
+										<td align="right">{{ order.shippingMethod.price }} &euro;</td>
 									</tr>
 									<tr>
 										<td class="bold" colspan="2" align="right">Total:</td>

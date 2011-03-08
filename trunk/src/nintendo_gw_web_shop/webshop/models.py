@@ -74,7 +74,7 @@ class Product( models.Model ):
 class SaleItem( models.Model ):
 	price					= models.DecimalField( max_digits=7, decimal_places=2 )
 	product					= models.ForeignKey( Product )
-	onSale					= models.BooleanField( "On sale", default=True)
+	onSale					= models.BooleanField( "On sale", default=True )
 
 	def __unicode__( self ):
 		return self.product.__str__() + u", %.2f \u20AC" % ( self.price, )
@@ -111,57 +111,33 @@ class Comment( models.Model ):
 
 
 class Rating( models.Model ):
-	rate		= models.IntegerField() #TODO MAX & MIN values
+	rate		= models.IntegerField()
 	user 		= models.ForeignKey( User )
 	product		= models.ForeignKey( Product )
 
+class ShippingMethod( models.Model ):
+	name		= models.CharField( max_length=50 )
+	description	= models.TextField( blank=True )
+	price		= models.DecimalField( max_digits=5, decimal_places=2 )
+	onSale		= models.BooleanField( "On sale", default=True )
+
+	def __unicode__( self ):
+		return self.name + u", %.2f \u20AC" % ( self.price, )
 
 class Order( models.Model ):
-	date		= models.DateTimeField()
-	user 		= models.ForeignKey( User )
-	delivered	= models.BooleanField()
-	paid		= models.BooleanField()
-	# List of SaleItems needs to be added
+	date			= models.DateTimeField()
+	user 			= models.ForeignKey( User )
+	delivered		= models.BooleanField()
+	paid			= models.BooleanField()
+	shippingMethod	= models.ForeignKey( ShippingMethod )
 
+	def __unicode__( self ):
+		return "%s (%s %s)" % ( self.date, self.user.first_name, self.user.last_name )
+		
 class OrderItem( models.Model ):
 	saleItem				= models.ForeignKey( SaleItem )
 	order					= models.ForeignKey( Order )
 	quantity				= models.IntegerField( default=1 )
 
 	def __unicode__( self ):
-		return self.id
-
-# Deprecated: replaced by Order class 
-#class ShoppingCart(models.Model):
-
-# Users: Teemu Teekkari, Arto Assari, etc.
-#class User( models.Model ):
-#	firstName 			= models.CharField( "First name", max_length=50 )
-#	lastName 			= models.CharField( "Last name", max_length=50 )
-#	password			= models.CharField( max_length=128 )
-#	email 				= models.EmailField()
-
-
-#class Product(models.Model):
-#	numOfComments 	= models.IntegerField() 
-#	numOfViews 		= models.IntegerField() 
-#	numOfPurchases 	= models.IntegerField()
-
-#class ProductDetails(models.Model):
-#	product			= models.ForeignKey( Product )
-#	name 			= models.CharField(max_length=50)
-#	description		= models.CharField(max_length=1023)
-#	picture 		= models.URLField() 
-#	price 			= models.DecimalField(decimal_places=2, max_digits=6) 
-#	quantity 		= models.IntegerField()
-
-
-#class ProductOrder(models.Model):
-#	details 	= models.ForeignKey(ProductDetails)
-#	quota		= models.IntegerField()
-#	order		= models.ForeignKey(Order)
-
-#class Review(models.Model):
-#	user 		= models.ForeignKey(User)
-#	published 	= models.DateTimeField('date published')
-#	contents	= models.TextField()
+		return "%d" % self.id
