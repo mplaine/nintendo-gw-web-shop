@@ -24,7 +24,8 @@ This README.txt file covers the following topics:
 *************************************************
 
 Nintendo Game & Watch Shop is a school project for a course called
-T-106.4300 Web Software Development at the Aalto School of Science.
+T-106.4300 Web Software Development, which is held at the Aalto
+University School of Science.
 
 For more information about Nintendo Game & Watch Shop, please see
 following resources:

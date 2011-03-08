@@ -29,26 +29,55 @@
 					{% for order in orders %}
 						<tr>
 							<td class="order">
-								<table>
-									{% for order_item in order.order_items %}
+								<table class="order-information-table">
 									<tr>
-										<td align="right">{{ order_item.quantity }} x</td>
-										<td align="left">{{ order_item.saleItem.product.title }} ({{ order_item.saleItem.product.type }})</td>
-										<td align="right">{{ order_item.saleItem.price }} &euro;</td>
-									</tr>
-									{% endfor %}
-									<tr>
-										<td style="padding-top: 5px;" colspan="2" align="right">Subtotal:</td>
-										<td style="padding-top: 5px;" align="right">1000 &euro;</td>
+										<td class="label bold">Order number:</td>
+										<td>{{ order.id }}</td>
 									</tr>
 									<tr>
-										<td colspan="2" align="right">Shipping ({{ order.shippingMethod.name }}):</td>
-										<td align="right">{{ order.shippingMethod.price }} &euro;</td>
+										<td class="label">Placed on:</td>
+										<td>{{ order.date }}</td>
 									</tr>
 									<tr>
-										<td class="bold" colspan="2" align="right">Total:</td>
-										<td class="bold" align="right">1020 &euro;</td>
+										<td class="label">Status:</td>
+										<td>
+											{% if order.delivered %}
+												paid &amp; delivered
+											{% else %}
+												paid, waiting to be delivered
+											{% endif %}
+										</td>
 									</tr>
+								</table>
+								<table class="order-items-table">
+									<thead>
+										<tr>
+											<th class="text-left">Quantity / Product</th>
+											<th class="text-right">Unit Price</th>
+											<th class="text-right">Price</th>
+										</tr>
+									</thead>
+									<tbody>
+										{% for orderItem in order.getOrderItems %}
+										<tr>
+											<td class="text-left">{{ orderItem.quantity }} x {{ orderItem.saleItem.product.title }} | {{ orderItem.saleItem.product.type }}</td>
+											<td class="text-right">{{ orderItem.saleItem.getPriceInEuros }}</td>
+											<td class="text-right">{{ orderItem.getPriceInEuros }}</td>
+										</tr>
+										{% endfor %}
+										<tr>
+											<td class="text-right subtotal" colspan="2">Subtotal:</td>
+											<td class="text-right subtotal">{{ order.getSubtotalInEuros }}</td>
+										</tr>
+										<tr>
+											<td class="text-right" colspan="2">Shipping ({{ order.shippingMethod.name }}):</td>
+											<td class="text-right">{{ order.shippingMethod.getPriceInEuros }}</td>
+										</tr>
+										<tr>
+											<td class="text-right bold" colspan="2">Total:</td>
+											<td class="text-right bold">{{ order.getTotalInEuros }}</td>
+										</tr>
+									</tbody>
 								</table>
 							</td>
 						</tr>
