@@ -34,6 +34,8 @@ urlpatterns    = patterns( '',
     ( r'^payment/success/$', 'webshop.views.payment_success'),
     ( r'^payment/cancel/$', 'webshop.views.payment_cancel'),
     ( r'^payment/error/$', 'webshop.views.payment_error'),
+    #ajax urls
+    ( r'^ajax/product/(?P<product_id>\d+)/rating/$', 'webshop.views.rating'),
     # Uncomment the admin/doc line below to enable admin documentation:
     # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 

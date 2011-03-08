@@ -37,7 +37,7 @@
 		  var $filterSort = $('#sort-bar input[name="sort"]');
 	
 		  // get the first collection
-		  var $applications = $('#content');
+		  var $applications = $('#index-content');
 	
 		  // clone applications to get a second collection
 		  var $data = $applications.clone();
@@ -98,6 +98,7 @@
 	</form>
 {% endblock %}
 {% block content %}
+	<div id="index-content">
 	{% if types %}
  		{% for type in types %}
  			<div class="thumb" data-id="{{type.id}}">
@@ -109,4 +110,5 @@
 			</div>
  		{% endfor %}
 	{% endif %}
+	</div>
 {% endblock %}
