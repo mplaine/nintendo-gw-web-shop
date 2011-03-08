@@ -235,10 +235,7 @@ def completed_orders( request ):
 		return redirect( "webshop.views.home" )	
 	
 	if request.method == "GET":
-		orders					= Order.objects.filter( user=request.user, delivered=True, paid=True ) # Filter by date, too
-		for order in orders:
-			order_items			= OrderItem.objects.filter( order=order )
-			order.order_items	= order_items
+		orders					= Order.objects.filter( user=request.user, paid=True )
 	else:
 		raise Http404( "%s method is not supported." % request.method )
 

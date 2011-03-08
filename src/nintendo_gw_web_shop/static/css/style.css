@@ -30,6 +30,12 @@ a {
 .bold {
 	font-weight: bold;
 }
+.text-left {
+	text-align: left;
+}
+.text-right {
+	text-align: right;
+}
 /* END: common */
 
 
@@ -440,7 +446,7 @@ a {
 	padding: 0;
 	text-indent: 0;	
 }
-#completed-orders-table, #completed-orders-table table {
+#completed-orders-table {
 	border-collapse: collapse;
 	width: 100%;
 }
@@ -449,11 +455,18 @@ a {
 	border-top: 1px solid #999999;
 	padding: 10px 0px 10px 0px;
 }
-#completed-orders-table ul {
-	list-style: none;
-	margin: 0;
-	padding: 0px 0px 4px 0px;
-	text-indent: 0;	
+#completed-orders-table table.order-information-table {
+	margin-bottom: 20px;
+	width: 100%;
+}
+#completed-orders-table table.order-information-table td.label {
+	width: 120px;
+}
+#completed-orders-table table.order-items-table {
+	width: 100%;
+}
+#completed-orders-table table.order-items-table td.subtotal {
+	padding-top: 15px;
 }
 /* END: my account */
 

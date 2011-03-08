@@ -1,6 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from django.contrib.humanize.templatetags.humanize import intcomma
 
 # Categories: Silver, Gold, etc.
 class Type( models.Model ):
@@ -85,6 +85,9 @@ class SaleItem( models.Model ):
 	product					= models.ForeignKey( Product )
 	onSale					= models.BooleanField( "On sale", default=True )
 
+	def getPriceInEuros( self ):
+		return u"%.2f \u20AC" % ( self.price, )
+
 	def __unicode__( self ):
 		return self.product.__str__() + u", %.2f \u20AC" % ( self.price, )
 
@@ -130,6 +133,9 @@ class ShippingMethod( models.Model ):
 	price		= models.DecimalField( max_digits=5, decimal_places=2 )
 	onSale		= models.BooleanField( "On sale", default=True )
 
+	def getPriceInEuros( self ):
+		return u"%.2f \u20AC" % ( self.price, )
+
 	def __unicode__( self ):
 		return self.name + u", %.2f \u20AC" % ( self.price, )
 
@@ -140,6 +146,29 @@ class Order( models.Model ):
 	paid			= models.BooleanField()
 	shippingMethod	= models.ForeignKey( ShippingMethod )
 
+	def getPriceInEuros( self ):
+		return u"%.2f \u20AC" % ( self.price, )
+
+	def getOrderItems( self ):
+		return OrderItem.objects.filter( order=self )
+
+	def getSubtotal( self ):
+		subtotal		= 0
+		orderItems		= OrderItem.objects.filter( order=self )
+
+		for orderItem in orderItems:
+			subtotal	= subtotal + ( orderItem.quantity * orderItem.saleItem.price )
+		return subtotal
+
+	def getSubtotalInEuros( self ):
+		return u"%.2f \u20AC" % ( self.getSubtotal(), )
+
+	def getTotal( self ):
+		return self.getSubtotal() + self.shippingMethod.price
+
+	def getTotalInEuros( self ):
+		return u"%.2f \u20AC" % ( self.getTotal(), )
+
 	def __unicode__( self ):
 		return "%s (%s %s)" % ( self.date, self.user.first_name, self.user.last_name )
 		
@@ -148,5 +177,11 @@ class OrderItem( models.Model ):
 	order					= models.ForeignKey( Order )
 	quantity				= models.IntegerField( default=1 )
 
+	def getPrice( self ):
+		return self.quantity * self.saleItem.price
+
+	def getPriceInEuros( self ):
+		return u"%.2f \u20AC" % ( self.getPrice(), )
+	
 	def __unicode__( self ):
 		return "%d" % self.id

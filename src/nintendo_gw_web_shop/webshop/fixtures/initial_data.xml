@@ -1131,4 +1131,16 @@
         <field to="webshop.product" name="product" rel="ManyToOneRel">63</field>
         <field type="BooleanField" name="onSale">True</field>
     </object>
+    <object pk="1" model="webshop.shippingmethod">
+        <field type="CharField" name="name">Standard</field>
+        <field type="TextField" name="description"></field>
+        <field type="DecimalField" name="price">10</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="2" model="webshop.shippingmethod">
+        <field type="CharField" name="name">Express</field>
+        <field type="TextField" name="description"></field>
+        <field type="DecimalField" name="price">20</field>
+        <field type="BooleanField" name="onSale">True</field>
+    </object>
 </django-objects>
