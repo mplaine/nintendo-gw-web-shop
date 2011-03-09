@@ -92,6 +92,8 @@ EMAIL_USE_TLS       = True
 SERVER_EMAIL        = "your-email-address@gmail.com"
 DEFAULT_FROM_EMAIL  = "your-email-address@gmail.com"
 
+LOGIN_URL           = '/webshop/login/'
+
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.

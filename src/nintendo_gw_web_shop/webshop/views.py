@@ -13,6 +13,7 @@ from django.contrib.auth.views import password_reset
 from django.http import Http404, HttpResponse, QueryDict
 from datetime import datetime
 from django.utils import simplejson as json
+from django.contrib.auth.decorators import login_required
 
 
 def root( request ):
@@ -28,7 +29,7 @@ def home( request ):
 def login( request ):
 	if request.user.is_authenticated():
 		return redirect( "webshop.views.home" )
-
+		
 	if request.method == "POST":
 		myAuthenticationForm	= MyAuthenticationForm( data=request.POST )
 		if myAuthenticationForm.is_valid():
@@ -36,14 +37,18 @@ def login( request ):
 			password			= myAuthenticationForm.cleaned_data.get( "password", "" )
 			user				= authenticate( username=username, password=password )
 			auth_login( request, user )
+			# After a successful login, redirect the user to the page (s)he came from based on 1) next URL parameter and 2) default to home
 			next				= request.POST.get( "next", reverse( "webshop.views.home" ) )
 			return redirect( next )
-		#else:
+		else:
 			#print "Form is not valid!"
+			# After a successful login, redirect the user to the page (s)he came from based on 1) next URL parameter and 2) default to home
+			next				= request.POST.get( "next", reverse( "webshop.views.home" ) )
 	else:
-		myAuthenticationForm	= MyAuthenticationForm( initial={} )	
-	
-	next						= request.META.get( "HTTP_REFERER", reverse( "webshop.views.home" ) ) # After a successful login, redirect the user to the page (s)he came from
+		myAuthenticationForm	= MyAuthenticationForm( initial={} )		
+		# After a successful login, redirect the user to the page (s)he came from based on 1) next URL parameter, 2) HTTP REFERER, and 3) default to home
+		next					= request.GET.get( "next", request.META.get( "HTTP_REFERER", reverse( "webshop.views.home" ) ) )
+				
 	variables					= { "form" : myAuthenticationForm, "next" : next }
 	context						= RequestContext( request )
 	context.update( csrf( request ) )
@@ -81,10 +86,8 @@ def forgot_your_password( request ):
 	context.update( csrf( request ) )
 	return render_to_response( "webshop/forgot_your_password.html", variables, context )	
 
+@login_required
 def change_password( request ):
-	if not request.user.is_authenticated():
-		return redirect( "webshop.views.home" )
-
 	if request.method == "POST":
 		myPasswordChangeForm	= MyPasswordChangeForm( data=request.POST, user=request.user )
 		if myPasswordChangeForm.is_valid():
@@ -118,24 +121,29 @@ def register( request ):
 			# Automatically login the user after successful registration
 			user.backend		= "django.contrib.auth.backends.ModelBackend"
 			auth_login( request, user )
-			return redirect( "webshop.views.home" )
-		#else:
+			# After a successful login, redirect the user to the page (s)he came from based on 1) next URL parameter and 2) default to home
+			next				= request.POST.get( "next", reverse( "webshop.views.home" ) )
+			return redirect( next )
+		else:
 			#print "Form is not valid!"
+			# After a successful login, redirect the user to the page (s)he came from based on 1) next URL parameter and 2) default to home
+			next				= request.POST.get( "next", reverse( "webshop.views.home" ) )
 	else:
 		myUserCreationForm		= MyUserCreationForm( initial={} )
+		# After a successful registration, redirect the user to the page (s)he came from based on 1) next URL parameter, 2) HTTP REFERER, and 3) default to home
+		next					= request.GET.get( "next", request.META.get( "HTTP_REFERER", reverse( "webshop.views.home" ) ) )
 	
-	variables					= { "form" : myUserCreationForm }
+	variables					= { "form" : myUserCreationForm, "next" : next }
 	context						= RequestContext( request )
 	context.update( csrf( request ) )
 	return render_to_response( "webshop/register.html", variables, context )
 
+@login_required
 def myaccount( request ):
 	return redirect( "webshop.views.account_details" )
 
+@login_required
 def account_details( request ):
-	if not request.user.is_authenticated():
-		return redirect( "webshop.views.home" )	
-	
 	if request.method == "POST":
 		myUserChangeForm		= MyUserChangeForm( data=request.POST, instance=request.user )
 		if myUserChangeForm.is_valid():
@@ -152,10 +160,8 @@ def account_details( request ):
 	context.update( csrf( request ) )
 	return render_to_response( "webshop/myaccount/account_details.html", variables, context )
 
+@login_required
 def address_book( request ):
-	if not request.user.is_authenticated():
-		return redirect( "webshop.views.home" )	
-
 	if request.method == "GET":
 		addresses				= Address.objects.filter( user=request.user )
 	else:
@@ -166,10 +172,8 @@ def address_book( request ):
 	context.update( csrf( request ) )
 	return render_to_response( "webshop/myaccount/address_book.html", variables, context )
 
+@login_required
 def address_book_new( request ):
-	if not request.user.is_authenticated():
-		return redirect( "webshop.views.home" )	
-
 	# Create a new address. Associate the currently logged-in user with the address
 	address						= Address()
 	address.user				= request.user
@@ -190,10 +194,8 @@ def address_book_new( request ):
 	#context.update( csrf( request ) )
 	return render_to_response( "webshop/myaccount/address_book_new.html", variables, context )	
 
+@login_required
 def address_book_edit( request, address_id=None ):
-	if not request.user.is_authenticated():
-		return redirect( "webshop.views.home" )	
-
 	# Retrieve the address. Users are allowed to edit their own addresses only!
 	address						= get_object_or_404( Address, pk=address_id, user=request.user )
 
@@ -213,10 +215,8 @@ def address_book_edit( request, address_id=None ):
 	context.update( csrf( request ) )
 	return render_to_response( "webshop/myaccount/address_book_edit.html", variables, context )
 
+@login_required
 def address_book_delete( request, address_id=None ):
-	if not request.user.is_authenticated():
-		return redirect( "webshop.views.home" )	
-
 	# Retrieve the address. Users are allowed to edit their own addresses only!
 	address						= get_object_or_404( Address, pk=address_id, user=request.user )
 
@@ -230,10 +230,8 @@ def address_book_delete( request, address_id=None ):
 	context.update( csrf( request ) )
 	return render_to_response( "webshop/myaccount/address_book_delete.html", variables, context )
 
+@login_required
 def completed_orders( request ):
-	if not request.user.is_authenticated():
-		return redirect( "webshop.views.home" )	
-	
 	if request.method == "GET":
 		orders					= Order.objects.filter( user=request.user, paid=True )
 	else:
@@ -246,7 +244,9 @@ def completed_orders( request ):
 
 def logout( request ):
 	auth_logout( request )
-	return redirect( "webshop.views.home" )
+	# After a successful logout, redirect the user to the page (s)he came from based on 1) HTTP REFERER and 2) default to home
+	next						= request.META.get( "HTTP_REFERER", reverse( "webshop.views.home" ) )
+	return redirect( next )
 
 def search( request ):
 	variables					= {}
