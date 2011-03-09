@@ -83,6 +83,7 @@
 			{% load messages %}
 			{% render_messages messages %}
 			{% csrf_token %}
+			<input type="hidden" name="next" value="{{ next }}" />
 			<table>
 				<tbody>
 					{% for field in form %}
