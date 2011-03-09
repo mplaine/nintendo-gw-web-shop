@@ -3,10 +3,13 @@
 {% block extra-scripts %}
 	<script type="text/javascript">
 		$( function() {
+			// Highlight current page in the main navigation
 			$( "#navi-register>span" ).addClass( "navi-selected" );
 
+			// Focus to the first input field
 			$( "#id_first_name" ).focus();
 
+			// Validate the form
 			$( "#register-form" ).validate( {
 				rules: {
 					"first_name": {

@@ -3,14 +3,18 @@
 {% block extra-scripts %}
 	<script type="text/javascript">
 		$( function() {
+			// Highlight current page in the main navigation
 			$( "#navi-myaccount>span" ).addClass( "navi-selected" );
 
+			// Highlight current page in the side navigation
 			$( "#side-navi-myaccount-address-book>span" ).addClass( "side-navi-selected" );
 			$( "#side-navi-myaccount-address-book" ).parent().append( $( "#side-navi-arrow" ) );		
 			$( "#side-navi-arrow" ).show( "slide", { direction: "left" }, 500 );
 
+			// Focus to the first input field
 			$( "#id_streetAddressLine1" ).focus();
 
+			// Validate the form
 			$( "#address-form" ).validate( {
 				rules: {
 					"streetAddressLine1": {

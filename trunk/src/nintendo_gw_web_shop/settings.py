@@ -1,8 +1,10 @@
-# Django settings for nintendo_gw_web_shop project.
+# Django settings for Nintendo Game & Watch Shop project.
 import os
 import django
-# calculated paths for django and the site
-# used as starting points for various other paths
+
+
+# Calculated paths for django and the site
+# used as starting points for various other paths.
 DJANGO_ROOT = os.path.dirname( os.path.realpath( django.__file__ ) )
 SITE_ROOT   = os.path.dirname( os.path.realpath( __file__ ) )
 
@@ -84,15 +86,21 @@ MIDDLEWARE_CLASSES = (
 
 ROOT_URLCONF = 'nintendo_gw_web_shop.urls'
 
+# For sending e-mails, e.g., on the "Forgot your password?" page 
 EMAIL_HOST          = "smtp.gmail.com"
-EMAIL_HOST_USER     = "your-email-address@gmail.com" 
-EMAIL_HOST_PASSWORD = "your-password"
+EMAIL_HOST_USER     = "nintendo.gwshop@gmail.com" 
+EMAIL_HOST_PASSWORD = "nintendogwshop"
 EMAIL_PORT          = 587
 EMAIL_USE_TLS       = True
-SERVER_EMAIL        = "your-email-address@gmail.com"
-DEFAULT_FROM_EMAIL  = "your-email-address@gmail.com"
+SERVER_EMAIL        = "nintendo.gwshop@gmail.com"
+DEFAULT_FROM_EMAIL  = "nintendo.gwshop@gmail.com"
 
+# For using the login_required() decorator in the views
 LOGIN_URL           = '/webshop/login/'
+
+# For managing the duration of sessions
+SESSION_COOKIE_AGE              = 3600 # Session expires in one hour
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
@@ -108,8 +116,5 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'webshop',
-    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
-    # Uncomment the next line to enable admin documentation:
-    # 'django.contrib.admindocs',
 )

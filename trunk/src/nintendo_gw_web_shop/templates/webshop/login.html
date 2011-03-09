@@ -3,10 +3,13 @@
 {% block extra-scripts %}
 	<script type="text/javascript">
 		$( function() {
+			// Highlight current page in the main navigation
 			$( "#navi-login>span" ).addClass( "navi-selected" );
 
+			// Focus to the first input field
 			$( "#id_username" ).focus();
 			
+			// Validate the form
 			$( "#login-form" ).validate( {
 				rules: {
 					"username": {

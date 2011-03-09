@@ -4,10 +4,12 @@
 	<script src="/webshop/static/js/jquery.flip.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
+			// Highlight current page in the main navigation
 			$( "#navi-home>span" ).addClass( "navi-selected" );
 			
 			$('a', '#side-navi').attr('href', 'javascript:;');
 
+			// Highlight current page in the side navigation
 			$( "#side-navi ul li a>span" ).first().addClass( "side-navi-selected" );
 
 			//$( "a", "#side-navi" ).click( function() {
