@@ -3,14 +3,18 @@
 {% block extra-scripts %}
 	<script type="text/javascript">
 		$( function() {
+			// Highlight current page in the main navigation
 			$( "#navi-myaccount>span" ).addClass( "navi-selected" );
 
+			// Highlight current page in the side navigation
 			$( "#side-navi-myaccount-account-details>span" ).addClass( "side-navi-selected" );
 			$( "#side-navi-myaccount-account-details" ).parent().append( $( "#side-navi-arrow" ) );		
 			$( "#side-navi-arrow" ).show( "slide", { direction: "left" }, 500 );
 
+			// Focus to the first input field
 			$( "#id_first_name" ).focus();
 
+			// Validate the form
 			$( "#account-details-form" ).validate( {
 				rules: {
 					"first_name": {
