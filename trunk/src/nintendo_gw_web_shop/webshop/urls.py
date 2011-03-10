@@ -9,7 +9,6 @@ admin.autodiscover()
 urlpatterns    = patterns( '',
     ( r'^$', 'webshop.views.root' ),
     ( r'^home/$', 'webshop.views.home' ),
-    ( r'^home/search/', 'webshop.views.search' ),
     ( r'^home/category/(?P<type_id>\d+)/', 'webshop.views.category' ),
     ( r'^home/search$', 'webshop.views.search' ),
     ( r'^register/$', 'webshop.views.register' ),
@@ -44,6 +43,10 @@ urlpatterns    = patterns( '',
     ( r'^ajax/product/(?P<product_id>\d+)/rating/$', 'webshop.views.rating'),
     ( r'^ajax/product/(?P<product_id>\d+)/comment/$', 'webshop.views.comment'),
     ( r'^ajax/products/$', 'webshop.views.ajaxproducts'),
+    ( r'^ajax/statistics/commentcount/$', 'webshop.views.ajaxstatisticscommentcount'),
+    ( r'^ajax/product/(?P<product_id>\d+)/view/$', 'webshop.views.addproductview'),
+    ( r'^ajax/product/view/$', 'webshop.views.productview'),
+    ( r'^ajax/comment/(?P<comment_id>\d+)/delete/$', 'webshop.views.commentdelete'),
 
     # Static files
     ( r'^static/(?P<path>.*)$', 'django.views.static.serve', { 'document_root' : settings.MEDIA_ROOT } ),

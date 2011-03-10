@@ -1,6 +1,7 @@
 {% extends "webshop/base_template.html" %}
 {% block title %}Nintendo Game &amp; Watch Shop - Admin - Statistics{% endblock %}
 {% block extra-scripts %}
+	<script type="text/javascript" src="/webshop/static/js/highcharts.js"></script>
 	<script type="text/javascript">
 		$( function() {
 			// Highlight current page in the main navigation
@@ -10,6 +11,87 @@
 			$( "#side-navi-admin-statistics>span" ).addClass( "side-navi-selected" );
 			$( "#side-navi-admin-statistics" ).parent().append( $( "#side-navi-arrow" ) );		
 			$( "#side-navi-arrow" ).show( "slide", { direction: "left" }, 500 );
+			var comments;
+			var commentchart;
+			var products;
+			var productchart;
+			$.getJSON('/webshop/ajax/statistics/commentcount/', function(data) {
+				comments = data;
+				commentchart = new Highcharts.Chart({
+				      chart: {
+				         renderTo: 'comment-pie',
+				         plotBackgroundColor: null,
+				         plotBorderWidth: null,
+				         plotShadow: false
+				      },
+				      title: {
+				         text: 'Product Comments'
+				      },
+				      tooltip: {
+				         formatter: function() {
+				            return '<b>'+ this.point.name +'</b>: '+ this.y;
+				         }
+				      },
+				      plotOptions: {
+				         pie: {
+				            allowPointSelect: false,
+				            cursor: 'pointer',
+				            dataLabels: {
+				               enabled: true,
+				               color: '#000000',
+				               connectorColor: '#000000',
+				               formatter: function() {
+				                  return '<b>'+ this.point.name +'</b>: '+ this.y;
+				               }
+				            }
+				         }
+				      },
+				       series: [{
+				         type: 'pie',
+				         name: 'Product Comments',
+				         data: comments
+				      }]
+				   });
+			});
+			
+			$.getJSON('/webshop/ajax/product/view/', function(data) {
+				comments = data;
+				commentchart = new Highcharts.Chart({
+				      chart: {
+				         renderTo: 'product-pie',
+				         plotBackgroundColor: null,
+				         plotBorderWidth: null,
+				         plotShadow: false
+				      },
+				      title: {
+				         text: 'Product Views'
+				      },
+				      tooltip: {
+				         formatter: function() {
+				            return '<b>'+ this.point.name +'</b>: '+ this.y;
+				         }
+				      },
+				      plotOptions: {
+				         pie: {
+				            allowPointSelect: false,
+				            cursor: 'pointer',
+				            dataLabels: {
+				               enabled: true,
+				               color: '#000000',
+				               connectorColor: '#000000',
+				               formatter: function() {
+				                  return '<b>'+ this.point.name +'</b>: '+ this.y;
+				               }
+				            }
+				         }
+				      },
+				       series: [{
+				         type: 'pie',
+				         name: 'Product Views',
+				         data: comments
+				      }]
+				   });
+			});
 		} );
 	</script>				
 {% endblock %}
@@ -23,5 +105,7 @@
 		<h3>Statistics</h3>
 		{% load messages %}
 		{% render_messages messages %}
+		<div id="comment-pie"></div>
+		<div id="product-pie"></div>
 	</div>
 {% endblock %}
