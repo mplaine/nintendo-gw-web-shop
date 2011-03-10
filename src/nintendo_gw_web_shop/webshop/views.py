@@ -1,8 +1,8 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
-from webshop.forms import ProductForm, MyUserCreationForm, MyAuthenticationForm, MyUserChangeForm, MyPasswordResetForm, MyPasswordChangeForm, AddressForm
-from webshop.models import SaleItem, Product, Type, Address, Order, OrderItem, Rating, Comment
+from webshop.forms import MyUserCreationForm, MyAuthenticationForm, MyUserChangeForm, MyPasswordResetForm, MyPasswordChangeForm, AddressForm
+from webshop.models import Product, Type, Address, Order, Rating, Comment
 from django.core.context_processors import csrf
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib import messages
@@ -11,7 +11,6 @@ from django.http import Http404, HttpResponse
 from django.utils import simplejson as json
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-from django.contrib.auth.decorators import login_required
 
 
 """
@@ -481,15 +480,15 @@ Author(s): Markku Laine
 """
 
 def credits( request ):
-    # Handle GET requests
-    if request.method == "GET":
-        variables                    = {}
-        context                        = RequestContext( request )
-        context.update( csrf( request ) )
-        return render_to_response( "webshop/credits.html", variables, context )
-    # Handle other requests
-    else:
-        raise Http404( "%s method is not supported." % request.method )
+	# Handle GET requests
+	if request.method == "GET":
+		variables                    = {}
+		context                        = RequestContext( request )
+		context.update( csrf( request ) )
+		return render_to_response( "webshop/credits.html", variables, context )
+	# Handle other requests
+	else:
+		raise Http404( "%s method is not supported." % request.method )
 
 """
 Nintendo Game & Watch Shop > Admin
@@ -498,16 +497,16 @@ Author(s): Markku Laine
 """
 @login_required
 def admin( request ):
-    # Redirect user to Home if (s)he is has not access rights
-    if not request.user.is_staff:
-        return redirect( "webshop.views.home" )
-                
-    # Handle GET requests
-    if request.method == "GET":
-        return redirect( "webshop.views.admin_paid_orders" )
-    # Handle other requests
-    else:
-        raise Http404( "%s method is not supported." % request.method )
+	# Redirect user to Home if (s)he is has not access rights
+	if not request.user.is_staff:
+		return redirect( "webshop.views.home" )
+
+	# Handle GET requests
+	if request.method == "GET":
+		return redirect( "webshop.views.admin_paid_orders" )
+	# Handle other requests
+	else:
+		raise Http404( "%s method is not supported." % request.method )
 
 
 """
@@ -517,22 +516,22 @@ Author(s): Markku Laine
 """
 @login_required
 def admin_paid_orders( request ):
-    # Redirect user to Home if (s)he is has not access rights
-    if not request.user.is_staff:
-        return redirect( "webshop.views.home" )
-                
-    # Handle GET requests
-    if request.method == "GET":
-        # Retrieve paid orders
-        orders                    = Order.objects.filter( paid=True, delivered=False )
-    # Handle other requests
-    else:
-        raise Http404( "%s method is not supported." % request.method )
+	# Redirect user to Home if (s)he is has not access rights
+	if not request.user.is_staff:
+		return redirect( "webshop.views.home" )
 
-    variables                    = { "orders" : orders }
-    context                        = RequestContext( request )
-    context.update( csrf( request ) )
-    return render_to_response( "webshop/admin/paid_orders.html", variables, context )
+	# Handle GET requests
+	if request.method == "GET":
+		# Retrieve paid orders
+		orders                    = Order.objects.filter( paid=True, delivered=False )
+	# Handle other requests
+	else:
+		raise Http404( "%s method is not supported." % request.method )
+
+	variables                    = { "orders" : orders }
+	context                        = RequestContext( request )
+	context.update( csrf( request ) )
+	return render_to_response( "webshop/admin/paid_orders.html", variables, context )
 
 
 """
@@ -542,22 +541,22 @@ Author(s): Markku Laine
 """
 @login_required
 def admin_delivered_orders( request ):
-    # Redirect user to Home if (s)he is has not access rights
-    if not request.user.is_staff:
-        return redirect( "webshop.views.home" )
-                                
-    # Handle GET requests
-    if request.method == "GET":
-        # Retrieve paid & delivered orders
-        orders                    = Order.objects.filter( paid=True, delivered=True )
-    # Handle other requests
-    else:
-        raise Http404( "%s method is not supported." % request.method )
+	# Redirect user to Home if (s)he is has not access rights
+	if not request.user.is_staff:
+		return redirect( "webshop.views.home" )
+	
+	# Handle GET requests
+	if request.method == "GET":
+		# Retrieve paid & delivered orders
+		orders                    = Order.objects.filter( paid=True, delivered=True )
+	# Handle other requests
+	else:
+		raise Http404( "%s method is not supported." % request.method )
 
-    variables                    = { "orders" : orders }
-    context                        = RequestContext( request )
-    context.update( csrf( request ) )
-    return render_to_response( "webshop/admin/delivered_orders.html", variables, context )
+	variables                    = { "orders" : orders }
+	context                        = RequestContext( request )
+	context.update( csrf( request ) )
+	return render_to_response( "webshop/admin/delivered_orders.html", variables, context )
 
 
 """
@@ -567,10 +566,10 @@ Author(s): Markku Laine
 """
 @login_required
 def admin_statistics( request ):
-    # Redirect user to Home if (s)he is has not access rights
-    if not request.user.is_staff:
-        return redirect( "webshop.views.home" )
-                            
+	# Redirect user to Home if (s)he is has not access rights
+	if not request.user.is_staff:
+		return redirect( "webshop.views.home" )
+
 	# Handle GET requests
 	if request.method == "GET":
 		variables					= {}

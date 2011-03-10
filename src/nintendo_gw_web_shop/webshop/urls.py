@@ -38,12 +38,11 @@ urlpatterns    = patterns( '',
     ( r'^payment/success/$', 'webshop.views.payment_success'),
     ( r'^payment/cancel/$', 'webshop.views.payment_cancel'),
     ( r'^payment/error/$', 'webshop.views.payment_error'),
-    #ajax urls
+    
+    #Ajax urls
     ( r'^ajax/product/(?P<product_id>\d+)/rating/$', 'webshop.views.rating'),
     ( r'^ajax/product/(?P<product_id>\d+)/comment/$', 'webshop.views.comment'),
     ( r'^ajax/products/$', 'webshop.views.ajaxproducts'),
-    # Uncomment the admin/doc line below to enable admin documentation:
-    # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Static files
     ( r'^static/(?P<path>.*)$', 'django.views.static.serve', { 'document_root' : settings.MEDIA_ROOT } ),
