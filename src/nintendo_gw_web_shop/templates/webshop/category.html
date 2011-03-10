@@ -2,6 +2,8 @@
 {% block title %}Nintendo Game &amp; Watch Shop - {{type}}{% endblock %}
 {% block extra-scripts %}
 	<script src="/webshop/static/js/jquery.flip.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="/webshop/static/js/jquery.simpledialog.0.1.css" />
+	<script src="/webshop/static/js/jquery.simpledialog.0.1.min.js"></script>
 	<script type="text/javascript">
 		$(function() {
 			//Add Statistics
@@ -107,6 +109,9 @@
 					}
 			);
 			bindComments();
+			$('.product-image-wrapper').simpleDialog({
+				  showCloseLabel: false
+			});
 		});
 		function bindComments() {
 			$('.add-comment-toggle').unbind();
@@ -294,7 +299,7 @@
 				<div class="product-content">
 					<h2 class="product-title">{{product.title}}</h2>
 					<div class="product-thumb">
-						<img src="/webshop/static/{{product.imageThumb}}" />
+						<a href="/webshop/static/{{product.image}}" class="product-image-wrapper" target="_blank"><img src="/webshop/static/{{product.imageThumb}}" /></a>
 					</div>
 					<div class="product-details">{{product.description}}</div>
 					<div class="product-info">

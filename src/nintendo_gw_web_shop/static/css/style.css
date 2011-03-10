@@ -5,7 +5,6 @@ html {
 }
 body {
 	height: 100%;
-	font-size: 14px;
 }
 img {
 	border: none;
@@ -131,6 +130,30 @@ a {
 	right: 7px;
 	top: 7px;
 	width: 12px;
+}
+
+#search-submit {
+	cursor: pointer;
+	background-color: #FFFFFF;
+	background-image: url( "../images/search.png" );
+	background-repeat: no-repeat;
+	border: none;
+	height: 13px;
+	margin: 0;
+	padding: 0;
+	position: absolute;
+	right: 7px;
+	top: 7px;
+	width: 12px;
+	display: none;
+}
+
+.no-js #search-submit {
+	display: inline;
+}
+
+.no-js #search-button {
+	display: none;
 }
 /* END: search */
 
@@ -646,7 +669,6 @@ a {
 	display: block;
 }
 .add-to-cart {
-	z-index: 1001;
 	position: absolute;
 	top: 5px;
 	right: 5px;
@@ -738,5 +760,9 @@ textarea.comment-textarea {
 .clearfix {
   clear: both;
   font-size: 1px;
+}
+
+.no-js .product-header, .no-js .comment-wrapper, .no-js .rating-table, .no-js #sort-bar {
+	display: none;
 }
 /* END: random/uncleaned */
