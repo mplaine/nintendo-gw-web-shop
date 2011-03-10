@@ -135,7 +135,7 @@ class Statistic( models.Model ):
 	numberOfViews					= models.IntegerField( default=0 )
 	
 	def __unicode__( self ):
-		return self.product.__unicode__() + ": %d views" % ( self.numberOfViews, )
+		return self.product.__unicode__() + " | %d view(s)" % ( self.numberOfViews, )
 	__unicode__.short_description	= "Statistic"
 		
 

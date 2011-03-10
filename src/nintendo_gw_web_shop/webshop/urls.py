@@ -1,5 +1,4 @@
 from django.conf.urls.defaults import patterns
-#from django.contrib.auth.views import password_reset, password_reset_done
 from django.contrib import admin
 
 import settings
@@ -13,10 +12,11 @@ urlpatterns    = patterns( '',
     ( r'^home/search$', 'webshop.views.search' ),
     ( r'^register/$', 'webshop.views.register' ),
     ( r'^login/$', 'webshop.views.login' ),
-    ( r'^login/forgotyourpassword/$', 'webshop.views.forgot_your_password' ),
-    #( r'^accounts/login/$', password_reset, { "template_name" : "registration/password_reset_form_markku.html" } ),
-    #( r'^accounts/resetdone/$', password_reset_done ),
-    #(r'^reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm', {'template_name' : 'registration/password_reset_email.html',  'post_reset_redirect': 'webshop.views.logout' }),
+    ( r'^passwordreset/$', 'webshop.views.password_reset' ),
+    ( r'^passwordreset/requestnewpassword/$', 'webshop.views.request_new_password' ), # Request new password
+    ( r'^passwordreset/newpasswordrequested/$', 'webshop.views.new_password_requested' ), # New password requested
+    ( r'^reset/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)/$', 'django.contrib.auth.views.password_reset_confirm', {'template_name' : 'webshop/passwordreset/new_password.html',  'post_reset_redirect': '/webshop/passwordreset/newpasswordset/' } ), # New Password
+    ( r'^passwordreset/newpasswordset/$', 'webshop.views.new_password_set' ), # New password set
     ( r'^logout/$', 'webshop.views.logout' ),
     ( r'^myaccount/$', 'webshop.views.myaccount' ),
     ( r'^myaccount/accountdetails/$', 'webshop.views.account_details' ),

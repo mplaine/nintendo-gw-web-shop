@@ -1,4 +1,4 @@
-from webshop.models import Type, Product, SaleItem, Address, Comment, Rating, ShippingMethod, Order, OrderItem
+from webshop.models import Type, Product, SaleItem, Statistic, Address, Comment, Rating, ShippingMethod, Order, OrderItem
 from django.contrib import admin
 	
 
@@ -54,9 +54,16 @@ admin.site.register( SaleItem, SaleItemAdmin )
 """
 Administration UI for statistics.
 
-Author(s): N/A
+Author(s): Markku Laine
 """
-#admin.site.register( Statistic )
+class StatisticAdmin( admin.ModelAdmin ):
+	fieldsets		= [
+		( "Basic Information",	{ "fields" : [ "product", "numberOfViews" ] } ),
+	]
+	list_display	= ( "product", "numberOfViews" )
+	list_filter		= [ "numberOfViews" ]
+	ordering		= [ "product__title" ]
+admin.site.register( Statistic, StatisticAdmin )
 
 
 """
