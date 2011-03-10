@@ -24,7 +24,7 @@
 		{% load messages %}
 		{% render_messages messages %}
 		{% if orders|length == 0 %}
-			<p>Shop has no orders.</p>
+			<p>Shop has no delivered orders.</p>
 		{% else %}
 			<table id="orders-table">
 				<tbody>
@@ -46,7 +46,7 @@
 											{% if order.delivered %}
 												paid &amp; delivered
 											{% else %}
-												paid, waiting to be delivered
+												unknown status
 											{% endif %}
 										</td>
 									</tr>
