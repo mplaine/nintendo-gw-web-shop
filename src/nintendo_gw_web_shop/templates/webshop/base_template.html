@@ -64,6 +64,9 @@
 						<li><a id="navi-home" href="{% url webshop.views.home %}"><span>home</span></a></li>
 						{% if user.is_authenticated %}
 							<li><a id="navi-myaccount" href="{% url webshop.views.account_details %}"><span>my account</span></a></li>
+							{% if user.is_staff %}
+								<li><a id="navi-admin" href="{% url webshop.views.admin_paid_orders %}"><span>admin</span></a></li>
+							{% endif %}
 							<li><a id="navi-logout" href="{% url webshop.views.logout %}"><span>logout</span></a></li>
 						{% else %}
 							<li><a id="navi-register" href="{% url webshop.views.register %}"><span>register</span></a></li>
