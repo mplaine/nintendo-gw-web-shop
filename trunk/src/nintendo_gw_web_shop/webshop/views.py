@@ -7,11 +7,10 @@ from django.core.context_processors import csrf
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib import messages
 from django.contrib.auth.views import password_reset
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseBadRequest
 from django.utils import simplejson as json
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-
 
 """
 Nintendo Game & Watch Shop
@@ -600,11 +599,26 @@ def credits( request ):
 """
 Author(s): Juha Loukkola
 """
+
 def payment_pay( request ):
+	if request.method == 'POST':
+		#TODO: get cart information
+		#TODO: 
+		digest = md5.new(checksumstr)
+		checksum = digest.hexdigest()
+		# checksum is the value that should be used in the payment request
 	variables	= {}
 	context		= RequestContext( request )
-	return render_to_response( "webshop/payement_pay.html", variables, context )
+	return render_to_response("webshop/payement_confirm.html", context)
+
 	
+"""
+Author(s): Juha Loukkola
+"""
+def payment_confirm( request ):
+	variables	= {}
+	context		= RequestContext( request )
+	return render_to_response( "webshop/payement_confirm.html", variables, context )	
 	
 """
 Author(s): Juha Loukkola
@@ -641,6 +655,38 @@ def cart( request ):
 	context		= RequestContext( request )
 	return render_to_response( "webshop/cart.html", variables, context )
 
+"""
+Author(s): Juha Loukkola
+"""
+def add_to_cart( request ):
+	#if request.is_ajax():
+	if request.method == 'POST':
+		# Get SaleItem		
+		si_id = request.POST.get('saleitem_id')
+		si = SaleItem.objects.get(id=si_id)
+
+		user = request.user
+		# Get existing Cart or create new		
+		cart = user.order_set.objects.get(paid='False')		
+		if cart == None:
+			cart = Order()
+			cart.user = user
+			cart.save()
+		
+		#cart.orderitem_set.objects.get(SaleItem
+		# TODO: If SaleItem is already in the cart increase quantity of the corresponding OrderItem
+		# TODO: else add a new OrderItem into Order
+
+		# Add new OrderItem into the cart		
+		oi = OrderItem(saleItem=si, order=cart, quantity=1)		
+	
+		variables	= {}
+		context		= RequestContext( request )
+		return render_to_response( "webshop/cart.html", variables, context )
+	#TODO: else return HTTP status code 400
+	else:
+		return HttpResponseBadRequest()
+		
 
 """
 Author(s): Kalle Saila
