@@ -80,16 +80,14 @@ Contact us at:
 
      * Developer, Markku Laine, M.Sc (Tech.), markku.laine@gmail.com
      * Developer, Juha Loukkola, B.Sc (Tech.), jloukko@gmail.com
-     * Developer, Kalle SŠilŠ, B.Sc (Tech.), kjsaila@gmail.com
+     * Developer, Kalle Sï¿½ilï¿½, B.Sc (Tech.), kjsaila@gmail.com
 
 
 *************************************************
  7. Known Issues
 *************************************************
 
-The list of known issues:
-
-     * Forgot your password? functionality has not been implemented.
+See /doc/final_report/final_report.pdf for detailed information.
 
 
 *************************************************
@@ -99,6 +97,6 @@ The list of known issues:
 See /doc/final_report/final_report.pdf for detailed information.
 
 
-Copyright (c) 2011 Markku Laine, Juha Loukkola and Kalle SŠilŠ. All rights reserved.
+Copyright (c) 2011 Markku Laine, Juha Loukkola and Kalle Sï¿½ilï¿½. All rights reserved.
 
 --

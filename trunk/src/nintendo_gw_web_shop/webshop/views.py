@@ -11,6 +11,7 @@ from django.http import Http404, HttpResponse, HttpResponseBadRequest
 from django.utils import simplejson as json
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
+from django.contrib.auth.tokens import default_token_generator
 #import md5
 
 
@@ -164,22 +165,37 @@ def login( request ):
 	# Handle other requests
 	else:
 		raise Http404( "%s method is not supported." % request.method )
-				
+
+	# If the user comes from the password reset page, then redirect to the home page
+	if next.find( "/webshop/passwordreset/" ) != -1:
+		next					= reverse( "webshop.views.home" )
+
 	variables					= { "form" : myAuthenticationForm, "next" : next }
 	context						= RequestContext( request )
 	context.update( csrf( request ) )
 	return render_to_response( "webshop/login.html", variables, context )	
 
 
-
 """
-Nintendo Game & Watch Shop > Login > Forgot Your Password?
-
-Status: Partly in use!!!
+Nintendo Game & Watch Shop > Password Reset
 
 Author(s): Markku Laine
 """
-def forgot_your_password( request ):
+def password_reset( request ):
+	# Handle GET requests
+	if request.method == "GET":
+		return redirect( "webshop.views.request_new_password" )
+	# Handle other requests
+	else:
+		raise Http404( "%s method is not supported." % request.method )
+
+
+"""
+Nintendo Game & Watch Shop > Password Reset > Request New Password
+
+Author(s): Markku Laine
+"""
+def request_new_password( request ):
 	# Redirect user to Home if (s)he is currently logged in
 	if request.user.is_authenticated():
 		return redirect( "webshop.views.home" )
@@ -187,17 +203,12 @@ def forgot_your_password( request ):
 	# Handle POST requests
 	if request.method == "POST":
 		myPasswordResetForm		= MyPasswordResetForm( data=request.POST )
+
+		# Check the validity of the form
 		if myPasswordResetForm.is_valid():
-			# Diabled
-			#myPasswordResetForm.save()
-			messages.success( request, "Password has been successfully reset (not implemented)." ) # Levels: info, success, warning, and error
-			return redirect( "webshop.views.forgot_your_password" )
-			#username			= myAuthenticationForm.cleaned_data.get( "username", "" )
-			#password			= myAuthenticationForm.cleaned_data.get( "password", "" )
-			#user				= authenticate( username=username, password=password )
-			#auth_login( request, user )
-			#next				= request.POST.get( "next", reverse( "webshop.views.home" ) )
-			#return redirect( next )
+			# Email instructions to the user how to reset the password
+			myPasswordResetForm.save( domain_override=None, use_https=False, token_generator=default_token_generator )
+			return redirect( "webshop.views.new_password_requested" )
 		#else:
 			#print "Form is not valid!"
 	# Handle GET requests
@@ -210,19 +221,49 @@ def forgot_your_password( request ):
 	variables					= { "form" : myPasswordResetForm }
 	context						= RequestContext( request )
 	context.update( csrf( request ) )
-	return render_to_response( "webshop/forgot_your_password.html", variables, context )	
+	return render_to_response( "webshop/passwordreset/request_new_password.html", variables, context )	
 
 
 """
-Nintendo Game & Watch Shop > Login > Forgot Your Password? > Password Reset
-
-Status: Not in use!!!
+Nintendo Game & Watch Shop > Password Reset > New Password Requested
 
 Author(s): Markku Laine
 """
-def my_password_reset(request):
-	#def my_password_reset(request, template_name='path/to/my/template'):
-	return password_reset( request )
+def new_password_requested( request ):
+	# Redirect user to Home if (s)he is currently logged in
+	if request.user.is_authenticated():
+		return redirect( "webshop.views.home" )
+		
+	# Handle GET requests
+	if request.method == "GET":
+		variables					= {}
+		context						= RequestContext( request )
+		context.update( csrf( request ) )
+		return render_to_response( "webshop/passwordreset/new_password_requested.html", variables, context )
+	# Handle other requests
+	else:
+		raise Http404( "%s method is not supported." % request.method )
+
+
+"""
+Nintendo Game & Watch Shop > Password Reset > New Password Set
+
+Author(s): Markku Laine
+"""
+def new_password_set( request ):
+	# Redirect user to Home if (s)he is currently logged in
+	if request.user.is_authenticated():
+		return redirect( "webshop.views.home" )
+		
+	# Handle GET requests
+	if request.method == "GET":
+		variables					= {}
+		context						= RequestContext( request )
+		context.update( csrf( request ) )
+		return render_to_response( "webshop/passwordreset/new_password_set.html", variables, context )
+	# Handle other requests
+	else:
+		raise Http404( "%s method is not supported." % request.method )
 
 
 """
@@ -576,7 +617,7 @@ def admin_delivered_orders( request ):
 """
 Nintendo Game & Watch Shop > Admin > Statistics
 
-Author(s): Markku Laine
+Author(s): Kalle Saila
 """
 @login_required
 def admin_statistics( request ):
