@@ -11,7 +11,7 @@ from django.http import Http404, HttpResponse, HttpResponseBadRequest
 from django.utils import simplejson as json
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
-import md5
+#import md5
 
 """
 Nintendo Game & Watch Shop
