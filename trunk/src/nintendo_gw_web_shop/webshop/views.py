@@ -420,15 +420,18 @@ Author(s): Markku Laine
 """
 @login_required
 def address_book_delete( request, address_id=None ):
-	# Retrieve the address. Users are allowed to edit their own addresses only!
-	address						= get_object_or_404( Address, pk=address_id, user=request.user )
-
 	# Handle POST requests
 	if request.method == "POST":
+		# Retrieve the address. Users are allowed to edit their own addresses only!
+		address					= get_object_or_404( Address, pk=address_id, user=request.user )
 		# Delete address
 		address.delete()
 		messages.success( request, "Address has been successfully deleted." ) # Levels: info, success, warning, and error
 		return redirect( "webshop.views.address_book" )
+	# Handle GET requests
+	elif request.method == "GET":
+		# Retrieve the address. Users are allowed to edit their own addresses only!
+		address					= get_object_or_404( Address, pk=address_id, user=request.user )
 	# Handle other requests
 	else:
 		raise Http404( "%s method is not supported." % request.method )
