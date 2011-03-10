@@ -446,26 +446,26 @@ a {
 	padding: 0;
 	text-indent: 0;	
 }
-#completed-orders-table {
+#orders-table {
 	border-collapse: collapse;
 	width: 100%;
 }
-#completed-orders-table td.order {
+#orders-table td.order {
 	border-bottom: 1px solid #999999;
 	border-top: 1px solid #999999;
 	padding: 10px 0px 10px 0px;
 }
-#completed-orders-table table.order-information-table {
+#orders-table table.order-information-table {
 	margin-bottom: 20px;
 	width: 100%;
 }
-#completed-orders-table table.order-information-table td.label {
+#orders-table table.order-information-table td.label {
 	width: 120px;
 }
-#completed-orders-table table.order-items-table {
+#orders-table table.order-items-table {
 	width: 100%;
 }
-#completed-orders-table table.order-items-table td.subtotal {
+#orders-table table.order-items-table td.subtotal {
 	padding-top: 15px;
 }
 /* END: my account */
