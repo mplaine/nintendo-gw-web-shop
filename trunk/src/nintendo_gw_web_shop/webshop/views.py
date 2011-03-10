@@ -458,7 +458,114 @@ def completed_orders( request ):
 	context.update( csrf( request ) )
 	return render_to_response( "webshop/myaccount/completed_orders.html", variables, context )
 
+
 """
+Nintendo Game & Watch Shop > Admin
+
+Author(s): Markku Laine
+"""
+@login_required
+def admin( request ):
+	# Redirect user to Home if (s)he is has not access rights
+	if not request.user.is_staff:
+		return redirect( "webshop.views.home" )
+				
+	# Handle GET requests
+	if request.method == "GET":
+		return redirect( "webshop.views.admin_paid_orders" )
+	# Handle other requests
+	else:
+		raise Http404( "%s method is not supported." % request.method )
+
+
+"""
+Nintendo Game & Watch Shop > Admin > Paid Orders
+
+Author(s): Markku Laine
+"""
+@login_required
+def admin_paid_orders( request, order_id=None ):
+	# Redirect user to Home if (s)he is has not access rights
+	if not request.user.is_staff:
+		return redirect( "webshop.views.home" )
+				
+	# Handle POST requests
+	if request.method == "POST":
+		# Retrieve order id
+		order_id				= request.POST.get( "order_id", 0 )
+		# Retrieve the order
+		order					= get_object_or_404( Order, pk=order_id )
+		order.delivered			= True
+		order.save()
+		# Retrieve paid orders
+		orders					= Order.objects.filter( paid=True, delivered=False )
+	# Handle GET requests
+	elif request.method == "GET":
+		# Retrieve paid orders
+		orders					= Order.objects.filter( paid=True, delivered=False )
+	# Handle other requests
+	else:
+		raise Http404( "%s method is not supported." % request.method )
+
+	variables					= { "orders" : orders }
+	context						= RequestContext( request )
+	context.update( csrf( request ) )
+	return render_to_response( "webshop/admin/paid_orders.html", variables, context )
+
+
+"""
+Nintendo Game & Watch Shop > Admin > Delivered Orders
+
+Author(s): Markku Laine
+"""
+@login_required
+def admin_delivered_orders( request ):
+	# Redirect user to Home if (s)he is has not access rights
+	if not request.user.is_staff:
+		return redirect( "webshop.views.home" )
+								
+	# Handle GET requests
+	if request.method == "GET":
+		# Retrieve paid & delivered orders
+		orders					= Order.objects.filter( paid=True, delivered=True )
+	# Handle other requests
+	else:
+		raise Http404( "%s method is not supported." % request.method )
+
+	variables					= { "orders" : orders }
+	context						= RequestContext( request )
+	context.update( csrf( request ) )
+	return render_to_response( "webshop/admin/delivered_orders.html", variables, context )
+
+
+"""
+Nintendo Game & Watch Shop > Admin > Statistics
+
+Author(s): Markku Laine
+"""
+@login_required
+def admin_statistics( request ):
+	# Redirect user to Home if (s)he is has not access rights
+	if not request.user.is_staff:
+		return redirect( "webshop.views.home" )
+								
+	# Handle GET requests
+	if request.method == "GET":
+		# Your code here
+		print "Your code here"
+	# Handle other requests
+	else:
+		raise Http404( "%s method is not supported." % request.method )
+
+	variables					= {}
+	context						= RequestContext( request )
+	context.update( csrf( request ) )
+	return render_to_response( "webshop/admin/statistics.html", variables, context )
+
+
+"""
+Nintendo Game & Watch Shop > About
+
 Author(s): Markku Laine
 """
 def about( request ):
@@ -478,98 +585,7 @@ Nintendo Game & Watch Shop > Credits
 
 Author(s): Markku Laine
 """
-
 def credits( request ):
-	# Handle GET requests
-	if request.method == "GET":
-		variables                    = {}
-		context                        = RequestContext( request )
-		context.update( csrf( request ) )
-		return render_to_response( "webshop/credits.html", variables, context )
-	# Handle other requests
-	else:
-		raise Http404( "%s method is not supported." % request.method )
-
-"""
-Nintendo Game & Watch Shop > Admin
-
-Author(s): Markku Laine
-"""
-@login_required
-def admin( request ):
-	# Redirect user to Home if (s)he is has not access rights
-	if not request.user.is_staff:
-		return redirect( "webshop.views.home" )
-
-	# Handle GET requests
-	if request.method == "GET":
-		return redirect( "webshop.views.admin_paid_orders" )
-	# Handle other requests
-	else:
-		raise Http404( "%s method is not supported." % request.method )
-
-
-"""
-Nintendo Game & Watch Shop > Admin > Paid Orders
-
-Author(s): Markku Laine
-"""
-@login_required
-def admin_paid_orders( request ):
-	# Redirect user to Home if (s)he is has not access rights
-	if not request.user.is_staff:
-		return redirect( "webshop.views.home" )
-
-	# Handle GET requests
-	if request.method == "GET":
-		# Retrieve paid orders
-		orders                    = Order.objects.filter( paid=True, delivered=False )
-	# Handle other requests
-	else:
-		raise Http404( "%s method is not supported." % request.method )
-
-	variables                    = { "orders" : orders }
-	context                        = RequestContext( request )
-	context.update( csrf( request ) )
-	return render_to_response( "webshop/admin/paid_orders.html", variables, context )
-
-
-"""
-Nintendo Game & Watch Shop > Admin > Delivered Orders
-
-Author(s): Markku Laine
-"""
-@login_required
-def admin_delivered_orders( request ):
-	# Redirect user to Home if (s)he is has not access rights
-	if not request.user.is_staff:
-		return redirect( "webshop.views.home" )
-	
-	# Handle GET requests
-	if request.method == "GET":
-		# Retrieve paid & delivered orders
-		orders                    = Order.objects.filter( paid=True, delivered=True )
-	# Handle other requests
-	else:
-		raise Http404( "%s method is not supported." % request.method )
-
-	variables                    = { "orders" : orders }
-	context                        = RequestContext( request )
-	context.update( csrf( request ) )
-	return render_to_response( "webshop/admin/delivered_orders.html", variables, context )
-
-
-"""
-Nintendo Game & Watch Shop > Admin > Statistics
-
-Author(s): Markku Laine
-"""
-@login_required
-def admin_statistics( request ):
-	# Redirect user to Home if (s)he is has not access rights
-	if not request.user.is_staff:
-		return redirect( "webshop.views.home" )
-
 	# Handle GET requests
 	if request.method == "GET":
 		variables					= {}

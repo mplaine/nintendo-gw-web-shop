@@ -475,6 +475,13 @@ a {
 /* END: my account */
 
 
+/* BEGIN: admin */
+#orders-table .inline-form {
+	display: inline;
+}
+/* END: admin */
+
+
 /* BEGIN: random/uncleaned */
 .ui-autocomplete {
 	/*margin-top:6px;*/

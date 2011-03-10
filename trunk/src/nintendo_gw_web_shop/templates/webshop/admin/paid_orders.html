@@ -24,7 +24,7 @@
 		{% load messages %}
 		{% render_messages messages %}
 		{% if orders|length == 0 %}
-			<p>Shop has no orders.</p>
+			<p>Shop has no paid orders waiting to be delivered.</p>
 		{% else %}
 			<table id="orders-table">
 				<tbody>
@@ -43,10 +43,15 @@
 									<tr>
 										<td class="label">Status:</td>
 										<td>
-											{% if order.delivered %}
-												paid &amp; delivered
+											{% if order.paid %}
+												paid
+												<form class="inline-form" action="{% url webshop.views.admin_paid_orders %}" method="post">
+													{% csrf_token %}
+													<input type="hidden" name="order_id" value="{{ order.id }}" />
+													<input type="submit" value="Mark as delivered" />
+												</form>
 											{% else %}
-												paid, waiting to be delivered
+												unknown status
 											{% endif %}
 										</td>
 									</tr>
