@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
 from webshop.forms import MyUserCreationForm, MyAuthenticationForm, MyUserChangeForm, MyPasswordResetForm, MyPasswordChangeForm, AddressForm
-from webshop.models import Product, Type, Address, Order, Rating, Comment, Statistic, SaleItem, OrderItem
+from webshop.models import Product, Type, Address, Order, Rating, Comment, Statistic, SaleItem, OrderItem, User
 from django.core.context_processors import csrf
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib import messages
@@ -12,6 +12,7 @@ from django.utils import simplejson as json
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 #import md5
+
 
 """
 Nintendo Game & Watch Shop
@@ -656,24 +657,26 @@ def cart( request ):
 """
 Author(s): Juha Loukkola
 """
+
 def add_to_cart( request ):
 	#if request.is_ajax():
 	if request.method == 'POST':
+		
 		# Get SaleItem		
 		si_id = request.POST.get('saleitem_id')
 		si = SaleItem.objects.get(id=si_id)
-
-		user = request.user
-		# Get existing Cart or create new		
-		cart = user.order_set.objects.get(paid='False')		
+				
+		# Get cart or create new one
+		cart = request.session.get( 'cart' )	
 		if cart == None:
+			# Get user		
+			user = User.objects.get(id=request.user.id)
 			cart = Order()
 			cart.user = user
-			cart.save()
-		
-		#cart.orderitem_set.objects.get(SaleItem
-		# TODO: If SaleItem is already in the cart increase quantity of the corresponding OrderItem
-		# TODO: else add a new OrderItem into Order
+			cart.date = datetime.now()
+			cart.shipingmethod = None
+			cart.paid = False
+			cart.delivered = False	
 
 		# Add new OrderItem into the cart		
 		oi = OrderItem(saleItem=si, order=cart, quantity=1)		
@@ -681,10 +684,9 @@ def add_to_cart( request ):
 		variables	= {}
 		context		= RequestContext( request )
 		return render_to_response( "webshop/cart.html", variables, context )
-	#TODO: else return HTTP status code 400
 	else:
 		return HttpResponseBadRequest()
-		
+
 
 """
 Author(s): Kalle Saila
@@ -743,7 +745,7 @@ def comment( request, product_id ):
 					comment.commentsOn = commentsOn
 				comment.contents = request.POST['comment']
 				comment.product = product
-				comment.published = datetime.now()
+				comment.published = datetime.nowdate()
 				comment.save()
 				my_json = json.dumps({'id':comment.id, 'commentsOn':request.POST['commentsOn'], 'published':comment.published.__str__(), 'user': comment.user.username, 'admin': comment.user.is_staff})
 				return HttpResponse(my_json, mimetype="application/json")
