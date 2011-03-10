@@ -5,6 +5,7 @@ html {
 }
 body {
 	height: 100%;
+	font-size: 14px;
 }
 img {
 	border: none;
@@ -645,6 +646,7 @@ a {
 	display: block;
 }
 .add-to-cart {
+	z-index: 1001;
 	position: absolute;
 	top: 5px;
 	right: 5px;

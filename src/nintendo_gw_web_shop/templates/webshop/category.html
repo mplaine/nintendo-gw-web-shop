@@ -57,6 +57,7 @@
 			$('form[class="add-to-cart"]').submit(function() {
 				//Your code Here
 				
+				
 				return false;
 			});
 			$('.own-star').hover(
@@ -285,8 +286,8 @@
 		{% for product in type.product_set.all %}
 			<div class="product">
 				<a name="item{{product.id}}"></a>
-				<form class="add-to-cart" action="/webshop/urlhere" method="post">
-					<input type="hidden" name="product_id" value="{{product.saleitems}}" />
+				<form class="add-to-cart" action="/webshop/cart/add" method="post">{% csrf_token %}
+					<input type="hidden" name="saleitem_id" value="{{ product.saleitem.id }}" />
 					<input class="add-cart-submit" type="submit" value="Add to cart" />
 				</form>
 				

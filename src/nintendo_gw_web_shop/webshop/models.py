@@ -237,7 +237,7 @@ class Order( models.Model ):
 	user 							= models.ForeignKey( User )
 	delivered						= models.BooleanField()
 	paid							= models.BooleanField()
-	shippingMethod					= models.ForeignKey( ShippingMethod )
+	shippingMethod					= models.ForeignKey( ShippingMethod, null=True )
 
 	def getPriceInEuros( self ):
 		return u"%.2f \u20AC" % ( self.price, )
