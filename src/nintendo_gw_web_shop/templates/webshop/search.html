@@ -1,0 +1,47 @@
+{% extends "webshop/base_template.html" %}
+{% block title %}Nintendo Game &amp; Watch Shop - Search{% endblock %}
+{% block extra-scripts %}
+	<script type="text/javascript" src="/webshop/static/js/jquery.text-overflow.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$( "#navi-home>span" ).addClass( "navi-selected" );
+			bindThumbs();
+			$('.thumb-title').ellipsis();
+		});
+		function bindThumbs() {
+			$('.thumb').hover(
+					function() {
+						var me = this;
+						$('.thumb-info', me).css('height', 'auto');
+					}, 
+					function() {
+						var me = this;
+						$('.thumb-info', me).css('height', '25px');
+					}
+			);
+			$('.thumb').click(function() {
+				var me = this;
+				window.location.href = 'http://' + location.host +'/webshop/home/category/'+$(me).attr('data-id')+'/product#item'+ $(me).attr('id');
+			});
+		}
+	</script>
+{% endblock %}
+{% block page-title %}Search Result{% endblock %}
+{% block sort-bar %}{% endblock %}
+{% block content %}
+	<div id="index-content">
+	{% if products %}
+ 		{% for product in products %}
+ 			<div class="thumb" data-id="{{product.type.id}}" id="{{product.id}}">
+				<img src="/webshop/static/{{product.imageThumb}}" />
+				<div class="thumb-info">
+					<p class="thumb-title">{{product}}</p>
+					<p class="thumb-body">Click to view</p>
+				</div>
+			</div>
+ 		{% endfor %}
+ 	{% else %}
+ 		<h2>No results found. Sorry.</h2>
+	{% endif %}
+	</div>
+{% endblock %}

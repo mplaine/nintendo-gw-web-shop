@@ -33,7 +33,7 @@
 					$( this ).removeClass( "side-navi-selected" );
 				} );
 				
-				window.location.hash = 'item' + ($(me).index() + 1);
+				window.location.hash = 'item' + $(me).attr('data-id');
 				$('.product').hide();
 				$('a[name="'+window.location.hash.substring(1)+'"]').parent().show();
 				$( "a>span", me ).addClass( "side-navi-selected" );
@@ -66,7 +66,7 @@
 			$('.own-star').click(function() {
 				var me = this;
 				var uri = '/webshop/ajax/product/'+$(me).attr('data-type')+'/rating/';
-				$.post(uri, { rate : $(me).attr('data-id') }, function(data){
+				$.post(uri, { rate : $(me).attr('data-id') }, function(data) {
 					if (data.error != undefined) {
 						alert(data.error)
 					} else {
@@ -91,12 +91,143 @@
 					function() {
 						var me = this;
 						var rate = parseInt($(me).attr('data-id') - 1);
-						$('.own-star:gt('+rate+')', me).attr('src', '/webshop/static/images/star_grey.png');
-						$('.own-star:lt('+rate+')', me).attr('src', '/webshop/static/images/star_green.png');
-						$('.own-star:eq('+rate+')', me).attr('src', '/webshop/static/images/star_green.png');
+						if (rate < 0) {
+							$('.own-star', me).attr('src', '/webshop/static/images/star_grey.png');
+						} else {
+							$('.own-star:gt('+rate+')', me).attr('src', '/webshop/static/images/star_grey.png');
+							$('.own-star:lt('+rate+')', me).attr('src', '/webshop/static/images/star_green.png');
+							$('.own-star:eq('+rate+')', me).attr('src', '/webshop/static/images/star_green.png');
+						}
 					}
 			);
+			bindComments();
 		});
+		function bindComments() {
+			$('.add-comment-toggle').unbind();
+			$('.add-comment-toggle-first').unbind();
+			$('.add-comment-toggle-second').unbind();
+			$('form[class="add-comment-form"]').unbind();
+			$('form[class="add-comment-form-first"]').unbind();
+			$('form[class="add-comment-form-second"]').unbind();
+			$('.add-comment-toggle').click(function(){
+				$('.add-comment-form', $(this).parent()).toggle('slow');
+			});
+			$('.add-comment-toggle-first').click(function(){
+				$('.add-comment-form-first', $(this).parent()).toggle('slow');
+			});
+			$('.add-comment-toggle-second').click(function(){
+				$('.add-comment-form-second', $(this).parent()).toggle('slow');
+			});
+			$('form[class="add-comment-form"]').submit(function() {
+				var me = this;
+				var uri = $(me).attr('action');
+				var comment = $('textarea', me).val();
+				var commentsOn = $('input[name=commentsOn]').val();
+				var product = $('input[name=product-id]').val();
+				if (comment != '') {
+					$.post(uri, { comment : comment, commentsOn : commentsOn }, function(data) {
+						if (data.error != undefined) {
+							alert(data.error)
+						} else {
+							var result = '<div class="comment-buble first-layer" data-id="'+data.commentsOn+'" data-type="'+data.id+'">';
+							result += '<span class="comment-arrow-green-first"></span>';
+							result += '<div class="comment-body">'+comment+'</div>';
+							result += '<div class="comment-date">'+data.user+' - '+data.published;
+							result += '<input class="add-comment-toggle-first" type="button" value="Reply" /><form class="add-comment-form-first" action="'+uri+'" method="post"><input type="hidden" value="'+product+'" /><input type="hidden" name="commentsOn" value="'+data.id+'" /><b>Comment:</b><br /><textarea class="comment-textarea" name="comment"></textarea><br /><input class="add-comment-submit-first" type="submit" value="Send" /></form>'
+							result +='</div>';
+							result += '</div>';
+							$(me).parent().append(result);
+							$('textarea', me).val('');
+							$(me).toggle('slow');
+							bindComments();
+						}
+					}, 'json');
+				}
+				
+				return false;
+			});
+			
+			$('form[class="add-comment-form-first"]').submit(function() {
+				
+				var me = this;
+				var uri = $(me).attr('action');
+				var comment = $('textarea', me).val();
+				var commentsOn = $('input[name=commentsOn]', me).val();
+				var product = $('input[name=product-id]', me).val();
+				var par = $(me).parent().parent();
+				var parindex = $('.first-layer').index(par) + 1;
+				if (comment != '') {
+					$.post(uri, { comment : comment, commentsOn : commentsOn }, function(data) {
+						if (data.error != undefined) {
+							alert(data.error)
+						} else {
+							var result = '<div class="comment-buble second-layer" data-id="'+data.commentsOn+'" data-type="'+data.id+'">';
+							result += '<span class="comment-arrow-green"></span>';
+							result += '<div class="comment-body">'+comment+'</div>';
+							result += '<div class="comment-date">'+data.user+' - '+data.published;
+							result += '<input class="add-comment-toggle-second" type="button" value="Reply" /><form class="add-comment-form-second" action="'+uri+'" method="post"><input type="hidden" value="'+product+'" /><input type="hidden" name="commentsOn" value="'+data.id+'" /><b>Comment:</b><br /><textarea class="comment-textarea" name="comment"></textarea><br /><input class="add-comment-submit-second" type="submit" value="Send" /></form>';
+							result += '</div>';
+							result += '</div>';
+							var bubble = $('.first-layer[data-type="'+data.commentsOn+'"]').eq(0);
+							if ($('.first-layer[data-type="'+data.commentsOn+'"]').eq(0).attr('data-type') == $('.first-layer', $(bubble).parent()).last().attr('data-type')) {
+								$(bubble).parent().append(result);
+							} else if($('.first-layer[data-type="'+data.commentsOn+'"]').eq(0).attr('data-type') == $('.first-layer', $(bubble).parent()).first().attr('data-type')) {
+								$(par).siblings('.first-layer').eq(0).before(result);
+							} else {
+								var temp = $('.first-layer').get(parindex);
+								$(temp).before(result);
+							}
+							$('textarea', me).val('');
+							$(me).toggle('slow');
+							bindComments();
+						}
+					}, 'json');
+				}
+				
+				return false;
+			});
+			
+			$('form[class="add-comment-form-second"]').submit(function() {
+				var me = this;
+				var uri = $(me).attr('action');
+				var comment = $('textarea', me).val();
+				var commentsOn = $('input[name=commentsOn]', me).val();
+				var product = $('input[name=product-id]', me).val();
+				var par = $(me).parent().parent();
+				var parindex = $('.second-layer').index(par) + 1;
+				if (comment != '') {
+					$.post(uri, { comment : comment, commentsOn : commentsOn }, function(data) {
+						if (data.error != undefined) {
+							alert(data.error)
+						} else {
+							var result = '<div class="comment-buble third-layer" data-id="'+data.commentsOn+'" data-type="'+data.id+'">';
+							result += '<span class="comment-arrow-green"></span>';
+							result += '<div class="comment-body">'+comment+'</div>';
+							result += '<div class="comment-date">'+data.user+' - '+data.published;
+							result +='</div>';
+							result += '</div>';
+							var bubble = $('.second-layer[data-type="'+data.commentsOn+'"]').eq(0);
+							if ($('.second-layer[data-type="'+data.commentsOn+'"]').eq(0).attr('data-type') == $('.second-layer', $(bubble).parent()).last().attr('data-type')) {
+								$(bubble).parent().append(result);
+							} else if($('.second-layer[data-type="'+data.commentsOn+'"]').eq(0).attr('data-type') == $('.second-layer', $(bubble).parent()).first().attr('data-type')) {
+								$(par).siblings('.second-layer').eq(0).before(result);
+							} else {
+								var tempindex = $('.comment-buble').not('.third-layer').index(par) + 1;
+								//var temptemp = $('.comment-buble').get(tempindex);
+								//alert($(temptemp).attr('class'));
+								var temp = $('.comment-buble').not('.third-layer').get(tempindex);
+								$(temp).before(result);
+							}
+							$('textarea', me).val('');
+							$(me).toggle('slow');
+							bindComments();
+						}
+					}, 'json');
+				}
+				
+				return false;
+			});
+		};
 	</script>
 {% endblock %}
 {% block page-title %}{{type}}{% endblock %}
@@ -106,7 +237,7 @@
 		<div id="side-navi-arrow"></div>
 		<ul>
 			{% for product in type.product_set.all %}
-				<li><a href="#item{{forloop.counter}}"><span>{{product.title}}</span></a></li>
+				<li data-id="{{product.id}}"><a href="#item{{product.id}}"><span>{{product.title}}</span></a></li>
 			{% endfor %}
 		</ul>
 	</div>
@@ -114,7 +245,7 @@
 		{% load templateargs %}
 		{% for product in type.product_set.all %}
 			<div class="product">
-				<a name="item{{forloop.counter}}"></a>
+				<a name="item{{product.id}}"></a>
 				<form class="add-to-cart" action="/webshop/urlhere" method="post">
 					<input type="hidden" value="{{product.id}}" />
 					<input class="add-cart-submit" type="submit" value="Add to cart" />
@@ -126,6 +257,14 @@
 						<img src="/webshop/static/{{product.imageThumb}}" />
 					</div>
 					<div class="product-details">{{product.description}}</div>
+					<div class="product-info">
+						<span class="info-span">Date of release: {{product.dateOfRelease}}</span>
+						<span class="info-span">Amount produced: {{product.produced}}</span>
+						<span class="info-span">Rarity: {{product.rarity}}</span>
+					</div>
+					<div class="product-sale">
+						<span class="sale-span">Price: {{product.saleitem.getPriceInEuros}}</span>
+					</div>
 				</div>
 				<h3 class="product-header">Ratings</h3>
 				<table class="rating-table">
@@ -160,22 +299,54 @@
 				</table>
 				<h3 class="product-header">Comments</h3>
 				<div class="comment-wrapper">
+					{% if user.is_authenticated %}
+					<input class="add-comment-toggle" type="button" value="Add comment" />
+					<form class="add-comment-form" action="/webshop/ajax/product/{{product.id}}/comment/" method="post">
+						<input type="hidden" name="product-id" value="{{product.id}}" />
+						<input type="hidden" name="commentsOn" value="None" />
+						<b>Comment:</b><br />
+						<textarea class="comment-textarea" name="comment"></textarea><br />
+						<input class="add-comment-submit" type="submit" value="Send" />
+					</form>
+					{% endif %}
 					{% for comment in product.filteredcomments %}
 						{% if comment.commentsOn = None %}
-							<div class="comment-buble first-layer">
+							<div class="comment-buble first-layer" data-id="None" data-type="{{comment.id}}">
 								<span class="comment-arrow-green-first"></span>
 								<div class="comment-body">{{comment.contents}}</div>
-								<div class="comment-date">{{comment.user.username}} - {{comment.published}}</div>
+								<div class="comment-date">{{comment.user.username}} - {{comment.published}}
+									{% if user.is_authenticated %}
+									<input class="add-comment-toggle-first" type="button" value="Reply" />
+									<form class="add-comment-form-first" action="/webshop/ajax/product/{{product.id}}/comment/" method="post">
+										<input type="hidden" name="product-id" value="{{product.id}}" />
+										<input type="hidden" name="commentsOn" value="{{comment.id}}" />
+										<b>Comment:</b><br />
+										<textarea class="comment-textarea" name="comment"></textarea><br />
+										<input class="add-comment-submit-first" type="submit" value="Send" />
+									</form>
+									{% endif %}
+								</div>
 							</div>
 						{% else %}
 							{% if comment.commentsOn.commentsOn = None %}
-								<div class="comment-buble second-layer">
+								<div class="comment-buble second-layer" data-id="{{comment.commentsOn.id}}" data-type="{{comment.id}}">
 									<span class="comment-arrow-green"></span>
 									<div class="comment-body">{{comment.contents}}</div>
-									<div class="comment-date">{{comment.user.username}} - {{comment.published}}</div>
+									<div class="comment-date">{{comment.user.username}} - {{comment.published}}
+										{% if user.is_authenticated %}
+										<input class="add-comment-toggle-second" type="button" value="Reply" />
+										<form class="add-comment-form-second" action="/webshop/ajax/product/{{product.id}}/comment/" method="post">
+											<input type="hidden" name="product-id" value="{{product.id}}" />
+											<input type="hidden" name="commentsOn" value="{{comment.id}}" />
+											<b>Comment:</b><br />
+											<textarea class="comment-textarea" name="comment"></textarea><br />
+											<input class="add-comment-submit-second" type="submit" value="Send" />
+										</form>
+										{% endif %}
+									</div>
 								</div>
 							{% else %}
-								<div class="comment-buble third-layer">
+								<div class="comment-buble third-layer" data-id="{{comment.commentsOn.id}}" data-type="{{comment.id}}">
 									<span class="comment-arrow-green"></span>
 									<div class="comment-body">{{comment.contents}}</div>
 									<div class="comment-date">{{comment.user.username}} - {{comment.published}}</div>
