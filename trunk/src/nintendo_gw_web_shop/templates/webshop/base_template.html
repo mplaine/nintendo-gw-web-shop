@@ -8,6 +8,7 @@
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="/webshop/static/js/jquery.validate.min.js"></script>
+		<script src="http://jquery-json.googlecode.com/files/jquery.json-2.2.min.js"></script>
 		<!--[if IE]>
 			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
@@ -15,41 +16,29 @@
 		<script type="text/javascript">
 			$(function() {
 				$('#search-button').click(function(){
-					window.location.href = 'http://' + location.host +'/webshop/home/search';
+					window.location.href = 'http://' + location.host +'/webshop/home/search?q=' + $('#search-input').val();
 				});
 				$('#search-input').focusin(function() {
 					$(this).val('');
 				});
-				var availableTags = [
-				         			"ActionScript",
-				         			"AppleScript",
-				         			"Asp",
-				         			"BASIC",
-				         			"C",
-				         			"C++",
-				         			"Clojure",
-				         			"COBOL",
-				         			"ColdFusion",
-				         			"Erlang",
-				         			"Fortran",
-				         			"Groovy",
-				         			"Haskell",
-				         			"Java",
-				         			"JavaScript",
-				         			"Lisp",
-				         			"Perl",
-				         			"PHP",
-				         			"Python",
-				         			"Ruby",
-				         			"Scala",
-				         			"Scheme"
-				         		];
-	       		$( "#search-input" ).autocomplete({
-	       			source: availableTags,
-	       			select: function( event, ui ) {
-	    				window.location.href = 'http://' + location.host +'/webshop/home/category/1/product#item3';
-	    			}
-	       		});
+				var tags;
+				$.getJSON('/webshop/ajax/products', function(data) {
+					tags = data;
+					$( "#search-input" ).autocomplete({
+		       			source: tags,
+		       			minLength: 0,
+		       			focus: function( event, ui ) {
+		    				$( "#search-input" ).val( ui.item.label );
+		    				return false;
+		    			},
+		    			select: function( event, ui ) {
+		    				$( "#search-input" ).val( ui.item.label );
+							window.location.href  = 'http://' + location.host +'/webshop/home/category/'+ui.item.type+'/product#item'+ui.item.id;
+		    				return false;
+		    			}
+		       		});
+				});
+	       		
 			});	
 		</script>
 	</head>

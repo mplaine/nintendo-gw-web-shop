@@ -18,6 +18,10 @@ class Type( models.Model ):
 		return self.name + " series"
 	__unicode__.short_description	= "Type"
 
+	
+	def firstproduct(self):
+		prod = Product.objects.filter(type=self).order_by( "title" )
+		return prod[0].id
 
 """
 Products (games).
@@ -49,6 +53,9 @@ class Product( models.Model ):
 	image							= models.ImageField( upload_to=IMAGE_UPLOAD_TO, max_length=255 )
 	# Image thumbnail could have been left out if the thumbnail had been automatically generated. In our case, we had already done the thumbnails manually in advance
 	imageThumb						= models.ImageField( "Image thumb", upload_to=IMAGE_UPLOAD_TO + "/thumbs", max_length=255 )
+	
+	class Meta:
+		ordering = ['title']
 
 	def average( self ):
 		result						= 0
@@ -89,6 +96,10 @@ class Product( models.Model ):
 		except Rating.DoesNotExist:
 			rating					= 0
 		return rating
+	
+	def saleitem(self):
+		saleitem = SaleItem.objects.get(product=self, onSale=True)
+		return saleitem
 
 	def __unicode__( self ):
 		return self.title + " | " + self.type.__unicode__()

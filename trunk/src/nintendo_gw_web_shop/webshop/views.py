@@ -1,14 +1,16 @@
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
-from webshop.forms import MyUserCreationForm, MyAuthenticationForm, MyUserChangeForm, MyPasswordResetForm, MyPasswordChangeForm, AddressForm
-from webshop.models import Product, Type, Address, Order, Rating
+from webshop.forms import ProductForm, MyUserCreationForm, MyAuthenticationForm, MyUserChangeForm, MyPasswordResetForm, MyPasswordChangeForm, AddressForm
+from webshop.models import SaleItem, Product, Type, Address, Order, OrderItem, Rating, Comment
 from django.core.context_processors import csrf
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib import messages
 from django.contrib.auth.views import password_reset
 from django.http import Http404, HttpResponse
 from django.utils import simplejson as json
+from django.contrib.auth.decorators import login_required
+from datetime import datetime
 from django.contrib.auth.decorators import login_required
 
 
@@ -55,7 +57,11 @@ Author(s): Kalle Saila
 def search( request ):
 	# Handle GET requests
 	if request.method == "GET":
-		return redirect( "webshop.views.home" )
+		querystring					= request.GET["q"]
+		products					= Product.objects.filter(title__icontains=querystring).order_by( "title" )
+		variables					= { "products" : products }
+		context						= RequestContext( request )
+		return render_to_response( "webshop/search.html", variables, context )
 	# Handle other requests
 	else:
 		raise Http404( "%s method is not supported." % request.method )
@@ -453,104 +459,7 @@ def completed_orders( request ):
 	context.update( csrf( request ) )
 	return render_to_response( "webshop/myaccount/completed_orders.html", variables, context )
 
-
 """
-Nintendo Game & Watch Shop > Admin
-
-Author(s): Markku Laine
-"""
-@login_required
-def admin( request ):
-	# Redirect user to Home if (s)he is has not access rights
-	if not request.user.is_staff:
-		return redirect( "webshop.views.home" )
-				
-	# Handle GET requests
-	if request.method == "GET":
-		return redirect( "webshop.views.admin_paid_orders" )
-	# Handle other requests
-	else:
-		raise Http404( "%s method is not supported." % request.method )
-
-
-"""
-Nintendo Game & Watch Shop > Admin > Paid Orders
-
-Author(s): Markku Laine
-"""
-@login_required
-def admin_paid_orders( request ):
-	# Redirect user to Home if (s)he is has not access rights
-	if not request.user.is_staff:
-		return redirect( "webshop.views.home" )
-				
-	# Handle GET requests
-	if request.method == "GET":
-		# Retrieve paid orders
-		orders					= Order.objects.filter( paid=True, delivered=False )
-	# Handle other requests
-	else:
-		raise Http404( "%s method is not supported." % request.method )
-
-	variables					= { "orders" : orders }
-	context						= RequestContext( request )
-	context.update( csrf( request ) )
-	return render_to_response( "webshop/admin/paid_orders.html", variables, context )
-
-
-"""
-Nintendo Game & Watch Shop > Admin > Delivered Orders
-
-Author(s): Markku Laine
-"""
-@login_required
-def admin_delivered_orders( request ):
-	# Redirect user to Home if (s)he is has not access rights
-	if not request.user.is_staff:
-		return redirect( "webshop.views.home" )
-								
-	# Handle GET requests
-	if request.method == "GET":
-		# Retrieve paid & delivered orders
-		orders					= Order.objects.filter( paid=True, delivered=True )
-	# Handle other requests
-	else:
-		raise Http404( "%s method is not supported." % request.method )
-
-	variables					= { "orders" : orders }
-	context						= RequestContext( request )
-	context.update( csrf( request ) )
-	return render_to_response( "webshop/admin/delivered_orders.html", variables, context )
-
-
-"""
-Nintendo Game & Watch Shop > Admin > Statistics
-
-Author(s): Markku Laine
-"""
-@login_required
-def admin_statistics( request ):
-	# Redirect user to Home if (s)he is has not access rights
-	if not request.user.is_staff:
-		return redirect( "webshop.views.home" )
-								
-	# Handle GET requests
-	if request.method == "GET":
-		# Your code here
-		print "Your code here"
-	# Handle other requests
-	else:
-		raise Http404( "%s method is not supported." % request.method )
-
-	variables					= {}
-	context						= RequestContext( request )
-	context.update( csrf( request ) )
-	return render_to_response( "webshop/admin/statistics.html", variables, context )
-
-
-"""
-Nintendo Game & Watch Shop > About
-
 Author(s): Markku Laine
 """
 def about( request ):
@@ -570,7 +479,98 @@ Nintendo Game & Watch Shop > Credits
 
 Author(s): Markku Laine
 """
+
 def credits( request ):
+    # Handle GET requests
+    if request.method == "GET":
+        variables                    = {}
+        context                        = RequestContext( request )
+        context.update( csrf( request ) )
+        return render_to_response( "webshop/credits.html", variables, context )
+    # Handle other requests
+    else:
+        raise Http404( "%s method is not supported." % request.method )
+
+"""
+Nintendo Game & Watch Shop > Admin
+
+Author(s): Markku Laine
+"""
+@login_required
+def admin( request ):
+    # Redirect user to Home if (s)he is has not access rights
+    if not request.user.is_staff:
+        return redirect( "webshop.views.home" )
+                
+    # Handle GET requests
+    if request.method == "GET":
+        return redirect( "webshop.views.admin_paid_orders" )
+    # Handle other requests
+    else:
+        raise Http404( "%s method is not supported." % request.method )
+
+
+"""
+Nintendo Game & Watch Shop > Admin > Paid Orders
+
+Author(s): Markku Laine
+"""
+@login_required
+def admin_paid_orders( request ):
+    # Redirect user to Home if (s)he is has not access rights
+    if not request.user.is_staff:
+        return redirect( "webshop.views.home" )
+                
+    # Handle GET requests
+    if request.method == "GET":
+        # Retrieve paid orders
+        orders                    = Order.objects.filter( paid=True, delivered=False )
+    # Handle other requests
+    else:
+        raise Http404( "%s method is not supported." % request.method )
+
+    variables                    = { "orders" : orders }
+    context                        = RequestContext( request )
+    context.update( csrf( request ) )
+    return render_to_response( "webshop/admin/paid_orders.html", variables, context )
+
+
+"""
+Nintendo Game & Watch Shop > Admin > Delivered Orders
+
+Author(s): Markku Laine
+"""
+@login_required
+def admin_delivered_orders( request ):
+    # Redirect user to Home if (s)he is has not access rights
+    if not request.user.is_staff:
+        return redirect( "webshop.views.home" )
+                                
+    # Handle GET requests
+    if request.method == "GET":
+        # Retrieve paid & delivered orders
+        orders                    = Order.objects.filter( paid=True, delivered=True )
+    # Handle other requests
+    else:
+        raise Http404( "%s method is not supported." % request.method )
+
+    variables                    = { "orders" : orders }
+    context                        = RequestContext( request )
+    context.update( csrf( request ) )
+    return render_to_response( "webshop/admin/delivered_orders.html", variables, context )
+
+
+"""
+Nintendo Game & Watch Shop > Admin > Statistics
+
+Author(s): Markku Laine
+"""
+@login_required
+def admin_statistics( request ):
+    # Redirect user to Home if (s)he is has not access rights
+    if not request.user.is_staff:
+        return redirect( "webshop.views.home" )
+                            
 	# Handle GET requests
 	if request.method == "GET":
 		variables					= {}
@@ -670,4 +670,62 @@ def rating( request, product_id ):
 				return HttpResponse(my_json, mimetype="application/json")
 	else:
 		my_json = json.dumps({})
+		return HttpResponse(my_json, mimetype="application/json")
+	
+def comment( request, product_id ):
+	if request.is_ajax():
+		if request.method == 'POST':
+			try:
+				product	= Product.objects.get(id=product_id)
+				comment = Comment()
+				comment.user = request.user
+				if request.POST['commentsOn'] != 'None':
+					commentsOn = Comment.objects.get(id=request.POST['commentsOn'])
+					comment.commentsOn = commentsOn
+				comment.contents = request.POST['comment']
+				comment.product = product
+				comment.published = datetime.now()
+				comment.save()
+				my_json = json.dumps({'id':comment.id, 'commentsOn':request.POST['commentsOn'], 'published':comment.published.__str__(), 'user': comment.user.username})
+				return HttpResponse(my_json, mimetype="application/json")
+			except Product.DoesNotExist:
+				my_json = json.dumps({'error':'product not found'})
+				return HttpResponse(my_json, mimetype="application/json")
+		else:
+			try:
+				my_json = json.dumps({})
+				return HttpResponse(my_json, mimetype="application/json")
+			except Product.DoesNotExist:
+				my_json = json.dumps({'error':'product not found'})
+				return HttpResponse(my_json, mimetype="application/json")
+	else:
+		my_json = json.dumps({})
+		return HttpResponse(my_json, mimetype="application/json")
+	
+def ajaxproducts( request ):
+	if request.is_ajax():
+		#my_json = json.dumps(Product.objects.all(), cls=DjangoJSONEncoder)
+		my_list = []
+		for p in Product.objects.all():
+			temp_dict = {}
+			temp_dict["id"] = p.id
+			temp_dict["type"] = p.type.id
+			temp_dict["label"] = p.title
+			my_list.append(temp_dict)
+			#my_list.append("{\"id\":" + str(p.id) + ", \"type\":" + str(p.type.id) + ", \"label\":\"" + p.title+"\"}")
+		my_json = json.dumps(my_list)
+		return HttpResponse(my_json, mimetype="application/json")
+	else:
+		#my_json = json.dumps(Product.objects.all(), cls=DjangoJSONEncoder)
+		#my_json = json.dumps(json.loads(serialize('json', Product.objects.all())))
+		#return HttpResponse(my_json, mimetype="application/json")
+		my_list = []
+		for p in Product.objects.all():
+			temp_dict = {}
+			temp_dict["id"] = p.id
+			temp_dict["type"] = p.type.id
+			temp_dict["label"] = p.title
+			my_list.append(temp_dict)
+			#my_list.append("{\"id\":" + str(p.id) + ", \"type\":" + str(p.type.id) + ", \"label\":\"" + p.title+"\"}")
+		my_json = json.dumps(my_list)
 		return HttpResponse(my_json, mimetype="application/json")

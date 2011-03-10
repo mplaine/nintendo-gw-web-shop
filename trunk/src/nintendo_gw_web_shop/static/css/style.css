@@ -402,6 +402,10 @@ a {
 	padding: 0;
 	margin: 0;
 	font-weight: bold;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 100%;
 }
 .thumb-body {
 	padding: 0;
@@ -473,9 +477,9 @@ a {
 
 /* BEGIN: random/uncleaned */
 .ui-autocomplete {
-	margin-top:1px;
-	margin-left: -2px;
-	padding:0;
+	/*margin-top:6px;*/
+	margin-left: -3px;
+	padding:5px 0 0;
 	width: 280px;
 	z-index: 1002;	
 }
@@ -488,6 +492,9 @@ a {
 	border-bottom: 1px solid #FFFFFF;
 	color: #FFFFFF;
 	z-index: 1002;
+}
+.ui-menu-item a {
+	color: #FFFFFF;
 }
 .ui-corner-all {
 	text-decoration: underline;
@@ -511,6 +518,7 @@ a {
 	padding: 10px;
 	float: left;
 	width: 99%;
+	position: relative;
 }
 .product-thumb {
 	border: 2px solid #999999;
@@ -528,7 +536,24 @@ a {
 	width: 400px;
 	margin-bottom: 12px;
 	float: right;
-	margin-top: 50px;
+	margin-top: 60px;
+}
+.product-info {
+	position: absolute;
+	bottom: 35px;
+	left: 10px;
+	text-align: left;
+}
+.info-span {
+	color: #999999;
+	text-style: italic;
+	margin-right: 70px;
+}
+.product-sale {
+	position: absolute;
+	top: 45px;
+	right: 18px;
+	color: #999999;
 }
 .product-header {
 	float: left;
@@ -553,6 +578,8 @@ a {
 	width: 95%;
 	margin-left: 20px;
 	color: #999999;
+	position: relative;
+	padding-top: 50px;
 }
 .comment-buble {
 	background: #339900;
@@ -570,9 +597,10 @@ a {
 	border-bottom: 1px dotted #FFFFFF;
 }
 .comment-date {
-	text-align: right;
+	text-align: left;
 	font-style: italic;
 	font-size: 12px;
+	position: relative;
 }
 .comment-arrow-green {
 	height: 0px;
@@ -627,6 +655,66 @@ a {
 	border: 3px solid #339900;
 	cursor: pointer;
 }
+
+.add-comment-form, .add-comment-form-first, .add-comment-form-second {
+	display: none;
+	margin: 0px 0px 15px;
+}
+
+.add-comment-toggle {
+	background: #FFFFFF;
+	height: 38px;
+	line-height: 38px;
+	padding: 5px;
+	color: #339900;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	border: 3px solid #339900;
+	cursor: pointer;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+.add-comment-toggle-first, .add-comment-toggle-second {
+	background: transparent;
+	color: #FFFFFF;
+	border: none;
+	text-decoration: underline;
+	cursor: pointer;
+	position: absolute;
+	top: 0px;
+	right: 0px;
+}
+
+.add-comment-submit, .add-comment-submit-first, .add-comment-submit-second {
+	background: #FFFFFF;
+	height: 38px;
+	width: 130px;
+	text-align: center;
+	line-height: 38px;
+	padding: 5px;
+	color: #339900;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	border: 3px solid #339900;
+	cursor: pointer;
+}
+
+textarea.comment-textarea {
+	width: 97%;
+	-moz-border-radius: 8px;
+	-webkit-border-radius: 8px;
+	border-radius: 8px;
+	border: 1px solid #999999;
+	color: #999999;
+	padding: 8px;
+	margin: 10px 0px;
+	font-family: Arial;
+}
+
 .clearfix {
   clear: both;
   font-size: 1px;

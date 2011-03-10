@@ -11,6 +11,7 @@ urlpatterns    = patterns( '',
     ( r'^home/$', 'webshop.views.home' ),
     ( r'^home/search/', 'webshop.views.search' ),
     ( r'^home/category/(?P<type_id>\d+)/', 'webshop.views.category' ),
+    ( r'^home/search$', 'webshop.views.search' ),
     ( r'^register/$', 'webshop.views.register' ),
     ( r'^login/$', 'webshop.views.login' ),
     ( r'^login/forgotyourpassword/$', 'webshop.views.forgot_your_password' ),
@@ -33,13 +34,16 @@ urlpatterns    = patterns( '',
     ( r'^about/$', 'webshop.views.about' ),
     ( r'^credits/$', 'webshop.views.credits' ),
     ( r'^cart/$', 'webshop.views.cart' ),
-    ( r'^payment/pay/$', 'webshop.views.payment_pay' ),
-    ( r'^payment/success/$', 'webshop.views.payment_success' ),
-    ( r'^payment/cancel/$', 'webshop.views.payment_cancel' ),
-    ( r'^payment/error/$', 'webshop.views.payment_error' ),
-
-    # Ajax urls
-    ( r'^ajax/product/(?P<product_id>\d+)/rating/$', 'webshop.views.rating' ),
+    ( r'^payment/pay/$', 'webshop.views.payment_pay'),
+    ( r'^payment/success/$', 'webshop.views.payment_success'),
+    ( r'^payment/cancel/$', 'webshop.views.payment_cancel'),
+    ( r'^payment/error/$', 'webshop.views.payment_error'),
+    #ajax urls
+    ( r'^ajax/product/(?P<product_id>\d+)/rating/$', 'webshop.views.rating'),
+    ( r'^ajax/product/(?P<product_id>\d+)/comment/$', 'webshop.views.comment'),
+    ( r'^ajax/products/$', 'webshop.views.ajaxproducts'),
+    # Uncomment the admin/doc line below to enable admin documentation:
+    # (r'^admin/doc/', include('django.contrib.admindocs.urls')),
 
     # Static files
     ( r'^static/(?P<path>.*)$', 'django.views.static.serve', { 'document_root' : settings.MEDIA_ROOT } ),

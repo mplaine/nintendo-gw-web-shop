@@ -87,7 +87,7 @@
 			);
 			$('.thumb').click(function() {
 				var me = this;
-				window.location.href = 'http://' + location.host +'/webshop/home/category/'+$(me).attr('data-id')+'/product#item1';
+				window.location.href = 'http://' + location.host +'/webshop/home/category/'+$(me).attr('data-id')+'/product#item'+ $(me).attr('id');
 			});
 		}
 	</script>
@@ -102,7 +102,7 @@
 	<div id="index-content">
 	{% if types %}
  		{% for type in types %}
- 			<div class="thumb" data-id="{{type.id}}">
+ 			<div class="thumb" data-id="{{type.id}}" id="{{type.firstproduct}}">
 				<img src="/webshop/static/{{type.imageThumb}}" />
 				<div class="thumb-info">
 					<p class="thumb-title">{{type}}</p>
