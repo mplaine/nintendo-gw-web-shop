@@ -153,6 +153,9 @@ class Address( models.Model ):
 	state							= models.CharField( max_length=50, blank=True )
 	country							= models.CharField( max_length=50, default="Finland" )
 
+	class Meta:
+		verbose_name_plural			= "Addresses"
+
 	def __unicode__( self ):
 		return self.user.first_name + " " + self.user.last_name + " (" + self.user.username + "), " + self.streetAddressLine1 + ( ", " + self.streetAddressLine2 if self.streetAddressLine2 is None else "" ) + ", " + self.zipCode + " " + self.city + ( ", " + self.state if self.state is None else "" ) + ", " + self.country
 	__unicode__.short_description	= "Address"
