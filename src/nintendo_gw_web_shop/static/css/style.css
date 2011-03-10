@@ -695,6 +695,17 @@ a {
 	right: 0px;
 }
 
+.delete-comment {
+	background: transparent;
+	color: #FFFFFF;
+	border: none;
+	text-decoration: underline;
+	cursor: pointer;
+	position: absolute;
+	top: 0px;
+	right: 40px;
+}
+
 .add-comment-submit, .add-comment-submit-first, .add-comment-submit-second {
 	background: #FFFFFF;
 	height: 38px;
