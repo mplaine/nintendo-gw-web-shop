@@ -706,7 +706,22 @@ def cart( request ):
 	variables					= { 'orderItems': orderItems }
 	context						= RequestContext( request )
 	context.update( csrf( request ) )
-	return render_to_response( "webshop/cart.html", variables, context )
+	return render_to_response( "webshop/cart_markku.html", variables, context )
+
+
+"""
+Author(s): Markku Laine
+"""
+def empty_cart( request ):
+	# Handle POST requests
+	if request.method == "POST":
+		# Empty cart
+		request.session[ 'orderItems' ]	= []
+		return redirect( "webshop.views.cart" )
+	# Handle other requests
+	else:
+		raise Http404( "%s method is not supported." % request.method )
+
 
 """
 Author(s): Juha Loukkola
