@@ -136,9 +136,9 @@ Author(s): Markku Laine
 """
 class OrderAdmin( admin.ModelAdmin ):
 	fieldsets		= [
-		( "Basic Information",	{ "fields" : [ "user", "date", "shippingMethod", "paid", "delivered" ] } ),
+		( "Basic Information",	{ "fields" : [ "user", "date", "address", "shippingMethod", "paid", "delivered" ] } ),
 	]
-	list_display	= ( "user", "shippingMethod", "paid", "delivered", "date" )
+	list_display	= ( "user", "address", "shippingMethod", "paid", "delivered", "date" )
 	list_filter		= [ "user", "paid", "delivered", "date" ]
 	ordering		= [ "user__username" ]
 	date_hierarchy	= "date"
