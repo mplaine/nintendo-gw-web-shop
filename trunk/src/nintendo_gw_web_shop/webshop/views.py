@@ -666,8 +666,10 @@ Author(s): Juha Loukkola
 def payment_pay( request ):
 	#if request.method == 'POST':
 	user = get_object_or_404(User, id=request.user.id)
-	sm = request.session['shippingMethod']
+	sm = request.session.get('shippingMethod')
 	shippingMethod = get_object_or_404(ShippingMethod, name=sm)
+	
+	# create an order from items in the cart
 	order = Order(date=datetime.now(), 
 				user=user, 
 				delivered=False, 
@@ -675,14 +677,22 @@ def payment_pay( request ):
 				shippingMethod=shippingMethod,
 				address=user.address_set.all()[0])
 	order.save()
+	
+	#TODO: handle orderItems
+	orderItems = request.session.get('orderItems')
+	for item in orderItems:
+		item.order = order
+		item.save()
+	
+	# construct parameters for interfacing the netpank
 	pid = order.id
 	sid	= 'Disk-kun'
-	#secret_key = '37e383c1182a6bab1524c9a7c0fc4557'
 	amount = order.getTotal()
-	# TODO: fix urls
-	success_url = request.build_absolute_uri("/webshop/payment/success") # "http://127.0.0.1:8888/webshop/payment/success"
-	cancel_url = request.build_absolute_uri("/webshop/payment/cancel") # "http://127.0.0.1:8888/webshop/payment/cancel"
-	error_url = request.build_absolute_uri("/webshop/payment/error") # "http://127.0.0.1:8888/webshop/payment/error"	
+	success_url = request.build_absolute_uri("/webshop/payment/success")
+	cancel_url = request.build_absolute_uri("/webshop/payment/cancel") 
+	error_url = request.build_absolute_uri("/webshop/payment/error")
+	
+	# calsulate a cehcksum
 	checksumstr = "pid=%s&sid=%s&amount=%s&token=%s"%(pid, sid, amount, secret_key)
 	m = md5.new(checksumstr)
 	checksum = m.hexdigest()
@@ -706,6 +716,7 @@ Author(s): Juha Loukkola
 def payment_success( request ):
 	# Handle GET requests
 	if request.method == "GET":
+
 		pid = request.GET.get('pid')
 		ref = request.GET.get('ref')
 		checksum = request.GET.get('checksum')
@@ -717,8 +728,10 @@ def payment_success( request ):
 			order = get_object_or_404(Order, id=pid)
 			order.paid = True
 			order.save()
-			del request.session['orderItems']
-			del request.session['shippingMethod']
+			if 'orderItems' in request.session:
+				del request.session['orderItems']
+			if 'shippingMethod' in request.session:
+				del request.session['shippingMethod']
 			variables	= {}
 			context		= RequestContext( request )
 			return render_to_response( "webshop/payment/success.html", variables, context )
@@ -760,8 +773,9 @@ def cart( request ):
 	# Handle GET requests
 	if request.method == "GET":
 		orderItems = request.session.get('orderItems', [])
-		if 'shippingMethod' in request.session:
-			sm = request.session['shippingMethod']
+		#if 'shippingMethod' in request.session:
+		sm = request.session.get('shippingMethod')
+		if sm:
 			shippingMethod = get_object_or_404(ShippingMethod, name=sm)
 		else:
 			request.session['shippingMethod'] = 'Standard'
@@ -803,9 +817,12 @@ def add_to_cart( request ):
 		orderItems = request.session.get('orderItems', [])	
 				
 		# Get SaleItem		
+		#if 'saleitem_id' in request.POST:
 		si_id = request.POST.get('saleitem_id')
-		si = SaleItem.objects.get(id=si_id)
-		
+		if si_id:
+			si = SaleItem.objects.get(id=si_id)
+		else:
+			return HttpResponseBadRequest()
 		# Check if there is allredy similar item in the cart ...
 		similarItem = None
 		for item in orderItems:
@@ -821,12 +838,14 @@ def add_to_cart( request ):
 			oi.saleItem = si
 			orderItems.append(oi)
 		
-		#save cart into session
+		#save the cart into session
 		request.session['orderItems'] = orderItems
 		
 		variables	= { 'orderItems': orderItems }
 		context		= RequestContext( request )
 		context.update( csrf( request ) )
+		
+		#TODO: change next to referer's url
 		next = request.POST.get( "next", reverse( "webshop.views.home" ) )
 		return redirect( next )
 	else:
@@ -837,26 +856,19 @@ Author(s): Juha Loukkola
 """
 def update_cart( request ):
 	#if request.is_ajax():
-	if request.method == 'POST':
-				
+	if request.method == 'POST':				
 		# Get the cart
-		orderItems = request.session.get('orderItems', [])	
-				
+#		orderItems = request.session.get('orderItems', [])					
 #		for item in orderItems:
 #			item_quantity = int(request.POST.get(item.saleItem.id))
 #			item.quantity = item_quantity
 		
-		#request.session['orderItems'] = orderItems
-		sm = request.POST.get('shipping_method')
-		request.session['shippingMethod'] = sm
-		#shippingMethod = get_object_or_404(ShippingMethod, name=sm)
-		
-		#variables	= { 'orderItems' : orderItems , 'shippingMethod' : shippingMethod }
-		#context		= RequestContext( request )
-		#context.update( csrf( request ) )
-		#next = request.POST.get( "next", reverse( "webshop.views.cart" ) )
-		#return redirect( next )
-		return redirect( "webshop.views.cart" )
+		# update the shipping method
+		if 'shipping_method' in request.POST:
+			request.session['shippingMethod'] = request.POST.get('shipping_method')
+			return redirect( "webshop.views.cart" )
+		else:
+			return HttpResponseBadRequest()
 	else:
 		return HttpResponseBadRequest()
 
