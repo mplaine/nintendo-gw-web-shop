@@ -2,7 +2,8 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
 from webshop.forms import MyUserCreationForm, MyAuthenticationForm, MyUserChangeForm, MyPasswordResetForm, MyPasswordChangeForm, AddressForm
-from webshop.models import Product, Type, Address, Order, Rating, Comment, Statistic, SaleItem, OrderItem, User, ShippingMethod
+from webshop.models import Product, Type, Address, Order, Rating, Comment, Statistic, SaleItem, OrderItem, ShippingMethod
+from django.contrib.auth.models import User
 from django.core.context_processors import csrf
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib import messages
@@ -95,33 +96,47 @@ def register( request ):
 	if request.user.is_authenticated():
 		return redirect( "webshop.views.home" )
 
+	# Create a new address. At first, associate a dummy user with the address
+	address						= Address()
+	dummyUser					= User()
+	address.user				= dummyUser
+	
 	# Handle POST requests		
 	if request.method == "POST":
 		myUserCreationForm		= MyUserCreationForm( data=request.POST )
+		addressForm				= AddressForm( data=request.POST, instance=address )
 
-		# Check the validity of the form
-		if myUserCreationForm.is_valid():
+		# Check the validity of the forms
+		if myUserCreationForm.is_valid() and addressForm.is_valid():
+			print "Forms are valid!"
 			user				= myUserCreationForm.save()
 			# Automatically login the user after successful registration
 			user.backend		= "django.contrib.auth.backends.ModelBackend"
 			auth_login( request, user )
+			# Retrieve the address
+			userAddress			= addressForm.instance
+			# Replace the dummy user with the currently logged-in user
+			userAddress.user	= user
+			# Save user's address
+			userAddress.save()
 			# After a successful registration, redirect the user to the page (s)he came from based on 1) next URL parameter and 2) default to home
 			next				= request.POST.get( "next", reverse( "webshop.views.home" ) )
 			return redirect( next )
 		else:
-			#print "Form is not valid!"
+			print "Forms are not valid!"
 			# After a failed registration, redirect the user to the page (s)he came from based on 1) next URL parameter and 2) default to home
 			next				= request.POST.get( "next", reverse( "webshop.views.home" ) )
 	# Handle GET requests
 	elif request.method == "GET":
 		myUserCreationForm		= MyUserCreationForm( initial={} )
+		addressForm				= AddressForm( initial={} )
 		# After registration, redirect the user to the page (s)he came from based on 1) next URL parameter, 2) HTTP REFERER, and 3) default to home
 		next					= request.GET.get( "next", request.META.get( "HTTP_REFERER", reverse( "webshop.views.home" ) ) )
 	# Handle other requests
 	else:
 		raise Http404( "%s method is not supported." % request.method )
 	
-	variables					= { "form" : myUserCreationForm, "next" : next }
+	variables					= { "form" : myUserCreationForm, "next" : next, "addressForm" : addressForm }
 	context						= RequestContext( request )
 	context.update( csrf( request ) )
 	return render_to_response( "webshop/register.html", variables, context )
@@ -460,6 +475,12 @@ Author(s): Markku Laine
 """
 @login_required
 def address_book_delete( request, address_id=None ):
+	# Retrieve user's addresses
+	addresses					= Address.objects.filter( user=request.user )
+	# Users are not allowed to delete their only address
+	if addresses.count() <= 1:
+		return redirect( "webshop.views.address_book" )
+
 	# Handle POST requests
 	if request.method == "POST":
 		# Retrieve the address. Users are allowed to edit their own addresses only!
