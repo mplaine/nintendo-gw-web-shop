@@ -678,13 +678,13 @@ def payment_pay( request ):
 				address=user.address_set.all()[0])
 	order.save()
 	
-	#TODO: handle orderItems
+	# Add orderItems to the order and save them to DB
 	orderItems = request.session.get('orderItems')
 	for item in orderItems:
 		item.order = order
 		item.save()
 	
-	# construct parameters for interfacing the netpank
+	# construct parameters for interfacing the net bank
 	pid = order.id
 	sid	= 'Disk-kun'
 	amount = order.getTotal()
@@ -732,6 +732,9 @@ def payment_success( request ):
 				del request.session['orderItems']
 			if 'shippingMethod' in request.session:
 				del request.session['shippingMethod']
+			if 'numberOfCartItems' in request.session:
+				request.session[ "numberOfCartItems" ]	= 0
+			
 			variables	= {}
 			context		= RequestContext( request )
 			return render_to_response( "webshop/payment/success.html", variables, context )
