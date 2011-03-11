@@ -32,24 +32,57 @@
 						<tr>
 							<td class="order">
 								<table class="order-information-table">
-									<tr>
-										<td class="label bold">Order number:</td>
-										<td>{{ order.id }}</td>
-									</tr>
-									<tr>
-										<td class="label">Placed on:</td>
-										<td>{{ order.date }}</td>
-									</tr>
-									<tr>
-										<td class="label">Status:</td>
-										<td>
-											{% if order.delivered %}
-												paid &amp; delivered
-											{% else %}
-												unknown status
-											{% endif %}
-										</td>
-									</tr>
+									<tbody>
+										<tr>
+											<td class="label bold">Order number:</td>
+											<td>{{ order.id }}</td>
+										</tr>
+										<tr>
+											<td class="label">Placed on:</td>
+											<td>{{ order.date }}</td>
+										</tr>
+										<tr>
+											<td class="label">Status:</td>
+											<td>
+												{% if order.delivered %}
+													paid &amp; delivered
+												{% else %}
+													unknown status
+												{% endif %}
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<table class="shipping-information-table">
+									<thead>
+										<tr>
+											<th class="text-left">Shipping address</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>{{ order.user.first_name }} {{ order.user.last_name }}</td>
+										</tr>
+										<tr>
+											<td>{{ order.address.streetAddressLine1 }}</td>
+										</tr>
+										{% if order.address.streetAddressLine2 != "" %}
+											<tr>
+												<td>{{ order.address.streetAddressLine2 }}</td>
+											</tr>
+										{% endif %}
+										<tr>
+											<td>{{ order.address.zipCode }} {{ order.address.city }}</td>
+										</tr>
+										{% if order.address.state != "" %}
+											<tr>
+												<td>{{ order.address.state }}</td>
+											</tr>
+										{% endif %}
+										<tr>
+											<td>{{ order.address.country }}</td>
+										</tr>
+									</tbody>
 								</table>
 								<table class="order-items-table">
 									<thead>

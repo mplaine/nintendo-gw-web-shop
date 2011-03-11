@@ -6,7 +6,6 @@ from webshop.models import Product, Type, Address, Order, Rating, Comment, Stati
 from django.core.context_processors import csrf
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib import messages
-from django.contrib.auth.views import password_reset
 from django.http import Http404, HttpResponse, HttpResponseBadRequest
 from django.utils import simplejson as json
 from django.contrib.auth.decorators import login_required
