@@ -37,6 +37,28 @@
 						required: true,
 						email: true,
 						maxlength: 128
+					},
+					"streetAddressLine1": {
+						required: true,
+						maxlength: 100
+					},
+					"streetAddressLine2": {
+						maxlength: 100
+					},
+					"zipCode": {
+						required: true,
+						maxlength: 10
+					},
+					"city": {
+						required: true,
+						maxlength: 50
+					},
+					"state": {
+						maxlength: 50
+					},
+					"country": {
+						required: true,
+						maxlength: 50
 					}
 				},
 				messages: {
@@ -59,7 +81,19 @@
 					"email": {
 						required: "E-mail address is required.",
 						email: "Please enter a valid e-mail address."
-		            }
+		            },
+					"streetAddressLine1": {
+						required: "Street address line 1 is required."
+					},
+					"zipCode": {
+						required: "ZIP code is required."
+					},
+					"city": {
+						required: "City is required."
+					},
+					"country": {
+						required: "Country is required."
+					}
 				}
 			} );
 		} );	
@@ -74,10 +108,13 @@
 		<h3>Register</h3>
 		<form id="register-form" class="form" action="" method="post">
 			{# Show validation errors #}
-			{% if form.errors %}
+			{% if form.errors or addressForm.errors %}
 				<div class="messages validation">
 					<ul class="messages-list-validation">
 						{% for key,value in form.errors.items %}
+							{% for error in value %}<li>{{ error }}</li>{% endfor %} 
+						{% endfor %}
+						{% for key,value in addressForm.errors.items %}
 							{% for error in value %}<li>{{ error }}</li>{% endfor %} 
 						{% endfor %}
 					</ul>
@@ -87,9 +124,33 @@
 			{% render_messages messages %}
 			{% csrf_token %}
 			<input type="hidden" name="next" value="{{ next }}" />
-			<table>
+			<table id="register-table">
 				<tbody>
+					<tr>
+						<th colspan="2">Basic Information</th>
+					</tr>
 					{% for field in form %}
+						<tr>
+							<th>
+								<label for="{{ field.auto_id }}">
+									{% if field.field.required %}
+										<span class="required">{{ field.label }}:</span>
+									{% else %}
+										{{ field.label }}:
+									{% endif %}
+								</label>
+							</th>
+							<td>{{ field }}</td>
+						</tr>
+					{% endfor %}
+					<tr class="fieldset-separator">
+						<th>&nbsp;</th>
+						<td>&nbsp;</td>
+					</tr>
+					<tr>
+						<th colspan="2">Shipping Address</th>
+					</tr>
+					{% for field in addressForm %}
 						<tr>
 							<th>
 								<label for="{{ field.auto_id }}">

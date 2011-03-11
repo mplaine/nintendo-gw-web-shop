@@ -439,6 +439,13 @@ a {
 /* END: home */
 
 
+/* BEGIN: register */
+#register-table tr.fieldset-separator {
+	margin-bottom: 20px;
+}
+/* END: register */
+
+
 /* BEGIN: my account */
 #address-book-table {
 	border-collapse: collapse;

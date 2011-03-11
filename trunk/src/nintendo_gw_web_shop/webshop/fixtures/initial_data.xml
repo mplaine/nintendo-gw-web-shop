@@ -1,32 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <django-objects version="1.0">
-    <object pk="5" model="auth.user">
-        <field type="CharField" name="username">administrator</field>
-        <field type="CharField" name="first_name">Andy</field>
-        <field type="CharField" name="last_name">Administrator</field>
-        <field type="CharField" name="email">administrator@example.org</field>
-        <field type="CharField" name="password">sha1$f3e8e$a88c93cc1a54baaaab1388f172725d5c2583fb63</field>
-        <field type="BooleanField" name="is_staff">True</field>
-        <field type="BooleanField" name="is_active">True</field>
-        <field type="BooleanField" name="is_superuser">True</field>
-        <field type="DateTimeField" name="last_login">2011-03-10 05:37:19</field>
-        <field type="DateTimeField" name="date_joined">2011-03-10 05:22:04</field>
-        <field to="auth.group" name="groups" rel="ManyToManyRel"></field>
-        <field to="auth.permission" name="user_permissions" rel="ManyToManyRel"></field>
+    <object pk="1" model="webshop.address">
+        <field to="auth.user" name="user" rel="ManyToOneRel">1</field>
+        <field type="CharField" name="streetAddressLine1">Konemiehentie 2</field>
+        <field type="CharField" name="streetAddressLine2">B117</field>
+        <field type="CharField" name="zipCode">02150</field>
+        <field type="CharField" name="city">Espoo</field>
+        <field type="CharField" name="state"></field>
+        <field type="CharField" name="country">Finland</field>
     </object>
-    <object pk="6" model="auth.user">
-        <field type="CharField" name="username">user</field>
-        <field type="CharField" name="first_name">Udo</field>
-        <field type="CharField" name="last_name">User</field>
-        <field type="CharField" name="email">user@example.org</field>
-        <field type="CharField" name="password">sha1$bb912$f55ef031f9a18fbac0717d88348333b9e35e5925</field>
-        <field type="BooleanField" name="is_staff">False</field>
-        <field type="BooleanField" name="is_active">True</field>
-        <field type="BooleanField" name="is_superuser">False</field>
-        <field type="DateTimeField" name="last_login">2011-03-10 05:37:30</field>
-        <field type="DateTimeField" name="date_joined">2011-03-10 05:34:12</field>
-        <field to="auth.group" name="groups" rel="ManyToManyRel"></field>
-        <field to="auth.permission" name="user_permissions" rel="ManyToManyRel"></field>
+    <object pk="2" model="webshop.address">
+        <field to="auth.user" name="user" rel="ManyToOneRel">2</field>
+        <field type="CharField" name="streetAddressLine1">Paratiisitie 13</field>
+        <field type="CharField" name="streetAddressLine2"></field>
+        <field type="CharField" name="zipCode">00100</field>
+        <field type="CharField" name="city">Helsinki</field>
+        <field type="CharField" name="state"></field>
+        <field type="CharField" name="country">Finland</field>
+    </object>
+    <object pk="3" model="webshop.address">
+        <field to="auth.user" name="user" rel="ManyToOneRel">2</field>
+        <field type="CharField" name="streetAddressLine1">Painajaistie 1</field>
+        <field type="CharField" name="streetAddressLine2"></field>
+        <field type="CharField" name="zipCode">00100</field>
+        <field type="CharField" name="city">Helsinki</field>
+        <field type="CharField" name="state"></field>
+        <field type="CharField" name="country">Finland</field>
     </object>
     <object pk="1" model="webshop.type">
         <field type="CharField" name="name">Silver</field>
@@ -1170,5 +1169,33 @@
         <field type="TextField" name="description"></field>
         <field type="DecimalField" name="price">20</field>
         <field type="BooleanField" name="onSale">True</field>
+    </object>
+    <object pk="1" model="auth.user">
+        <field type="CharField" name="username">administrator</field>
+        <field type="CharField" name="first_name">Andy</field>
+        <field type="CharField" name="last_name">Administrator</field>
+        <field type="CharField" name="email">administrator@example.org</field>
+        <field type="CharField" name="password">sha1$f3e8e$a88c93cc1a54baaaab1388f172725d5c2583fb63</field>
+        <field type="BooleanField" name="is_staff">True</field>
+        <field type="BooleanField" name="is_active">True</field>
+        <field type="BooleanField" name="is_superuser">True</field>
+        <field type="DateTimeField" name="last_login">2011-03-11 04:17:06</field>
+        <field type="DateTimeField" name="date_joined">2011-03-10 05:22:04</field>
+        <field to="auth.group" name="groups" rel="ManyToManyRel"></field>
+        <field to="auth.permission" name="user_permissions" rel="ManyToManyRel"></field>
+    </object>
+    <object pk="2" model="auth.user">
+        <field type="CharField" name="username">user</field>
+        <field type="CharField" name="first_name">Udo</field>
+        <field type="CharField" name="last_name">User</field>
+        <field type="CharField" name="email">user@example.org</field>
+        <field type="CharField" name="password">sha1$bb912$f55ef031f9a18fbac0717d88348333b9e35e5925</field>
+        <field type="BooleanField" name="is_staff">False</field>
+        <field type="BooleanField" name="is_active">True</field>
+        <field type="BooleanField" name="is_superuser">False</field>
+        <field type="DateTimeField" name="last_login">2011-03-11 04:16:45</field>
+        <field type="DateTimeField" name="date_joined">2011-03-10 05:34:12</field>
+        <field to="auth.group" name="groups" rel="ManyToManyRel"></field>
+        <field to="auth.permission" name="user_permissions" rel="ManyToManyRel"></field>
     </object>
 </django-objects>

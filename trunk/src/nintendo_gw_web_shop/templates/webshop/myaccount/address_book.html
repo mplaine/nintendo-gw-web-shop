@@ -41,16 +41,18 @@
 								{% endif %}
 								<li>{{ address.zipCode }} {{ address.city }}</li>
 								{% if address.state != "" %}
-								<li>{{ address.state }}</li>
+									<li>{{ address.state }}</li>
 								{% endif %}
 								<li>{{ address.country }}</li>
 							</ul>
 							<form class="inline-form" action="{% url webshop.views.address_book_edit address_id=address.pk %}" method="get">
 								<input type="submit" value="Edit" />
 							</form>
-							<form class="inline-form" action="{% url webshop.views.address_book_delete address_id=address.pk %}" method="get">
-								<input type="submit" value="Delete" />
-							</form>
+							{% if addresses|length > 1 %}
+								<form class="inline-form" action="{% url webshop.views.address_book_delete address_id=address.pk %}" method="get">
+									<input type="submit" value="Delete" />
+								</form>
+							{% endif %}
 						</td>
 					</tr>
 				{% endfor %}
