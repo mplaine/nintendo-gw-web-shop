@@ -294,6 +294,7 @@
 				<a name="item{{product.id}}"></a>
 				<div class="add-to-cart">
 				<form action="/webshop/cart/add/" method="post">{% csrf_token %}
+					<input type="hidden" name="next" value="{% url webshop.views.category type_id=type.id %}product#item{{ product.id }}" />
 					<input type="hidden" name="saleitem_id" value="{{ product.saleitem.id }}" />
 					<input class="add-cart-submit" type="submit" value="Add to cart" />
 				</form>
