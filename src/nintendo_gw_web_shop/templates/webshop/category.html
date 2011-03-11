@@ -59,7 +59,15 @@
 				addView(window.location.hash.substring(5));
 			});
 			
-
+			$('.add-to-cart form').submit(function() {
+				//Your code Here-->
+				var me = this;
+				var id = $('input[name=saleitem_id]', me).val()
+				var uri = '/webshop/cart/add';
+				$.post(uri, {saleitem_id:id});
+				$('#cart-span').text((parseInt($('#cart-span').text()) + 1));
+				return false;
+			});
 			$('.own-star').hover(
 					function() {
 						var me = this;

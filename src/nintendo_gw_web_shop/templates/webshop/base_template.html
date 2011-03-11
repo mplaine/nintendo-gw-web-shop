@@ -60,7 +60,7 @@
 							<li><a id="navi-register" href="{% url webshop.views.register %}"><span>register</span></a></li>
 							<li><a id="navi-login" href="{% url webshop.views.login %}"><span>login</span></a></li>
 						{% endif %}	
-						<li><a id="navi-cart" href="{% url webshop.views.cart %}"><span>cart (0)</span></a></li>
+						<li><a id="navi-cart" href="{% url webshop.views.cart %}"><span>cart (<span id="cart-span">{{ request.session.orderItems|length }}</span>)</span></a></li>
 					</ul>
 				</div>
 				<div id="search-bar">
