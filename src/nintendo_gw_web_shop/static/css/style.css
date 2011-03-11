@@ -679,7 +679,7 @@ a {
 	position: relative;
 }
 .no-js .product {
-	display: block;
+	display: inline-block;
 }
 .add-to-cart {
 	position: absolute;
