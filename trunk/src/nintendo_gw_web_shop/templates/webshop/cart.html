@@ -1,0 +1,56 @@
+{% extends "webshop/base_template.html" %}
+{% block title %}Nintendo Game &amp; Watch Shop - Cart{% endblock %}
+{% block extra-scripts %}
+	<script type="text/javascript">
+		$( function() {
+			// Highlight current page in the main navigation
+			$( "#navi-myaccount>span" ).addClass( "navi-selected" );
+
+			// Highlight current page in the side navigation
+			$( "#side-navi-myaccount-completed-orders>span" ).addClass( "side-navi-selected" );
+			$( "#side-navi-myaccount-completed-orders" ).parent().append( $( "#side-navi-arrow" ) );		
+			$( "#side-navi-arrow" ).show( "slide", { direction: "left" }, 500 );
+		} );
+	</script>				
+{% endblock %}
+{% block page-title %}Cart{% endblock %}
+{% block sort-bar %}{% endblock %}
+{% block content %}
+	<!--  
+	<div id="side-navi">
+		{% include "webshop/myaccount/side_navi_template.html" %}
+	</div>
+	-->
+	<div id="main-content">
+<!--		<h3>Cart</h3>-->
+		{% load messages %}
+		{% render_messages messages %}
+		{% if orderItems|length == 0 %}
+			<p>The cart is empty. </p>
+		{% else %}
+			<form>
+				<table class="order-items-table">
+					<thead>
+						<tr>
+							<th class="text-left">Quantity</th>
+							<th class="text-center">Product</th>
+							<th class="text-right">Unit Price</th>
+							<th class="text-right">Price</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for orderItem in orderItems %}
+						<tr>
+							<td class="text-left"><input type="text" name="quantity" value="{{ orderItem.quantity }}" maxlength="3" size="3"/> x </td>
+							<td class="text-left">{{ orderItem.saleItem.product.title }} | {{ orderItem.saleItem.product.type }}</td>
+							<td class="text-left">{{ orderItem.saleItem.getPriceInEuros }}</td>
+							<td class="text-left">{{ orderItem.getPriceInEuros }}</td>
+						</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</form>
+		{% endif %}
+	</div>
+{% endblock %}
+
