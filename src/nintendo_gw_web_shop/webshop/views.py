@@ -773,23 +773,34 @@ Author(s): Juha Loukkola
 """
 #@login_required
 def cart( request ):
+	# Handle POST requests
+	if request.method == "POST":
+		print "Hello"
 	# Handle GET requests
-	if request.method == "GET":
-		orderItems = request.session.get('orderItems', [])
+	elif request.method == "GET":
+		orderItems	= request.session.get('orderItems', [])
 		#if 'shippingMethod' in request.session:
-		sm = request.session.get('shippingMethod')
+		sm			= request.session.get('shippingMethod')
 		if sm:
 			shippingMethod = get_object_or_404(ShippingMethod, name=sm)
 		else:
 			request.session['shippingMethod'] = 'Standard'
 			shippingMethod = get_object_or_404(ShippingMethod, name='Standard')
 
+		# Calculate subtotal
+		subtotal					= 0
+		for orderItem in orderItems:
+			subtotal				+= ( orderItem.quantity * orderItem.saleItem.price )
+		subtotalInEuros				= u"%.2f \u20AC" % subtotal
+
+		shippingMethodInEuros		= u"%.2f \u20AC" % shippingMethod.price
+		total						= subtotal + shippingMethod.price
+		totalInEuros				= u"%.2f \u20AC" % total
 	# Handle other requests
 	else:
 		raise Http404( "%s method is not supported." % request.method )
 	
-	#variables					= { 'cart' : cart, 'orderItems': orderItems }
-	variables					= { 'orderItems': orderItems, 'shippingMethod' : shippingMethod }
+	variables					= { 'orderItems': orderItems, 'shippingMethod' : shippingMethod, 'shippingMethodInEuros' : shippingMethodInEuros, "subtotalInEuros" : subtotalInEuros, "totalInEuros" : totalInEuros }
 	context						= RequestContext( request )
 	context.update( csrf( request ) )
 	return render_to_response( "webshop/cart_markku.html", variables, context )
