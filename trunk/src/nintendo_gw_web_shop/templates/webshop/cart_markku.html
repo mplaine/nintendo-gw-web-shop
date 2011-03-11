@@ -56,7 +56,6 @@
 			</table>
 			<form action="/webshop/cart/update" method="post"" id="selection">{% csrf_token %}
 			    Shipping method: <select name="shipping_method">
-			      <option value="clear">-- choose --</option>
 			      <option value="Standard">Standard</option>
 			      <option value="Express">Express</option>
 			    </select>
@@ -65,7 +64,7 @@
  			 </p> Shipping method: {{ shippingMethod.name }}
 			
 			{% if user.is_authenticated %}
-				<p><a href="/webshop/payment/confirm">Pay</a></p>
+				<p><a href="/webshop/payment/pay">Pay</a></p>
 			{% else %}
 				<p>In order to continue please <a href="/webshop/login/">login</a> or <a href="/webshop/register/">register</a></p>
 			{% endif %}
