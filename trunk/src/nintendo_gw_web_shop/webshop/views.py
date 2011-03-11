@@ -811,9 +811,7 @@ def empty_cart( request ):
 Author(s): Juha Loukkola
 """
 def add_to_cart( request ):
-	#if request.is_ajax():
 	if request.method == 'POST':
-				
 		# Get the cart from the session
 		orderItems = request.session.get( 'orderItems', [] )
 				
@@ -848,24 +846,18 @@ def add_to_cart( request ):
 			numberOfCartItems	+= orderItem.quantity
 		request.session[ "numberOfCartItems" ]	= numberOfCartItems
 
-		# Return the number of cart items for updating the cart items number in the navigation
-		my_json = json.dumps( { "numberOfCartItems" : numberOfCartItems } )
-		return HttpResponse( my_json, mimetype="application/json" )
-		
-#		variables	= { 'orderItems': orderItems }
-#		context		= RequestContext( request )
-#		context.update( csrf( request ) )
-#		next = request.POST.get( "next", reverse( "webshop.views.home" ) )
-#		return redirect( next )
-#		variables	= { 'orderItems': orderItems }
-#		context		= RequestContext( request )
-#		context.update( csrf( request ) )
-		
-		#TODO: change next to referer's url
-#		next = request.POST.get( "next", reverse( "webshop.views.home" ) )
-#		return redirect( next )
+		# Handle Ajax request
+		if request.is_ajax():
+			# Return the number of cart items for updating the cart items number in the navigation
+			my_json = json.dumps( { "numberOfCartItems" : numberOfCartItems } )
+			return HttpResponse( my_json, mimetype="application/json" )
+		# Handle normal request
+		else:
+			next		= request.POST.get( "next", reverse( "webshop.views.cart" ) )
+			return redirect( next )
+	# Handle other requests
 	else:
-		return HttpResponseBadRequest()
+		raise Http404( "%s method is not supported." % request.method )
 
 """
 Author(s): Juha Loukkola
