@@ -56,12 +56,11 @@
 				addView(window.location.hash.substring(5));
 			});
 			
-			$('form[class="add-to-cart"]').submit(function() {
-				//Your code Here
-				
-				
-				return false;
-			});
+<!--			$('form[class="add-to-cart"]').submit(function() {-->
+<!--				//Your code Here-->
+<!--				-->
+<!--				return false;-->
+<!--			});-->
 			$('.own-star').hover(
 					function() {
 						var me = this;
@@ -291,11 +290,12 @@
 		{% for product in type.product_set.all %}
 			<div class="product">
 				<a name="item{{product.id}}"></a>
-				<form class="add-to-cart" action="/webshop/cart/add" method="post">{% csrf_token %}
+				<div class="add-to-cart">
+				<form action="/webshop/cart/add" method="post">{% csrf_token %}
 					<input type="hidden" name="saleitem_id" value="{{ product.saleitem.id }}" />
 					<input class="add-cart-submit" type="submit" value="Add to cart" />
 				</form>
-				
+				</div>
 				<div class="product-content">
 					<h2 class="product-title">{{product.title}}</h2>
 					<div class="product-thumb">

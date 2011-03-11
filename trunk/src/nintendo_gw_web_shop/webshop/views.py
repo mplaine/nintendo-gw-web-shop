@@ -693,44 +693,111 @@ def payment_error( request ):
 """
 Author(s): Juha Loukkola
 """
+#@login_required
 def cart( request ):
-	variables	= {}
-	context		= RequestContext( request )
+	# Handle GET requests
+	if request.method == "GET":
+		orderItems = request.session.get('orderItems', [])
+
+	# Handle other requests
+	else:
+		raise Http404( "%s method is not supported." % request.method )
+
+	#variables					= { 'cart' : cart, 'orderItems': orderItems }
+	variables					= { 'orderItems': orderItems }
+	context						= RequestContext( request )
+	context.update( csrf( request ) )
 	return render_to_response( "webshop/cart.html", variables, context )
 
 """
 Author(s): Juha Loukkola
 """
-
 def add_to_cart( request ):
 	#if request.is_ajax():
 	if request.method == 'POST':
-		
+				
+		# Get the cart
+		orderItems = request.session.get('orderItems', [])	
+				
 		# Get SaleItem		
 		si_id = request.POST.get('saleitem_id')
 		si = SaleItem.objects.get(id=si_id)
-				
-		# Get cart or create new one
-		cart = request.session.get( 'cart' )	
-		if cart == None:
-			# Get user		
-			user = User.objects.get(id=request.user.id)
-			cart = Order()
-			cart.user = user
-			cart.date = datetime.now()
-			cart.shipingmethod = None
-			cart.paid = False
-			cart.delivered = False	
+		
+		# Check if there is allredy similar item in the cart ...
+		similarItem = None
+		for item in orderItems:
+			if item.saleItem.id == si.id:
+				similarItem = item
+		# ... if similar item exist increase its quantity ...
+		if similarItem:
+			similarItem.quantity += 1
+		# ... else create new item
+		else:
+			oi = OrderItem()
+			oi.quantity = 1
+			oi.saleItem = si
+			orderItems.append(oi)
+		
+		#save cart into session
+		request.session['orderItems'] = orderItems
+		
+		variables	= { 'orderItems': orderItems }
+		context		= RequestContext( request )
+		context.update( csrf( request ) )
+		next = request.POST.get( "next", reverse( "webshop.views.home" ) )
+		return redirect( next )
+	else:
+		return HttpResponseBadRequest()
 
-		# Add new OrderItem into the cart		
-		oi = OrderItem(saleItem=si, order=cart, quantity=1)		
+"""
+def add_to_cart( request ):
+	#if request.is_ajax():
+	if request.method == 'POST':
+		cart = request.session.get( 'cart' )
+		# If this is the first time the cart is refered during this session
+		if cart == None:			
+			if request.user.is_authenticated():
+				user = get_object_or_404(User, id=request.user.id)
+				# If the user has unfinished cart from previous session then get it ...
+				cart = user.order_set.filter(paid=False)	
+				# ... else create new one
+				if cart == None:
+					cart = Order()
+					cart.user = user
+					cart.date = datetime.now()
+					cart.shipingmethod = None
+					cart.paid = False
+					cart.delivered = False
+					cart.save()
+			# If the user is not authenticated then just create a cart
+			else:
+				cart = Order()
+				cart.user = get_object_or_404(User, username='anonymous')
+				cart.date = datetime.now()
+				cart.shipingmethod = ShipingMethod()
+				cart.paid = False
+				cart.delivered = False
+				cart.save()
+						
+			request.session['cart'] = cart
 	
+		# Get SaleItem		
+		si_id = request.POST.get('saleitem_id')
+		si = SaleItem.objects.get(id=si_id)
+		
+		# Create a new OrderItem and add it into the cart		
+		oi = OrderItem()
+		oi.saleItem=si
+		oi.order=cart
+		oi.quantity=1
+		oi.save()
+		
 		variables	= {}
 		context		= RequestContext( request )
 		return render_to_response( "webshop/cart.html", variables, context )
 	else:
 		return HttpResponseBadRequest()
-
+"""
 
 """
 Author(s): Kalle Saila
