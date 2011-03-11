@@ -108,7 +108,6 @@ def register( request ):
 
 		# Check the validity of the forms
 		if myUserCreationForm.is_valid() and addressForm.is_valid():
-			print "Forms are valid!"
 			user				= myUserCreationForm.save()
 			# Automatically login the user after successful registration
 			user.backend		= "django.contrib.auth.backends.ModelBackend"
@@ -123,7 +122,7 @@ def register( request ):
 			next				= request.POST.get( "next", reverse( "webshop.views.home" ) )
 			return redirect( next )
 		else:
-			print "Forms are not valid!"
+			#print "Forms are not valid!"
 			# After a failed registration, redirect the user to the page (s)he came from based on 1) next URL parameter and 2) default to home
 			next				= request.POST.get( "next", reverse( "webshop.views.home" ) )
 	# Handle GET requests
