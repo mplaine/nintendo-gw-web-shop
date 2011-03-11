@@ -1,0 +1,59 @@
+{% extends "webshop/base_template.html" %}
+{% block title %}Nintendo Game &amp; Watch Shop - Cart{% endblock %}
+{% block extra-scripts %}
+	<script type="text/javascript">
+		$( function() {
+			// Highlight current page in the main navigation
+			$( "#navi-cart>span" ).addClass( "navi-selected" );
+		} );
+	</script>				
+{% endblock %}
+{% block page-title %}Cart{% endblock %}
+{% block sort-bar %}{% endblock %}
+{% block content %}
+	<div id="side-navi">
+	</div>
+	<div id="main-content">
+		<h3>Cart</h3>
+		{% load messages %}
+		{% render_messages messages %}
+		{% if orderItems|length == 0 %}
+			<p>Your shopping cart is empty.</p>
+		{% else %}
+			<table id="orders-table">
+				<tbody>
+					<tr>
+						<td>
+							<table class="order-items-table">
+								<thead>
+									<tr>
+										<th class="text-left">Quantity / Product</th>
+										<th class="text-right">Unit Price</th>
+										<th class="text-right">Price</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for orderItem in orderItems %}
+									<tr>
+										<td class="text-left">{{ orderItem.quantity }} x {{ orderItem.saleItem.product.title }} | {{ orderItem.saleItem.product.type }}</td>
+										<td class="text-right">{{ orderItem.saleItem.getPriceInEuros }}</td>
+										<td class="text-right">{{ orderItem.getPriceInEuros }}</td>
+									</tr>
+									{% endfor %}
+									<tr>
+										<td class="text-left" colspan="3">
+											<form class="inline-form" action="{% url webshop.views.empty_cart %}" method="post">
+												{% csrf_token %}
+												<input type="submit" value="Empty cart" />
+											</form>										
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		{% endif %}
+	</div>
+{% endblock %}
