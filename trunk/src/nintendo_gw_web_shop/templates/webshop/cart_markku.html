@@ -41,12 +41,16 @@
 									</tr>
 									{% endfor %}
 									<tr>
-										<td class="text-left" colspan="3">
-											<form class="inline-form" action="{% url webshop.views.empty_cart %}" method="post">
-												{% csrf_token %}
-												<input type="submit" value="Empty cart" />
-											</form>										
-										</td>
+										<td class="text-right subtotal" colspan="2">Subtotal:</td>
+										<td class="text-right subtotal">{{ subtotalInEuros }}</td>
+									</tr>
+									<tr>
+										<td class="text-right" colspan="2">Shipping ({{ shippingMethod.name }}):</td>
+										<td class="text-right">{{ shippingMethodInEuros }}</td>
+									</tr>
+									<tr>
+										<td class="text-right bold" colspan="2">Total:</td>
+										<td class="text-right bold">{{ totalInEuros }}</td>
 									</tr>
 								</tbody>
 							</table>
@@ -54,20 +58,28 @@
 					</tr>
 				</tbody>
 			</table>
-			<form action="/webshop/cart/update" method="post"" id="selection">{% csrf_token %}
-			    Shipping method: <select name="shipping_method">
-			      <option value="Standard">Standard</option>
-			      <option value="Express">Express</option>
-			    </select>
-			    <input type="submit" value="Update cart" />
- 			 </form>
- 			 </p> Shipping method: {{ shippingMethod.name }}
-			
-			{% if user.is_authenticated %}
-				<p><a href="/webshop/payment/pay">Pay</a></p>
-			{% else %}
-				<p>In order to continue please <a href="/webshop/login/">login</a> or <a href="/webshop/register/">register</a></p>
-			{% endif %}
+			<p>
+				<form class="inline-form" action="{% url webshop.views.empty_cart %}" method="post">
+					{% csrf_token %}
+					<input type="submit" value="Empty cart" />
+				</form>										
+			</p>
+			<p>
+				<form action="/webshop/cart/update" method="post"" id="selection">{% csrf_token %}
+				    Shipping method: <select name="shipping_method">
+				      <option value="Standard">Standard</option>
+				      <option value="Express">Express</option>
+				    </select>
+				    <input type="submit" value="Update cart" />
+	 			 </form>
+			</p>
+			<p>
+				{% if user.is_authenticated %}
+					<a href="/webshop/payment/pay">Pay</a>
+				{% else %}
+					In order to continue please <a href="/webshop/login/">login</a> or <a href="/webshop/register/">register</a>
+				{% endif %}
+			</p>
 		{% endif %}
 	</div>
 {% endblock %}
