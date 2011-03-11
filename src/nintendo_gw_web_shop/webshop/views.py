@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
 from webshop.forms import MyUserCreationForm, MyAuthenticationForm, MyUserChangeForm, MyPasswordResetForm, MyPasswordChangeForm, AddressForm
-from webshop.models import Product, Type, Address, Order, Rating, Comment, Statistic, SaleItem, OrderItem, User
+from webshop.models import Product, Type, Address, Order, Rating, Comment, Statistic, SaleItem, OrderItem, User, ShippingMethod
 from django.core.context_processors import csrf
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib import messages
@@ -641,7 +641,7 @@ def admin_statistics( request ):
 """
 Author(s): Juha Loukkola
 """
-
+@login_required
 def payment_pay( request ):
 	#if request.method == 'POST':
 		#TODO: get cart information
@@ -649,6 +649,9 @@ def payment_pay( request ):
 		#digest = md5.new(checksumstr)
 		#checksum = digest.hexdigest()
 		# checksum is the value that should be used in the payment request
+	#order = Order('date': datetime.now(), 'user' :  get_object_or_404(User, id=request.user.id), 'delivered' : False, 'paid': False, 
+#	pid = 
+#	sid	
 	variables	= {}
 	context		= RequestContext( request )
 	return render_to_response("webshop/payement_confirm.html", context)
@@ -773,18 +776,21 @@ def update_cart( request ):
 		# Get the cart
 		orderItems = request.session.get('orderItems', [])	
 				
-		for item in orderItems:
-			item_quantity = int(request.POST.get(item.saleItem.id))
-			item.quantity = item_quantity
+#		for item in orderItems:
+#			item_quantity = int(request.POST.get(item.saleItem.id))
+#			item.quantity = item_quantity
 		
 		request.session['orderItems'] = orderItems
 		
-		variables	= { 'orderItems': orderItems }
+		request.session['shippingMethod'] = request.POST.get('shipping_method')
+		shippingMethod = get_object_or_404(ShippingMethod, name=request.session['shippingMethod'])
+		
+		variables	= { 'orderItems' : orderItems , 'shippingMethod' : shippingMethod }
 		context		= RequestContext( request )
 		context.update( csrf( request ) )
 		#next = request.POST.get( "next", reverse( "webshop.views.cart" ) )
 		#return redirect( next )
-		return render_to_response( "webshop/cart.html", variables, context )
+		return render_to_response( "webshop/cart_markku.html", variables, context )
 	else:
 		return HttpResponseBadRequest()
 
