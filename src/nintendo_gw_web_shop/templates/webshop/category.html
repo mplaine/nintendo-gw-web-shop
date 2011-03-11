@@ -59,11 +59,7 @@
 				addView(window.location.hash.substring(5));
 			});
 			
-<!--			$('form[class="add-to-cart"]').submit(function() {-->
-<!--				//Your code Here-->
-<!--				-->
-<!--				return false;-->
-<!--			});-->
+
 			$('.own-star').hover(
 					function() {
 						var me = this;
@@ -114,6 +110,9 @@
 			$('.product-image-wrapper').simpleDialog({
 				  showCloseLabel: false
 			});
+			if($('#side-navi ul').height() > $('#content').height()) {
+				$('#content').height(($('#side-navi ul').height() + 45))
+			}
 		});
 		function bindComments() {
 			$('.add-comment-toggle').unbind();
