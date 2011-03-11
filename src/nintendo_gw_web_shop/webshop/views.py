@@ -799,7 +799,8 @@ def empty_cart( request ):
 	# Handle POST requests
 	if request.method == "POST":
 		# Empty cart
-		request.session[ 'orderItems' ]	= []
+		request.session[ 'orderItems' ]			= []
+		request.session[ "numberOfCartItems" ]	= 0
 		return redirect( "webshop.views.cart" )
 	# Handle other requests
 	else:
@@ -813,8 +814,8 @@ def add_to_cart( request ):
 	#if request.is_ajax():
 	if request.method == 'POST':
 				
-		# Get the cart
-		orderItems = request.session.get('orderItems', [])	
+		# Get the cart from the session
+		orderItems = request.session.get( 'orderItems', [] )
 				
 		# Get SaleItem		
 		#if 'saleitem_id' in request.POST:
@@ -838,16 +839,31 @@ def add_to_cart( request ):
 			oi.saleItem = si
 			orderItems.append(oi)
 		
-		#save the cart into session
-		request.session['orderItems'] = orderItems
+		# Save the cart into the session
+		request.session['orderItems']	= orderItems
+
+		# Calculate the number of cart items
+		numberOfCartItems				= 0
+		for orderItem in orderItems:
+			numberOfCartItems	+= orderItem.quantity
+		request.session[ "numberOfCartItems" ]	= numberOfCartItems
+
+		# Return the number of cart items for updating the cart items number in the navigation
+		my_json = json.dumps( { "numberOfCartItems" : numberOfCartItems } )
+		return HttpResponse( my_json, mimetype="application/json" )
 		
-		variables	= { 'orderItems': orderItems }
-		context		= RequestContext( request )
-		context.update( csrf( request ) )
+#		variables	= { 'orderItems': orderItems }
+#		context		= RequestContext( request )
+#		context.update( csrf( request ) )
+#		next = request.POST.get( "next", reverse( "webshop.views.home" ) )
+#		return redirect( next )
+#		variables	= { 'orderItems': orderItems }
+#		context		= RequestContext( request )
+#		context.update( csrf( request ) )
 		
 		#TODO: change next to referer's url
-		next = request.POST.get( "next", reverse( "webshop.views.home" ) )
-		return redirect( next )
+#		next = request.POST.get( "next", reverse( "webshop.views.home" ) )
+#		return redirect( next )
 	else:
 		return HttpResponseBadRequest()
 
