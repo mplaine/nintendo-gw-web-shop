@@ -28,7 +28,7 @@
 		{% if orderItems|length == 0 %}
 			<p>The cart is empty. </p>
 		{% else %}
-			<form>
+			<form action="/webshop/cart/update" method="post">{% csrf_token %}
 				<table class="order-items-table">
 					<thead>
 						<tr>
@@ -41,7 +41,7 @@
 					<tbody>
 						{% for orderItem in orderItems %}
 						<tr>
-							<td class="text-left"><input type="text" name="quantity" value="{{ orderItem.quantity }}" maxlength="3" size="3"/> x </td>
+							<td class="text-left"><input type="text" name="{{ orderItem.saleItem.id }}" value="{{ orderItem.quantity }}" maxlength="3" size="3"/> x </td>
 							<td class="text-left">{{ orderItem.saleItem.product.title }} | {{ orderItem.saleItem.product.type }}</td>
 							<td class="text-left">{{ orderItem.saleItem.getPriceInEuros }}</td>
 							<td class="text-left">{{ orderItem.getPriceInEuros }}</td>
@@ -49,6 +49,7 @@
 						{% endfor %}
 					</tbody>
 				</table>
+				<input type="submit" value="Update cart" />
 			</form>
 		{% endif %}
 	</div>

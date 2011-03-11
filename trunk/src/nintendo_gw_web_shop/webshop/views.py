@@ -764,6 +764,31 @@ def add_to_cart( request ):
 		return HttpResponseBadRequest()
 
 """
+Author(s): Juha Loukkola
+"""
+def update_cart( request ):
+	#if request.is_ajax():
+	if request.method == 'POST':
+				
+		# Get the cart
+		orderItems = request.session.get('orderItems', [])	
+				
+		for item in orderItems:
+			item_quantity = int(request.POST.get(item.saleItem.id))
+			item.quantity = item_quantity
+		
+		request.session['orderItems'] = orderItems
+		
+		variables	= { 'orderItems': orderItems }
+		context		= RequestContext( request )
+		context.update( csrf( request ) )
+		#next = request.POST.get( "next", reverse( "webshop.views.cart" ) )
+		#return redirect( next )
+		return render_to_response( "webshop/cart.html", variables, context )
+	else:
+		return HttpResponseBadRequest()
+
+"""
 def add_to_cart( request ):
 	#if request.is_ajax():
 	if request.method == 'POST':
