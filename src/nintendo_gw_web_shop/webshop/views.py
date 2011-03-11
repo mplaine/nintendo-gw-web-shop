@@ -922,7 +922,7 @@ def comment( request, product_id ):
 					comment.commentsOn = commentsOn
 				comment.contents = request.POST['comment']
 				comment.product = product
-				comment.published = datetime.nowdate()
+				comment.published = datetime.today()
 				comment.save()
 				my_json = json.dumps({'id':comment.id, 'commentsOn':request.POST['commentsOn'], 'published':comment.published.__str__(), 'user': comment.user.username, 'admin': comment.user.is_staff})
 				return HttpResponse(my_json, mimetype="application/json")
