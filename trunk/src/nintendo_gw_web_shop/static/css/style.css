@@ -402,7 +402,6 @@ a {
 	position: relative;
 	cursor: pointer;
 	margin-right: 12px;
-	font-size: 14px;
 }
 .thumb:nth-of-type(4n) {
 	margin-right: 0px;
@@ -490,6 +489,10 @@ a {
 }
 #orders-table table.order-information-table td.label {
 	width: 120px;
+}
+#orders-table table.shipping-information-table {
+	margin-bottom: 20px;
+	width: 100%;
 }
 #orders-table table.order-items-table {
 	width: 100%;
