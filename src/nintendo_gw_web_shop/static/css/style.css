@@ -130,6 +130,7 @@ a {
 	right: 7px;
 	top: 7px;
 	width: 12px;
+	font-size: 0px;
 }
 
 #search-submit {
@@ -146,6 +147,7 @@ a {
 	top: 7px;
 	width: 12px;
 	display: none;
+	font-size: 0px;
 }
 
 .no-js #search-submit {
@@ -282,7 +284,7 @@ a {
 .messages.warning,
 .messages.error,
 .messages.validation {
-	align: left;
+	/*align: left;*/
 	background-position: 5px 5px;
 	background-repeat: no-repeat;
 	border: 2px solid;
@@ -588,7 +590,7 @@ a {
 }
 .info-span {
 	color: #999999;
-	text-style: italic;
+	font-style: italic;
 	margin-right: 70px;
 }
 .product-sale {
