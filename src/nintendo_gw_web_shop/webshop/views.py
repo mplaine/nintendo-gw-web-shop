@@ -12,8 +12,9 @@ from django.utils import simplejson as json
 from django.contrib.auth.decorators import login_required
 from datetime import datetime
 from django.contrib.auth.tokens import default_token_generator
-#import md5
+import md5
 
+secret_key = '37e383c1182a6bab1524c9a7c0fc4557'
 
 """
 Nintendo Game & Watch Shop
@@ -664,18 +665,31 @@ Author(s): Juha Loukkola
 @login_required
 def payment_pay( request ):
 	#if request.method == 'POST':
-		#TODO: get cart information
-		#TODO: 
-		#digest = md5.new(checksumstr)
-		#checksum = digest.hexdigest()
-		# checksum is the value that should be used in the payment request
-	#order = Order('date': datetime.now(), 'user' :  get_object_or_404(User, id=request.user.id), 'delivered' : False, 'paid': False, 
-#	pid = 
-#	sid	
-	variables	= {}
+	user = get_object_or_404(User, id=request.user.id)
+	sm = request.session['shippingMethod']
+	shippingMethod = get_object_or_404(ShippingMethod, name=sm)
+	order = Order(date=datetime.now(), 
+				user=user, 
+				delivered=False, 
+				paid=False,
+				shippingMethod=shippingMethod,
+				address=user.address_set.all()[0])
+	order.save()
+	pid = order.id
+	sid	= 'Disk-kun'
+	#secret_key = '37e383c1182a6bab1524c9a7c0fc4557'
+	amount = order.getTotal()
+	# TODO: fix urls
+	success_url = request.build_absolute_uri("/webshop/payment/success") # "http://127.0.0.1:8888/webshop/payment/success"
+	cancel_url = request.build_absolute_uri("/webshop/payment/cancel") # "http://127.0.0.1:8888/webshop/payment/cancel"
+	error_url = request.build_absolute_uri("/webshop/payment/error") # "http://127.0.0.1:8888/webshop/payment/error"	
+	checksumstr = "pid=%s&sid=%s&amount=%s&token=%s"%(pid, sid, amount, secret_key)
+	m = md5.new(checksumstr)
+	checksum = m.hexdigest()
+	
+	variables	= { "pid":pid, "sid":sid, "amount":amount, "success_url":success_url, "cancel_url":cancel_url, "error_url":error_url, "checksum":checksum}
 	context		= RequestContext( request )
-	return render_to_response("webshop/payement_confirm.html", context)
-
+	return render_to_response("webshop/payement_confirm.html", variables, context)
 	
 """
 Author(s): Juha Loukkola
@@ -688,10 +702,36 @@ def payment_confirm( request ):
 """
 Author(s): Juha Loukkola
 """
+@login_required
 def payment_success( request ):
-	variables	= {}
-	context		= RequestContext( request )
-	return render_to_response( "webshop/payement_success.html", variables, context )
+	# Handle GET requests
+	if request.method == "GET":
+		pid = request.GET.get('pid')
+		ref = request.GET.get('ref')
+		checksum = request.GET.get('checksum')
+		#secret_key = '37e383c1182a6bab1524c9a7c0fc4557'
+		
+		# validate checksum
+		checksumstr = "pid=%s&ref=%s&token=%s"%(pid, ref, secret_key)
+		m = md5.new(checksumstr)
+		if checksum == m.hexdigest():
+			order = get_object_or_404(Order, id=pid)
+			order.paid = True
+			order.save()
+			
+			variables	= {}
+			context		= RequestContext( request )
+			return render_to_response( "webshop/payement_success.html", variables, context )
+		else:
+			context		= RequestContext( request )
+			return render_to_response( "webshop/error.html", context )
+
+	# Handle other requests
+	else:
+		raise Http404( "%s method is not supported." % request.method )
+	
+
+	
 	
 	
 """
@@ -720,13 +760,19 @@ def cart( request ):
 	# Handle GET requests
 	if request.method == "GET":
 		orderItems = request.session.get('orderItems', [])
+		if 'shippingMethod' in request.session:
+			sm = request.session['shippingMethod']
+			shippingMethod = get_object_or_404(ShippingMethod, name=sm)
+		else:
+			request.session['shippingMethod'] = 'Standard'
+			shippingMethod = get_object_or_404(ShippingMethod, name='Standard')
 
 	# Handle other requests
 	else:
 		raise Http404( "%s method is not supported." % request.method )
-
+	
 	#variables					= { 'cart' : cart, 'orderItems': orderItems }
-	variables					= { 'orderItems': orderItems }
+	variables					= { 'orderItems': orderItems, 'shippingMethod' : shippingMethod }
 	context						= RequestContext( request )
 	context.update( csrf( request ) )
 	return render_to_response( "webshop/cart_markku.html", variables, context )
@@ -800,10 +846,10 @@ def update_cart( request ):
 #			item_quantity = int(request.POST.get(item.saleItem.id))
 #			item.quantity = item_quantity
 		
-		request.session['orderItems'] = orderItems
-		
-		request.session['shippingMethod'] = request.POST.get('shipping_method')
-		shippingMethod = get_object_or_404(ShippingMethod, name=request.session['shippingMethod'])
+		#request.session['orderItems'] = orderItems
+		sm = request.POST.get('shipping_method')
+		request.session['shippingMethod'] = sm
+		shippingMethod = get_object_or_404(ShippingMethod, name=sm)
 		
 		variables	= { 'orderItems' : orderItems , 'shippingMethod' : shippingMethod }
 		context		= RequestContext( request )
