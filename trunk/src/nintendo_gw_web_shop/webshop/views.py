@@ -689,7 +689,7 @@ def payment_pay( request ):
 	
 	variables	= { "pid":pid, "sid":sid, "amount":amount, "success_url":success_url, "cancel_url":cancel_url, "error_url":error_url, "checksum":checksum}
 	context		= RequestContext( request )
-	return render_to_response("webshop/payement_confirm.html", variables, context)
+	return render_to_response("webshop/payment/confirm.html", variables, context)
 	
 """
 Author(s): Juha Loukkola
@@ -697,7 +697,7 @@ Author(s): Juha Loukkola
 def payment_confirm( request ):
 	variables	= {}
 	context		= RequestContext( request )
-	return render_to_response( "webshop/payement_confirm.html", variables, context )	
+	return render_to_response( "webshop/payment/confirm.html", variables, context )	
 	
 """
 Author(s): Juha Loukkola
@@ -709,7 +709,6 @@ def payment_success( request ):
 		pid = request.GET.get('pid')
 		ref = request.GET.get('ref')
 		checksum = request.GET.get('checksum')
-		#secret_key = '37e383c1182a6bab1524c9a7c0fc4557'
 		
 		# validate checksum
 		checksumstr = "pid=%s&ref=%s&token=%s"%(pid, ref, secret_key)
@@ -718,13 +717,14 @@ def payment_success( request ):
 			order = get_object_or_404(Order, id=pid)
 			order.paid = True
 			order.save()
-			
+			del request.session['orderItems']
+			del request.session['shippingMethod']
 			variables	= {}
 			context		= RequestContext( request )
-			return render_to_response( "webshop/payement_success.html", variables, context )
+			return render_to_response( "webshop/payment/success.html", variables, context )
 		else:
 			context		= RequestContext( request )
-			return render_to_response( "webshop/error.html", context )
+			return render_to_response( "webshop/payment/error.html", context )
 
 	# Handle other requests
 	else:
@@ -740,7 +740,7 @@ Author(s): Juha Loukkola
 def payment_cancel( request ):
 	variables	= {}
 	context		= RequestContext( request )
-	return render_to_response( "webshop/cart.html", variables, context )
+	return render_to_response( "webshop/payment/cancel.html", variables, context )
 	
 	
 """
@@ -749,7 +749,7 @@ Author(s): Juha Loukkola
 def payment_error( request ):
 	variables	= {}
 	context		= RequestContext( request )
-	return render_to_response( "webshop/error.html", variables, context )
+	return render_to_response( "webshop/payment/error.html", variables, context )
 	
 	
 """
@@ -849,14 +849,14 @@ def update_cart( request ):
 		#request.session['orderItems'] = orderItems
 		sm = request.POST.get('shipping_method')
 		request.session['shippingMethod'] = sm
-		shippingMethod = get_object_or_404(ShippingMethod, name=sm)
+		#shippingMethod = get_object_or_404(ShippingMethod, name=sm)
 		
-		variables	= { 'orderItems' : orderItems , 'shippingMethod' : shippingMethod }
-		context		= RequestContext( request )
-		context.update( csrf( request ) )
+		#variables	= { 'orderItems' : orderItems , 'shippingMethod' : shippingMethod }
+		#context		= RequestContext( request )
+		#context.update( csrf( request ) )
 		#next = request.POST.get( "next", reverse( "webshop.views.cart" ) )
 		#return redirect( next )
-		return render_to_response( "webshop/cart_markku.html", variables, context )
+		return redirect( "webshop.views.cart" )
 	else:
 		return HttpResponseBadRequest()
 

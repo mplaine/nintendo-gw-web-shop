@@ -1,18 +1,16 @@
-<!-- Add payment information -->
-	
-<!DOCTYPE html>
-<html>
-  <head>
-      <title>Confirm Payment</title>
-  </head>
-  <body>
-     <div id="page">
-      <div id="header">
+<!-- Add static payment information -->
 
-          <h1>Confirm Payment</h1>
-      </div>
-      <div id="content">
-		<p>By pressing confirm button you will be redirectend to a netbank</p>
+{% extends "webshop/base_template.html" %}
+{% block title %}Nintendo Game &amp; Watch Shop - Password Reset - Password Reset Complete{% endblock %}
+{% block extra-scripts %}{% endblock %}
+{% block page-title %}Password Reset{% endblock %}
+{% block sort-bar %}{% endblock %}
+{% block content %}
+	<div id="side-navi">
+	</div>
+	<div id="main-content">
+		<h3>Confirm order</h3>
+		<p>Please press the confirm button and you will be redirectend to a netbank in order to pay the order</p>
 		<form action="http://webcourse.cs.hut.fi/payment/pay/" method="POST">
 		  <input id="id_pid" type="hidden" name="pid" value="{{ pid }}" />
 		  <input id="id_sid" type="hidden" name="sid" value="{{ sid }}" />
@@ -21,12 +19,10 @@
 		  <input id="id_cancel_url" type="hidden" name="cancel_url" value="{{ cancel_url }}" />
 		  <input id="id_error_url" type="hidden" name="error_url" value="{{ error_url }}" />
 		  <input type="hidden" name="checksum" value="{{ checksum }}" id="id_checksum" />
-		<!--<input name="dev" type="hidden" id="id_dev"/><label for="id_dev">dev</label> -->
-		
+		  <input name="dev" type="hidden" value="fail"id="id_dev"/>		
 		<input type="submit" value="Confirm" />
 		</form>
-      </div>
-    </div>
-  </body>
-</html>
+	</div>
+{% endblock %}
+
           
