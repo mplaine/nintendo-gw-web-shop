@@ -37,9 +37,10 @@ urlpatterns    = patterns( '',
     ( r'^cart/update$', 'webshop.views.update_cart' ),  
     ( r'^cart/empty/$', 'webshop.views.empty_cart' ),
     ( r'^payment/pay/$', 'webshop.views.payment_pay'),
-    ( r'^payment/success/$', 'webshop.views.payment_success'),
-    ( r'^payment/cancel/$', 'webshop.views.payment_cancel'),
-    ( r'^payment/error/$', 'webshop.views.payment_error'),
+    ( r'^payment/confirm$', 'webshop.views.payment_confirm'),
+    ( r'^payment/success$', 'webshop.views.payment_success'),
+    ( r'^payment/cancel$', 'webshop.views.payment_cancel'),
+    ( r'^payment/error$', 'webshop.views.payment_error'),
     
     #Ajax urls
     ( r'^ajax/product/(?P<product_id>\d+)/rating/$', 'webshop.views.rating'),
