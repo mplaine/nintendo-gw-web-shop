@@ -32,19 +32,13 @@
 	<div id="index-content">
 	{% if products %}
  		{% for product in products %}
- 			<a href="category/{{ product.type.id }}/product#item{{ product.id }}">
-		 		{% if forloop.counter|divisibleby:"4" %}
-		 			<div class="thumb thumb-4th" data-id="{{product.type.id}}" id="{{product.id}}">
-	 			{% else %}
-		 			<div class="thumb" data-id="{{product.type.id}}" id="{{product.id}}">
-	 			{% endif %}
-					<img src="/webshop/static/{{product.imageThumb}}" />
-					<div class="thumb-info">
-						<p class="thumb-title">{{product}}</p>
-						<p class="thumb-body">Click to view</p>
-					</div>
+		 	<div class="thumb" data-id="{{product.type.id}}" id="{{product.id}}">
+				<img src="/webshop/static/{{product.imageThumb}}" />
+				<div class="thumb-info">
+					<p class="thumb-title">{{product}}</p>
+					<p class="thumb-body"><a class="thumb-link" href="category/{{ product.type.id }}/product#item{{ product.id }}">Click to view</a></p>
 				</div>
-			</a>
+			</div>
  		{% endfor %}
  	{% else %}
  		<h2>Sorry, no results found.</h2>

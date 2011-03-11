@@ -406,6 +406,9 @@ a {
 	cursor: pointer;
 	margin-right: 12px;
 }
+.thumb-link {
+	color: #FFFFFF;
+}
 .thumb-4th {
 	margin-right: 0px;
 }
