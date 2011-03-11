@@ -19,15 +19,6 @@
 			//$( "#side-navi ul li a>span" ).first().addClass( "side-navi-selected" );
 			$('li[data-id='+hash+'] a>span', '#side-navi').addClass( "side-navi-selected" );
 
-			//$( "a", "#side-navi" ).click( function() {
-			//	var me	= this;
-			//	$( "#side-navi-arrow" ).hide();
-			//	$( me ).append( $( "#side-navi-arrow" ) );
-			//	$( "#side-navi-arrow" ).show( "slide", { direction: "left" }, 500 );
-			//});
-			//
-			//$( "a", "#side-navi" ).attr( "href", "javascript:;" );
-
 			$('a[name="'+window.location.hash.substring(1)+'"]').parent().show();
 			
 			//$('li', '#side-navi').eq((window.location.hash.substring(5) - 1)).append($('#side-navi-arrow'));
@@ -63,9 +54,10 @@
 				//Your code Here-->
 				var me = this;
 				var id = $('input[name=saleitem_id]', me).val()
-				var uri = '/webshop/cart/add';
-				$.post(uri, {saleitem_id:id});
-				$('#cart-span').text((parseInt($('#cart-span').text()) + 1));
+				var uri = '/webshop/cart/add/';
+				$.post( uri, { "saleitem_id" : id }, function( data ) {
+					$( '#cart-span' ).text( data.numberOfCartItems );
+				} );
 				return false;
 			});
 			$('.own-star').hover(
@@ -301,7 +293,7 @@
 			<div class="product">
 				<a name="item{{product.id}}"></a>
 				<div class="add-to-cart">
-				<form action="/webshop/cart/add" method="post">{% csrf_token %}
+				<form action="/webshop/cart/add/" method="post">{% csrf_token %}
 					<input type="hidden" name="saleitem_id" value="{{ product.saleitem.id }}" />
 					<input class="add-cart-submit" type="submit" value="Add to cart" />
 				</form>

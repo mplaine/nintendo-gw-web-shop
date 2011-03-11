@@ -102,13 +102,19 @@
 	<div id="index-content">
 	{% if types %}
  		{% for type in types %}
- 			<div class="thumb" data-id="{{type.id}}" id="{{type.firstproduct}}">
-				<img src="/webshop/static/{{type.imageThumb}}" />
-				<div class="thumb-info">
-					<p class="thumb-title">{{type}}</p>
-					<p class="thumb-body">View all [<span data-type="size">{{type.product_set.count}}</span> items]</p>
+ 			<a href="category/{{ type.id }}/product#item{{ type.firstproduct }}">
+		 		{% if forloop.counter|divisibleby:"4" %}
+		 			<div class="thumb thumb-4th" data-id="{{type.id}}" id="{{type.firstproduct}}">
+	 			{% else %}
+		 			<div class="thumb" data-id="{{type.id}}" id="{{type.firstproduct}}">
+	 			{% endif %}
+					<img src="/webshop/static/{{type.imageThumb}}" />				
+					<div class="thumb-info">
+						<p class="thumb-title">{{type}}</p>
+						<p class="thumb-body">View all [<span data-type="size">{{type.product_set.count}}</span> items]</p>
+					</div>
 				</div>
-			</div>
+			</a>
  		{% endfor %}
 	{% endif %}
 	</div>
